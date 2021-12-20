@@ -4,6 +4,7 @@ interface User {
   name: string;
   email: string;
   password: string;
+  userType: string;
 }
 
 const UserSchema = new Schema<User>({
@@ -23,6 +24,12 @@ const UserSchema = new Schema<User>({
     type: String,
     required: true,
     min: 6,
+  },
+  userType: {
+    type: String,
+    enum: ['Customer', 'Technician', 'Admin'],
+    required: true,
+    default: 'Customer',
   },
 });
 
