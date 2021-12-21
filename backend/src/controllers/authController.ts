@@ -1,5 +1,5 @@
 import express, { Router, Request, Response, NextFunction } from 'express';
-import { createUser, authenticateUser } from '../services/authService';
+import { createUser, authenticateUser } from '../services/AuthService';
 
 /**
  * Login Controller

@@ -1,8 +1,10 @@
 import express, { Application } from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
-import authRouter from './routes/auth';
+import AuthRouter from './routes/AuthRoute';
+import ServiceRouter from './routes/ServiceRoute';
 
+const PORT = 3000;
 dotenv.config();
 
 mongoose
@@ -12,5 +14,6 @@ mongoose
 
 const app: Application = express();
 app.use(express.json());
-app.use('/api', authRouter);
-app.listen(3000, () => console.log('listening'));
+app.use('/api', AuthRouter);
+app.use('/api', ServiceRouter);
+app.listen(PORT, () => console.log(`listening ${PORT}`));
