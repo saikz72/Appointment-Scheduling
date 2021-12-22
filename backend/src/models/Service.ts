@@ -1,6 +1,6 @@
 import { model, Schema } from 'mongoose';
 
-interface Service {
+export interface Service {
   name: string;
   cost: number;
   duration: number;
