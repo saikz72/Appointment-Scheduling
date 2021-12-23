@@ -1,5 +1,4 @@
 import { model, Schema } from 'mongoose';
-import { Bill } from './Bill';
 import { Service } from './Service';
 import { User } from './User';
 
@@ -8,7 +7,6 @@ export interface Appointment {
   endDate: Date;
   services: Service[];
   users: User[];
-  bill: Bill;
   noShow: boolean;
 }
 
@@ -38,10 +36,6 @@ const AppointmentSchema = new Schema<Appointment>({
       ref: 'User',
     },
   ],
-  bill: {
-    type: Schema.Types.ObjectId,
-    ref: 'Bill',
-  },
 });
 
 export default model<Appointment>('Appointment', AppointmentSchema);

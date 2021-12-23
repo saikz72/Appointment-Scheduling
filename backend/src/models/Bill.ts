@@ -6,7 +6,7 @@ export interface Bill {
   date: Date;
   totalCost: number;
   appointment: Appointment;
-  user: User;
+  customer: User;
   paid: boolean;
 }
 
@@ -28,7 +28,7 @@ const BillSchema = new Schema<Bill>({
     type: Schema.Types.ObjectId,
     ref: 'Appointment',
   },
-  user: {
+  customer: {
     type: Schema.Types.ObjectId,
     ref: 'User',
   },

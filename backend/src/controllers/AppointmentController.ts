@@ -10,13 +10,12 @@ abstract class AppointmentController {
    */
   static async createAppointment(req: Request, res: Response, next: NextFunction) {
     const services = req.body.services; //[{name: serviceId}, ...]
-    const users = req.body.users; //[{customer: customerId}, {technician: technicianId}]
+    const customerId = req.body.customerId;
     const startDate = req.body.startDate;
-    const appointmentDTO = { startDate, users, services };
+    const appointmentDTO = { startDate, customerId, services };
 
-    console.log(appointmentDTO);
     try {
-      const appointment = AppointmentService.createAppointment(appointmentDTO);
+      const appointment = await AppointmentService.createAppointment(appointmentDTO);
       res.status(200).send(appointment);
     } catch (error) {
       res.status(400).send(error);
