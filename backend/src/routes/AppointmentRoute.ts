@@ -11,8 +11,11 @@ router.delete('/appointment/cancel/:appointmentId', AppointmentController.delete
 
 router.get('/appointment/getAllAppointments', AppointmentController.getAllAppointments);
 
-router.get('/appointment/getAllAppointmentsOfCustomer', AppointmentController.getAllAppointmentsOfCustomer);
+router.get('/appointment/getAllAppointmentsOfCustomer/:customerId', AppointmentController.getAllAppointmentsOfCustomer);
 
-router.get('/appointment/getAllAppointmentsOfTechnician', AppointmentController.getAllAppointmentsOfTechnician);
+router.get(
+  '/appointment/getAllAppointmentsOfTechnician/:technicianId',
+  AppointmentController.getAllAppointmentsOfTechnician
+);
 
 export default router;

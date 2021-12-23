@@ -1,12 +1,10 @@
 import { model, Schema } from 'mongoose';
-import { Appointment } from './Appointment';
 
 export interface User {
   name: string;
   email: string;
   password: string;
   userType: string;
-  appointments: Appointment[];
 }
 
 const UserSchema = new Schema<User>({
@@ -33,12 +31,6 @@ const UserSchema = new Schema<User>({
     required: true,
     default: 'Customer',
   },
-  appointments: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: 'Appointment',
-    },
-  ],
 });
 
 export default model<User>('User', UserSchema);

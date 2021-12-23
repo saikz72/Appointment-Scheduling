@@ -1,4 +1,4 @@
-import express, { Router, Request, Response, NextFunction } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import AppointmentService from '../services/AppointmentService';
 
 abstract class AppointmentController {
@@ -44,7 +44,14 @@ abstract class AppointmentController {
    * @param res
    * @param next
    */
-  static async getAllAppointments(req: Request, res: Response, next: NextFunction) {}
+  static async getAllAppointments(req: Request, res: Response, next: NextFunction) {
+    try {
+      const appointments = await AppointmentService.getAllAppointments();
+      res.status(200).send(appointments);
+    } catch (error) {
+      throw error;
+    }
+  }
 
   /**
    * Get all the appointments of the customer
@@ -52,7 +59,16 @@ abstract class AppointmentController {
    * @param res
    * @param next
    */
-  static async getAllAppointmentsOfCustomer(req: Request, res: Response, next: NextFunction) {}
+  static async getAllAppointmentsOfCustomer(req: Request, res: Response, next: NextFunction) {
+    const customerId = req.params.customerId;
+
+    try {
+      const appointments = await AppointmentService.getAllAppointmentsOfCustomer(customerId);
+      res.status(200).send(appointments);
+    } catch (error) {
+      res.status(400).send(error);
+    }
+  }
 
   /**
    * Get all the appointmens of the technician
@@ -60,7 +76,16 @@ abstract class AppointmentController {
    * @param res
    * @param next
    */
-  static async getAllAppointmentsOfTechnician(req: Request, res: Response, next: NextFunction) {}
+  static async getAllAppointmentsOfTechnician(req: Request, res: Response, next: NextFunction) {
+    const technicianId = req.params.technicianId;
+    console.log(technicianId);
+    try {
+      const appointments = await AppointmentService.getAllAppointmentsOfTechnician(technicianId);
+      res.status(200).send(appointments);
+    } catch (error) {
+      res.status(400).send(error);
+    }
+  }
 }
 
 export default AppointmentController;

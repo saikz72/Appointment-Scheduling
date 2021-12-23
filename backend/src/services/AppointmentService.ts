@@ -11,15 +11,16 @@ abstract class AppointmentService {
     // For starter, pick the technician with the least amount of scheduled appointments
     // TODO:: cannot assign same technician to the same timeslot for an appointment
     const technicians = await User.find({ userType: 'Technician' });
+    let loopCounter: number = 10;
     let chosenTechnician;
-    let minAppointments = 1000;
-    technicians.forEach((technician) => {
-      const appointments = technician.appointments;
-      if (minAppointments > appointments.length) {
-        minAppointments = appointments.length;
-        chosenTechnician = technician;
+    while (true) {
+      if (loopCounter == 0) {
+        break;
       }
-    });
+      chosenTechnician = technicians[Math.floor(Math.random() * technicians.length)];
+      //check if technician does not have another appointment on this date
+      loopCounter = loopCounter - 1;
+    }
 
     // get services
     const allServices: any = [];
@@ -66,11 +67,34 @@ abstract class AppointmentService {
 
   static async updateAppointment(appointmentId: string, appointmentDTO: any) {}
 
-  static async getAllAppointments() {}
+  static async getAllAppointments() {
+    try {
+      const appointments = await Appointment.find();
+      return appointments;
+    } catch (error) {
+      throw error;
+    }
+  }
 
-  static async getAllAppointmentsOfCustomer(customerId: string) {}
+  static async getAllAppointmentsOfCustomer(customerId: string) {
+    try {
+      const appointments = await Appointment.find({ users: { $all: [customerId] } });
+      console.log(appointments);
+      return appointments;
+    } catch (error) {
+      throw error;
+    }
+  }
 
-  static async getAllAppointmentsOfTechnician(technicianId: string) {}
+  static async getAllAppointmentsOfTechnician(technicianId: string) {
+    try {
+      const appointments = await Appointment.find({ users: { $all: [technicianId] } });
+      console.log(appointments);
+      return appointments;
+    } catch (error) {
+      throw error;
+    }
+  }
 }
 
 export default AppointmentService;
