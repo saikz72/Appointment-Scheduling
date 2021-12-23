@@ -3,27 +3,35 @@ import { Bill } from './Bill';
 import { Service } from './Service';
 import { User } from './User';
 
-interface Appointment {
+export interface Appointment {
   startDate: Date;
   endDate: Date;
-  services: Service;
-  user: User;
+  services: Service[];
+  users: User[];
   bill: Bill;
 }
 
 const AppointmentSchema = new Schema<Appointment>({
-  startDate: Date,
-  endDate: Date,
+  startDate: {
+    type: Date,
+    required: true,
+  },
+  endDate: {
+    type: Date,
+    required: true,
+  },
   services: [
     {
       type: Schema.Types.ObjectId,
       ref: 'Service',
     },
   ],
-  user: {
-    type: Schema.Types.ObjectId,
-    ref: 'User',
-  },
+  users: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'User',
+    },
+  ],
   bill: {
     type: Schema.Types.ObjectId,
     ref: 'Bill',
