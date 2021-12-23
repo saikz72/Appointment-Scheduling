@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import AuthRouter from './routes/AuthRoute';
 import ServiceRouter from './routes/ServiceRoute';
+import BusinessRouter from './routes/BusinessRoute';
 
 const PORT = 3000;
 dotenv.config();
@@ -16,4 +17,5 @@ const app: Application = express();
 app.use(express.json());
 app.use('/api', AuthRouter);
 app.use('/api', ServiceRouter);
+app.use('/api', BusinessRouter);
 app.listen(PORT, () => console.log(`listening ${PORT}`));
