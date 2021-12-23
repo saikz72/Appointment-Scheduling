@@ -21,16 +21,28 @@ export const createService = async (req: Request, res: Response, next: NextFunct
   }
 };
 
+/**
+ * Delete Service Controller
+ * @param req
+ * @param res
+ * @param next
+ */
 export const deleteService = async (req: Request, res: Response, next: NextFunction) => {
   const serviceId = req.params.serviceId;
   try {
     await OfferService.deleteService(serviceId);
     res.status(200).send('Service deleted.');
   } catch (error) {
-    res.status(400).send('Cannot delete service.');
+    res.status(400).send(error);
   }
 };
 
+/**
+ * Update Service Controller
+ * @param req
+ * @param res
+ * @param next
+ */
 export const updateService = async (req: Request, res: Response, next: NextFunction) => {
   const serviceId = req.params.serviceId;
   const serviceDTO = req.body;
@@ -38,10 +50,16 @@ export const updateService = async (req: Request, res: Response, next: NextFunct
     const updateService = await OfferService.updateService(serviceId, serviceDTO);
     res.status(200).send(updateService);
   } catch (error) {
-    res.status(400).send('Cannot update service.');
+    res.status(400).send(error);
   }
 };
 
+/**
+ * Get All Services Controller
+ * @param req
+ * @param res
+ * @param next
+ */
 export const getAllServices = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const allServices = await OfferService.getAllServices();

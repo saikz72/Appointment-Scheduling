@@ -1,9 +1,11 @@
 import { model, Schema } from 'mongoose';
+import { Appointment } from './Appointment';
 
 export interface Service {
   name: string;
   cost: number;
   duration: number;
+  appointments: Appointment[];
 }
 
 const ServiceSchema = new Schema<Service>({
@@ -19,6 +21,12 @@ const ServiceSchema = new Schema<Service>({
     type: Number,
     required: true,
   },
+  appointments: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Appointment',
+    },
+  ],
 });
 
 export default model<Service>('Service', ServiceSchema);

@@ -35,24 +35,25 @@ class OfferService {
     try {
       await Service.deleteOne({ serviceId: serviceId });
     } catch (error) {
-      throw 'Cannot delete.';
+      throw error;
     }
   }
 
   static async updateService(serviceId: string, serviceDTO: any) {
-    const filter = { serviceId: serviceId };
-    const service = await Service.findOne(filter);
-
-    const name = serviceDTO?.name === null ? service?.name : serviceDTO?.name;
-    const cost = serviceDTO?.cost === null ? service?.cost : serviceDTO?.cost;
-    const duration = serviceDTO?.duration === null ? service?.duration : serviceDTO?.duration;
-
+    const name = serviceDTO?.name;
+    const cost = serviceDTO?.cost;
+    const duration = serviceDTO?.duration;
     const update = { name, cost, duration };
 
+    const serviceExist = await Service.exists({ name: name });
+    if (serviceExist) {
+      throw 'Service name already exist.';
+    }
+
     try {
-      return await Service.findOneAndUpdate(filter, update, { new: true });
+      return await Service.findByIdAndUpdate(serviceId, update, { new: true });
     } catch (error) {
-      throw 'Cannot update.';
+      throw error;
     }
   }
 }
