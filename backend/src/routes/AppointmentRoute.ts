@@ -9,4 +9,10 @@ router.put('/appointment/update/:appointmentId', AppointmentController.updateApp
 
 router.delete('/appointment/cancel/:appointmentId', AppointmentController.deleteAppointment);
 
+router.get('/appointment/getAllAppointments', AppointmentController.getAllAppointments);
+
+router.get('/appointment/getAllAppointmentsOfCustomer', AppointmentController.getAllAppointmentsOfCustomer);
+
+router.get('/appointment/getAllAppointmentsOfTechnician', AppointmentController.getAllAppointmentsOfTechnician);
+
 export default router;

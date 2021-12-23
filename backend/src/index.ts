@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import AuthRouter from './routes/AuthRoute';
 import ServiceRouter from './routes/ServiceRoute';
 import BusinessRouter from './routes/BusinessRoute';
+import AppointmentRouter from './routes/AppointmentRoute';
 
 const PORT = 3000;
 dotenv.config();
@@ -18,4 +19,5 @@ app.use(express.json());
 app.use('/api', AuthRouter);
 app.use('/api', ServiceRouter);
 app.use('/api', BusinessRouter);
+app.use('/api', AppointmentRouter);
 app.listen(PORT, () => console.log(`listening ${PORT}`));

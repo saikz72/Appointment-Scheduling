@@ -3,7 +3,7 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
 export const createUser = async (userDTO: any) => {
-  const { email, password, name } = userDTO;
+  const { email, password, name, userType } = userDTO;
 
   //Email exist
   const emailExist = await User.exists({ email });
@@ -19,6 +19,7 @@ export const createUser = async (userDTO: any) => {
     name: name,
     email: email,
     password: hashPassword,
+    userType: userType,
   });
 
   try {

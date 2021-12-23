@@ -9,7 +9,10 @@ abstract class BusinessService {
       email,
       address,
     });
-
+    const businesses = await Business.find();
+    if (businesses.length > 0) {
+      throw 'A business already exist, please try updating the business info instead.';
+    }
     try {
       const savedBusiness = await business.save();
       return savedBusiness;

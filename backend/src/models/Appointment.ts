@@ -9,6 +9,7 @@ export interface Appointment {
   services: Service[];
   users: User[];
   bill: Bill;
+  noShow: boolean;
 }
 
 const AppointmentSchema = new Schema<Appointment>({
@@ -19,6 +20,11 @@ const AppointmentSchema = new Schema<Appointment>({
   endDate: {
     type: Date,
     required: true,
+  },
+  noShow: {
+    type: Boolean,
+    required: true,
+    default: false,
   },
   services: [
     {

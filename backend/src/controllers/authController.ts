@@ -24,6 +24,7 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
 
 /**
  * Register Controller
+ * TODO: create a different endpoint for creating technicians and admins
  * @param req
  * @param res
  * @param next
@@ -33,7 +34,8 @@ export const register = async (req: Request, res: Response, next: NextFunction) 
   const email: string = req.body.email;
   const password: string = req.body.password;
   const name: string = req.body.name;
-  const userDTO = { email, password, name };
+  const userType: string = req.body.userType;
+  const userDTO = { email, password, name, userType };
 
   try {
     const savedUser = await createUser(userDTO);
