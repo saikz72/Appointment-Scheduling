@@ -13,7 +13,7 @@ abstract class AppointmentService {
     const technicians = await User.find({ userType: 'Technician' });
     let chosenTechnician: any;
     let minAppointment: number = 10000;
-    technicians.forEach((technician) => {
+    technicians.forEach((technician: any) => {
       if (minAppointment > technician.appointments.length) {
         minAppointment = technician.appointments.length;
         chosenTechnician = technician;
