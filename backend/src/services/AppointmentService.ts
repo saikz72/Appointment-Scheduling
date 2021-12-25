@@ -11,16 +11,14 @@ abstract class AppointmentService {
     // For starter, pick the technician with the least amount of scheduled appointments
     // TODO:: cannot assign same technician to the same timeslot for an appointment
     const technicians = await User.find({ userType: 'Technician' });
-    let loopCounter: number = 10;
-    let chosenTechnician;
-    while (true) {
-      if (loopCounter == 0) {
-        break;
+    let chosenTechnician: any;
+    let minAppointment: number = 10000;
+    technicians.forEach((technician) => {
+      if (minAppointment > technician.appointments.length) {
+        minAppointment = technician.appointments.length;
+        chosenTechnician = technician;
       }
-      chosenTechnician = technicians[Math.floor(Math.random() * technicians.length)];
-      //check if technician does not have another appointment on this date
-      loopCounter = loopCounter - 1;
-    }
+    });
 
     // get services
     const allServices: any = [];
@@ -56,9 +54,13 @@ abstract class AppointmentService {
       date: startDate,
       totalCost: 100,
       appointment: appointment._id,
-      customer: customer?._id,
     });
 
+    customer.appointments.push(appointment);
+    chosenTechnician.appointments.push(appointment);
+
+    await customer.save();
+    await chosenTechnician.save();
     await bill.save();
 
     const savedAppointment = await appointment.save();

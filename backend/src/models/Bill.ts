@@ -1,12 +1,10 @@
 import { model, Schema } from 'mongoose';
 import { Appointment } from './Appointment';
-import { User } from './User';
 
 export interface Bill {
   date: Date;
   totalCost: number;
   appointment: Appointment;
-  customer: User;
   paid: boolean;
 }
 
@@ -27,10 +25,6 @@ const BillSchema = new Schema<Bill>({
   appointment: {
     type: Schema.Types.ObjectId,
     ref: 'Appointment',
-  },
-  customer: {
-    type: Schema.Types.ObjectId,
-    ref: 'User',
   },
 });
 
