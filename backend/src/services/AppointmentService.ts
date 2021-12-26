@@ -2,10 +2,12 @@ import Appointment from '../models/Appointment';
 import Service from '../models/Service';
 import User from '../models/User';
 import Bill from '../models/Bill';
+import Automobile from '../models/Automobile';
+import AppointmentUtility from '../utility/AppointmentUtility';
 
 abstract class AppointmentService {
   static async createAppointment(appointmentDTO: any) {
-    const { startDate, services, customerId } = appointmentDTO;
+    const { startDate, services, customerId, automobileId } = appointmentDTO;
 
     // search for a technician to give the appointment
     // For starter, pick the technician with the least amount of scheduled appointments
@@ -40,6 +42,9 @@ abstract class AppointmentService {
       throw error;
     }
     const users = [customer, chosenTechnician];
+    console.log(users);
+    //get automobile
+    const automobile = await Automobile.findById(automobileId);
 
     // TODO:: need to do date validation
 
@@ -48,11 +53,12 @@ abstract class AppointmentService {
       endDate: startDate, // TODO change endDate
       services: allServices,
       users: users,
+      automobile: automobile,
     });
 
     const bill = new Bill({
       date: startDate,
-      totalCost: 100,
+      totalCost: AppointmentUtility.getTotalCostFromServices(allServices),
       appointment: appointment._id,
     });
 

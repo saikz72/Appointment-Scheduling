@@ -10,7 +10,7 @@ export interface User {
   userType: string;
   appointments: Appointment[];
   creditCard?: CreditCard;
-  automobile?: Automobile[];
+  automobiles?: Automobile[];
 }
 
 const UserSchema = new Schema<User>({
@@ -50,7 +50,7 @@ const UserSchema = new Schema<User>({
       required: false,
     },
   ],
-  automobile: [
+  automobiles: [
     {
       type: Schema.Types.ObjectId,
       ref: 'Automobile',

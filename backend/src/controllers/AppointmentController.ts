@@ -12,7 +12,8 @@ abstract class AppointmentController {
     const services = req.body.services; //[{name: serviceId}, ...]
     const customerId = req.body.customerId;
     const startDate = req.body.startDate;
-    const appointmentDTO = { startDate, customerId, services };
+    const automobileId = req.body.automobileId;
+    const appointmentDTO = { startDate, customerId, services, automobileId };
 
     try {
       const appointment = await AppointmentService.createAppointment(appointmentDTO);

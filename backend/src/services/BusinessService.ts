@@ -24,7 +24,7 @@ abstract class BusinessService {
   static async updateBusiness(businessId: string, businessDTO: any) {
     const update = businessDTO;
     try {
-      return Business.findByIdAndUpdate(businessId, update, { new: true });
+      return await Business.findByIdAndUpdate(businessId, update, { new: true });
     } catch (error) {
       throw error;
     }
