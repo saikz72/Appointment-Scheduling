@@ -1,4 +1,5 @@
 import { model, Schema } from 'mongoose';
+import { Automobile } from './Automobile';
 import { Bill } from './Bill';
 import { Service } from './Service';
 import { User } from './User';
@@ -10,6 +11,7 @@ export interface Appointment {
   users: User[];
   noShow: boolean;
   bill: Bill;
+  automobile: Automobile;
 }
 
 const AppointmentSchema = new Schema<Appointment>({
@@ -41,6 +43,10 @@ const AppointmentSchema = new Schema<Appointment>({
   bill: {
     type: Schema.Types.ObjectId,
     ref: 'Bill',
+  },
+  automobile: {
+    type: Schema.Types.ObjectId,
+    ref: 'Automobile',
   },
 });
 
