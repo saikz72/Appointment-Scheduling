@@ -5,8 +5,8 @@ abstract class AutomobileController {
   static async createAutomobile(req: Request, res: Response, next: NextFunction) {
     const type = req.body.type;
     const imgUrl = req.body?.imgUrl;
-    const userId = req.body.userId;
-    const automobileDTO = { type, imgUrl, userId };
+    const customerId = req.body.customerId;
+    const automobileDTO = { type, imgUrl, customerId };
 
     try {
       const automobile = await AutomobileService.createAutomobile(automobileDTO);

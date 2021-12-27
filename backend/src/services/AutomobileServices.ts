@@ -1,10 +1,10 @@
 import Automobile from '../models/Automobile';
-import User from '../models/User';
+import Customer from '../models/Customer';
 
 abstract class AutomobileService {
   static async createAutomobile(automobileDTO: any) {
-    const { type, imgUrl, userId } = automobileDTO;
-    const owner = await User.findById(userId);
+    const { type, imgUrl, customerId } = automobileDTO;
+    const owner = await Customer.findById(customerId);
     const automobile = new Automobile({
       type,
       imgUrl,

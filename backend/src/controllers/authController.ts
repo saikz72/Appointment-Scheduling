@@ -11,7 +11,7 @@ import { createUser, authenticateUser } from '../services/AuthService';
 export const login = async (req: Request, res: Response, next: NextFunction) => {
   const email = req.body.email;
   const password = req.body.password;
-  const userType: string = req.body.userType;
+  const userType = req.body.userType;
   const userDTO = { email, password, userType };
 
   try {

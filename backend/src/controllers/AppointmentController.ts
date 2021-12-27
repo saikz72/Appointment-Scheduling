@@ -9,11 +9,11 @@ abstract class AppointmentController {
    * @param next
    */
   static async createAppointment(req: Request, res: Response, next: NextFunction) {
-    const services = req.body.services; //[{name: serviceId}, ...]
+    const serviceId = req.body.serviceId;
     const customerId = req.body.customerId;
     const startDate = req.body.startDate;
     const automobileId = req.body.automobileId;
-    const appointmentDTO = { startDate, customerId, services, automobileId };
+    const appointmentDTO = { startDate, customerId, serviceId, automobileId };
 
     try {
       const appointment = await AppointmentService.createAppointment(appointmentDTO);

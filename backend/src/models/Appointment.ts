@@ -1,14 +1,16 @@
 import { model, Schema } from 'mongoose';
 import { Automobile } from './Automobile';
 import { Bill } from './Bill';
+import { Customer } from './Customer';
 import { Service } from './Service';
-import { User } from './User';
+import { Technician } from './Technician';
 
 export interface Appointment {
   startDate: Date;
   endDate: Date;
-  services: Service[];
-  users: User[];
+  service: Service;
+  customer: Customer;
+  technician: Technician;
   noShow: boolean;
   bill: Bill;
   automobile: Automobile;
@@ -28,18 +30,19 @@ const AppointmentSchema = new Schema<Appointment>({
     required: true,
     default: false,
   },
-  services: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: 'Service',
-    },
-  ],
-  users: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: 'User',
-    },
-  ],
+  service: {
+    type: Schema.Types.ObjectId,
+    ref: 'Service',
+  },
+
+  customer: {
+    type: Schema.Types.ObjectId,
+    ref: 'Customer',
+  },
+  technician: {
+    type: Schema.Types.ObjectId,
+    ref: 'Technician',
+  },
   bill: {
     type: Schema.Types.ObjectId,
     ref: 'Bill',
