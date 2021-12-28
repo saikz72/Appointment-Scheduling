@@ -2,15 +2,16 @@ import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
-import { BrowserRouter, Navigate, Route, Routes, useLocation } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Dashboard from './pages/Dashboard';
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
-
 import { createTheme, Theme, ThemeProvider } from '@mui/material/styles';
 import { blue } from '@mui/material/colors';
 import { useState } from 'react';
-import useAuth, { AuthProvider } from './utility/AuthProvider';
+import AuthProvider from './utility/AuthProvider';
+import RequireAuth from './components/RequireAuth';
+import SignupPage from './pages/SignupPage';
 
 /*Common Theme configuration for both dark and light mode */
 const commonTheme: any = {
@@ -61,16 +62,6 @@ const darkTheme: Theme = createTheme({
   },
 });
 
-const RequireAuth = ({ children }: { children: JSX.Element }) => {
-  let location = useLocation();
-  let auth = useAuth();
-  console.log('auth', auth);
-  if (!auth.user) {
-    return <Navigate to="/login" state={{ from: location }} />;
-  }
-  return children;
-};
-
 function App() {
   const [theme, setTheme] = useState<string>('dark');
   const globalTheme = theme === 'light' ? lightTheme : darkTheme;
@@ -90,6 +81,8 @@ function App() {
                 </RequireAuth>
               }
             />
+            <Route path="/ForgotPassword" />
+            <Route path="/Signup" element={<SignupPage />} />
           </Routes>
         </BrowserRouter>
       </AuthProvider>

@@ -1,8 +1,6 @@
 import { Button, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import Navbar from '../components/Navbar';
-import useAuth from '../utility/AuthProvider';
-import LoginPage from './LoginPage';
+import { useAuth } from '../utility/AuthProvider';
 
 const Dashboard = () => {
   let navigate = useNavigate();

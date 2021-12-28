@@ -12,9 +12,9 @@ import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import useAuth from '../utility/AuthProvider';
-import Auth from '../types/Auth';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useAuth } from '../utility/AuthProvider';
+import { useLocation, useNavigate, Link as RouterLink } from 'react-router-dom';
+import { Radio, RadioGroup } from '@mui/material';
 
 function Copyright(props: any) {
   return (
@@ -40,16 +40,17 @@ export default function LoginPage() {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    // eslint-disable-next-line no-console
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+
+    const email: FormDataEntryValue | null = data.get('email');
+    const password: FormDataEntryValue | null = data.get('password');
+    const userType: FormDataEntryValue | null = data.get('userType');
+
     const user: any = {
-      email: 'customer1@gmail.com',
-      password: 'customer1',
-      userType: 'Customer',
+      email,
+      password,
+      userType,
     };
+
     auth.signin(user, () => {
       navigate(from, { replace: true });
     });
@@ -89,6 +90,12 @@ export default function LoginPage() {
               Sign in
             </Typography>
             <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
+              <Typography>Select the role that applies to you</Typography>
+              <RadioGroup row aria-label="userType" name="userType">
+                <FormControlLabel value="Customer" control={<Radio />} label="Customer" defaultChecked={true} />
+                <FormControlLabel value="Technician" control={<Radio />} label="Technician" />
+                <FormControlLabel value="Admin" control={<Radio />} label="Admin" />
+              </RadioGroup>
               <TextField
                 margin="normal"
                 required
@@ -115,14 +122,10 @@ export default function LoginPage() {
               </Button>
               <Grid container>
                 <Grid item xs>
-                  <Link href="#" variant="body2">
-                    Forgot password?
-                  </Link>
+                  <RouterLink to="/ForgotPassword">Forgot password?</RouterLink>
                 </Grid>
                 <Grid item>
-                  <Link href="#signup" variant="body2">
-                    {"Don't have an account? Sign Up"}
-                  </Link>
+                  <RouterLink to="/Signup">{"Don't have an account? Sign Up"}</RouterLink>
                 </Grid>
               </Grid>
               <Copyright sx={{ mt: 5 }} />

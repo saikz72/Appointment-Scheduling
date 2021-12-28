@@ -4,6 +4,7 @@ const HomePage = () => {
   return (
     <div>
       <Navbar />
+      {/* Landing page */}
     </div>
   );
 };

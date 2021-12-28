@@ -12,6 +12,8 @@ import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { Link as RouterLink, useLocation, useNavigate } from 'react-router-dom';
+import { useAuth } from '../utility/AuthProvider';
 
 function Copyright(props: any) {
   return (
@@ -28,14 +30,30 @@ function Copyright(props: any) {
 
 const theme = createTheme();
 
-export default function SignUp() {
+export default function SignupPage() {
+  let auth = useAuth();
+  let location: any = useLocation();
+  let navigate = useNavigate();
+  let from = location.state?.from?.pathname || '/';
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    // eslint-disable-next-line no-console
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
+
+    const name: FormDataEntryValue | null = data.get('name');
+    const email: FormDataEntryValue | null = data.get('email');
+    const password: FormDataEntryValue | null = data.get('password');
+    const userType: string = 'Customer';
+
+    const user: any = {
+      name,
+      email,
+      password,
+      userType,
+    };
+
+    auth.signup(user, () => {
+      navigate(from, { replace: true });
     });
   };
 
@@ -100,14 +118,12 @@ export default function SignUp() {
               </Button>
               <Grid container>
                 <Grid item xs>
-                  <Link href="#" variant="body2">
-                    Forgot password?
-                  </Link>
+                  <RouterLink to="/ForgotPassword">Forgot password?</RouterLink>
                 </Grid>
                 <Grid item>
-                  <Link href="#" variant="body2">
-                    {'Already have an account? Sign in'}
-                  </Link>
+                  <RouterLink to="/Login">
+                    <Typography color="secondary">Already have an account? Sign in</Typography>
+                  </RouterLink>
                 </Grid>
               </Grid>
               <Copyright sx={{ mt: 5 }} />

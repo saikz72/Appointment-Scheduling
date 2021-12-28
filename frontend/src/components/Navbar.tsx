@@ -20,7 +20,6 @@ const Navbar = () => {
           </Link>
           <Link to="/dashboard">
             <Stack sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', paddingRight: 2 }}>
-              {/* <HomeIcon /> */}
               <Typography color="secondary">Dashboard</Typography>
             </Stack>
           </Link>
