@@ -8,7 +8,7 @@ const router: Router = express.Router();
 router.post('/auth/login', login);
 
 //Logout Route
-router.post('/auth/logout', authorize, logout);
+router.post('/auth/logout', logout); // add , authorize,
 
 //Register Route
 router.post('/auth/register', register);
