@@ -10,6 +10,7 @@ import LoginPage from './pages/LoginPage';
 import { createTheme, Theme, ThemeProvider } from '@mui/material/styles';
 import { blue } from '@mui/material/colors';
 import { useState } from 'react';
+import useAuth, { AuthProvider } from './utility/AuthProvider';
 
 /*Common Theme configuration for both dark and light mode */
 const commonTheme: any = {
@@ -62,10 +63,8 @@ const darkTheme: Theme = createTheme({
 
 const RequireAuth = ({ children }: { children: JSX.Element }) => {
   let location = useLocation();
-  let auth = {
-    user: true,
-  }; // TODO: auth object
-
+  let auth = useAuth();
+  console.log('auth', auth);
   if (!auth.user) {
     return <Navigate to="/login" state={{ from: location }} />;
   }
@@ -78,20 +77,22 @@ function App() {
 
   return (
     <ThemeProvider theme={globalTheme}>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/Login" element={<LoginPage />} />
-          <Route
-            path="/dashboard"
-            element={
-              <RequireAuth>
-                <Dashboard />
-              </RequireAuth>
-            }
-          />
-        </Routes>
-      </BrowserRouter>
+      <AuthProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/Login" element={<LoginPage />} />
+            <Route
+              path="/dashboard"
+              element={
+                <RequireAuth>
+                  <Dashboard />
+                </RequireAuth>
+              }
+            />
+          </Routes>
+        </BrowserRouter>
+      </AuthProvider>
     </ThemeProvider>
   );
 }
