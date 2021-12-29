@@ -16,7 +16,8 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
 
   try {
     const token = await authenticateUser(userDTO);
-    res.status(200).header('auth-token', token).send(token);
+    //res.status(200).header('auth-token', token).send(token);
+    res.status(200).send(token);
   } catch (error) {
     res.status(400).send(error);
   }

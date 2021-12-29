@@ -1,22 +1,10 @@
-import { Button, Typography } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../utility/AuthProvider';
+import CustomerDashboard from './CustomerDashboard';
 
 const Dashboard = () => {
-  let navigate = useNavigate();
-
-  const auth = useAuth();
-  const logout = () => {
-    auth.signout(() => navigate('/'));
-  };
-  return (
-    <div>
-      <Typography>Dashbaord</Typography>
-      <Button onClick={logout} color="primary">
-        Logout
-      </Button>
-    </div>
-  );
+  const { user } = useAuth();
+  const content = user.userType === 'Customer' ? <CustomerDashboard /> : user.userType === 'Technician' ? <></> : <></>;
+  return content;
 };
 
 export default Dashboard;

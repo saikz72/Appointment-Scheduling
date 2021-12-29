@@ -3,10 +3,42 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { createTheme, Theme, ThemeProvider } from '@mui/material/styles';
+import { blue } from '@mui/material/colors';
+
+/*Common Theme configuration for both dark and light mode */
+const commonTheme: any = {
+  typography: {
+    fontSize: 11.5,
+  },
+};
+
+/*Light Theme configuration */
+const lightTheme: Theme = createTheme({
+  ...commonTheme,
+  palette: {
+    mode: 'light',
+    primary: {
+      main: '#000',
+    },
+    secondary: {
+      main: blue[500],
+    },
+    background: {
+      paper: 'white',
+      default: '#EEEEEE',
+    },
+    text: {
+      primary: '#000',
+    },
+  },
+});
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <ThemeProvider theme={lightTheme}>
+      <App />
+    </ThemeProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

@@ -108,6 +108,7 @@ export const authenticateUser = async (userDTO: any) => {
   if (!validPassword) {
     throw 'Incorrect password.';
   }
-  const token = jwt.sign({ user: user }, `${process.env.TOKEN_SECRET}`);
-  return token; // token == user
+  //const token = jwt.sign({ user: user }, `${process.env.TOKEN_SECRET}`);
+  //return token; // token == user
+  return user;
 };

@@ -6,7 +6,7 @@ const Navbar = () => {
     <div>
       <CssBaseline />
       <AppBar
-        position="absolute"
+        position="sticky"
         enableColorOnDark={true}
         elevation={0}
         sx={{
