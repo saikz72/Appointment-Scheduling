@@ -14,6 +14,7 @@ export interface Appointment {
   noShow: boolean;
   bill: Bill;
   automobile: Automobile;
+  status: string;
 }
 
 const AppointmentSchema = new Schema<Appointment>({
@@ -29,6 +30,12 @@ const AppointmentSchema = new Schema<Appointment>({
     type: Boolean,
     required: true,
     default: false,
+  },
+  status: {
+    type: String,
+    enum: ['Pending', 'Confirm', 'Cancelled'],
+    required: true,
+    default: 'Pending',
   },
   service: {
     type: Schema.Types.ObjectId,

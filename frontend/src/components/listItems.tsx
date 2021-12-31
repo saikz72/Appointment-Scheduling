@@ -12,11 +12,11 @@ import { List } from '@mui/material';
 export const MainListItems = ({ menuItemSelected, setMenuItemSelected }) => {
   return (
     <List>
-      <ListItem button onClick={() => setMenuItemSelected('Dashboard')}>
+      <ListItem button onClick={() => setMenuItemSelected('Appointments')}>
         <ListItemIcon>
           <DashboardIcon />
         </ListItemIcon>
-        <ListItemText primary="Dashboard" />
+        <ListItemText primary="Appointments" />
       </ListItem>
       <ListItem button onClick={() => setMenuItemSelected('Bills')}>
         <ListItemIcon>

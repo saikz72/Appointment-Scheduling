@@ -17,6 +17,7 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import { MainListItems } from '../components/listItems';
 import { Link as RouterLink } from 'react-router-dom';
 import Appointment from '../components/Appointment';
+import { Paper } from '@mui/material';
 
 function Copyright(props: any) {
   return (
@@ -83,11 +84,15 @@ const mdTheme = createTheme();
 
 const DashboardContent = () => {
   const [open, setOpen] = React.useState(true);
-  const [menuItemSelected, setMenuItemSelected] = React.useState('Dashboard');
+  const [menuItemSelected, setMenuItemSelected] = React.useState('Appointments');
 
   function displayDashboardContent(menuItemSelected: string) {
-    if (menuItemSelected === 'Dashboard') {
-      return <Appointment />;
+    if (menuItemSelected === 'Appointments') {
+      return (
+        <Paper>
+          <Appointment />
+        </Paper>
+      );
     }
     return <div></div>;
   }
