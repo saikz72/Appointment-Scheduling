@@ -9,7 +9,12 @@ import BarChartIcon from '@mui/icons-material/BarChart';
 import LayersIcon from '@mui/icons-material/Layers';
 import { List } from '@mui/material';
 
-export const MainListItems = ({ menuItemSelected, setMenuItemSelected }) => {
+interface propsTypes {
+  menuItemSelected: string;
+  setMenuItemSelected: (s: string) => void;
+}
+
+export const MainListItems = ({ menuItemSelected, setMenuItemSelected }: propsTypes) => {
   return (
     <List>
       <ListItem button onClick={() => setMenuItemSelected('Appointments')}>

@@ -26,7 +26,7 @@ const Appointment = () => {
     );
   }
 
-  const handleChange = (event, newValue) => {
+  const handleChange = (event: React.SyntheticEvent<Element, Event>, newValue: number) => {
     setValue(newValue);
   };
 

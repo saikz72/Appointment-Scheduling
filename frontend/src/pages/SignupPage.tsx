@@ -11,9 +11,10 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useTheme, ThemeProvider } from '@mui/material/styles';
 import { Link as RouterLink, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../utility/AuthProvider';
+import Navbar from '../components/Navbar';
 
 function Copyright(props: any) {
   return (
@@ -28,9 +29,8 @@ function Copyright(props: any) {
   );
 }
 
-const theme = createTheme();
-
 export default function SignupPage() {
+  const theme = useTheme();
   let auth = useAuth();
   let location: any = useLocation();
   let navigate = useNavigate();
@@ -59,6 +59,7 @@ export default function SignupPage() {
 
   return (
     <ThemeProvider theme={theme}>
+      <Navbar />
       <Grid id="signup" container component="main" sx={{ height: '100vh' }}>
         <CssBaseline />
         <Grid
@@ -88,20 +89,11 @@ export default function SignupPage() {
               <LockOutlinedIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
-              Sign in
+              Sign up
             </Typography>
             <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
               <TextField margin="normal" required fullWidth id="name" label="Full Name" name="name" autoFocus />
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                id="email"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
-                autoFocus
-              />
+              <TextField margin="normal" required fullWidth id="email" label="Email Address" name="email" autoFocus />
               <TextField
                 margin="normal"
                 required
@@ -110,7 +102,6 @@ export default function SignupPage() {
                 label="Password"
                 type="password"
                 id="password"
-                autoComplete="current-password"
               />
               <FormControlLabel control={<Checkbox value="remember" color="primary" />} label="Remember me" />
               <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
@@ -118,11 +109,13 @@ export default function SignupPage() {
               </Button>
               <Grid container>
                 <Grid item xs>
-                  <RouterLink to="/ForgotPassword">Forgot password?</RouterLink>
+                  <RouterLink to="/ForgotPassword">
+                    <Typography color="primary">Forgot password?</Typography>
+                  </RouterLink>
                 </Grid>
                 <Grid item>
                   <RouterLink to="/Login">
-                    <Typography color="secondary">Already have an account? Sign in</Typography>
+                    <Typography color="primary">Already have an account? Sign in</Typography>
                   </RouterLink>
                 </Grid>
               </Grid>

@@ -4,7 +4,6 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { createTheme, Theme, ThemeProvider } from '@mui/material/styles';
-import { blue } from '@mui/material/colors';
 
 /*Common Theme configuration for both dark and light mode */
 const commonTheme: any = {
@@ -17,19 +16,19 @@ const commonTheme: any = {
 const lightTheme: Theme = createTheme({
   ...commonTheme,
   palette: {
-    mode: 'light',
+    mode: 'dark',
     primary: {
-      main: '#000',
+      main: '#fff',
     },
     secondary: {
-      main: blue[500],
+      main: '#fff',
     },
     background: {
-      paper: 'white',
-      default: '#EEEEEE',
+      paper: '#001E3C',
+      default: '#0A1929',
     },
     text: {
-      primary: '#000',
+      primary: '#fff',
     },
   },
 });

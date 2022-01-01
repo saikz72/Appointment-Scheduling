@@ -11,10 +11,11 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { ThemeProvider } from '@mui/material/styles';
 import { useAuth } from '../utility/AuthProvider';
 import { useLocation, useNavigate, Link as RouterLink } from 'react-router-dom';
-import { Radio, RadioGroup } from '@mui/material';
+import { Radio, RadioGroup, useTheme } from '@mui/material';
+import Navbar from '../components/Navbar';
 
 function Copyright(props: any) {
   return (
@@ -29,9 +30,9 @@ function Copyright(props: any) {
   );
 }
 
-const theme = createTheme();
-
 export default function LoginPage() {
+  const theme = useTheme();
+
   let auth = useAuth();
   let location: any = useLocation();
   let navigate = useNavigate();
@@ -58,7 +59,15 @@ export default function LoginPage() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Grid id="Signin" container component="main" sx={{ height: '100vh' }}>
+      <Navbar />
+      <Grid
+        id="Signin"
+        container
+        component="main"
+        sx={{
+          height: '100vh',
+        }}
+      >
         <CssBaseline />
         <Grid
           item
@@ -122,10 +131,14 @@ export default function LoginPage() {
               </Button>
               <Grid container>
                 <Grid item xs>
-                  <RouterLink to="/ForgotPassword">Forgot password?</RouterLink>
+                  <RouterLink to="/ForgotPassword">
+                    <Typography color="primary">Forgot password?</Typography>
+                  </RouterLink>
                 </Grid>
                 <Grid item>
-                  <RouterLink to="/Signup">{"Don't have an account? Sign Up"}</RouterLink>
+                  <RouterLink to="/Signup">
+                    <Typography color="primary">Don't have an account? Sign Up</Typography>
+                  </RouterLink>
                 </Grid>
               </Grid>
               <Copyright sx={{ mt: 5 }} />
