@@ -1,51 +1,80 @@
-import * as React from 'react';
 import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import PeopleIcon from '@mui/icons-material/People';
-import BarChartIcon from '@mui/icons-material/BarChart';
-import LayersIcon from '@mui/icons-material/Layers';
-import { List } from '@mui/material';
+import LogoutIcon from '@mui/icons-material/Logout';
+import { Divider, List, useTheme } from '@mui/material';
+import FileCopyIcon from '@mui/icons-material/FileCopy';
+import { green, red } from '@mui/material/colors';
 
 interface propsTypes {
-  menuItemSelected: string;
   setMenuItemSelected: (s: string) => void;
+  setOpenLogoutModal: (open: boolean) => void;
 }
 
-export const MainListItems = ({ menuItemSelected, setMenuItemSelected }: propsTypes) => {
+export const MainListItems = ({ setMenuItemSelected, setOpenLogoutModal }: propsTypes) => {
+  const theme = useTheme();
+
   return (
     <List>
       <ListItem button onClick={() => setMenuItemSelected('Appointments')}>
         <ListItemIcon>
-          <DashboardIcon />
+          <DashboardIcon sx={{ color: theme.palette.primary.main }} />
         </ListItemIcon>
-        <ListItemText primary="Appointments" />
+        <ListItemText
+          primary="Appointments"
+          primaryTypographyProps={{ fontSize: 13, fontWeight: 'medium', lineHeight: '20px', mb: '2px' }}
+          sx={{ my: 0 }}
+        />
       </ListItem>
       <ListItem button onClick={() => setMenuItemSelected('Bills')}>
         <ListItemIcon>
-          <ShoppingCartIcon />
+          <FileCopyIcon sx={{ color: green[900] }} />
         </ListItemIcon>
-        <ListItemText primary="Bills" />
+        <ListItemText
+          primary="Bills"
+          primaryTypographyProps={{ fontSize: 13, fontWeight: 'medium', lineHeight: '20px', mb: '2px' }}
+          sx={{ my: 0 }}
+        />
       </ListItem>
       <ListItem button onClick={() => setMenuItemSelected('Profile Settings')}>
         <ListItemIcon>
-          <PeopleIcon />
+          <PeopleIcon sx={{ color: theme.palette.primary.main }} />
         </ListItemIcon>
-        <ListItemText primary="Profile Settings" />
+        <ListItemText
+          primary="Profile Settings"
+          primaryTypographyProps={{ fontSize: 13, fontWeight: 'medium', lineHeight: '20px', mb: '2px' }}
+          sx={{ my: 0 }}
+        />
       </ListItem>
       <ListItem button onClick={() => setMenuItemSelected('Orders')}>
         <ListItemIcon>
-          <BarChartIcon />
+          <ShoppingCartIcon sx={{ color: green[900] }} />
         </ListItemIcon>
-        <ListItemText primary="Orders" />
+        <ListItemText
+          primary="Orders"
+          primaryTypographyProps={{ fontSize: 13, fontWeight: 'medium', lineHeight: '20px', mb: '2px' }}
+          sx={{ my: 0 }}
+        />
       </ListItem>
-      <ListItem button>
-        <ListItemIcon>
-          <LayersIcon />
+      <Divider />
+      <ListItem
+        button
+        onClick={() => {
+          setMenuItemSelected('Logout');
+          setOpenLogoutModal(true);
+        }}
+      >
+        <ListItemIcon sx={{ py: 0, minHeight: 32 }}>
+          <LogoutIcon sx={{ color: red[900] }} />
         </ListItemIcon>
-        <ListItemText primary="Logout" />
+        <ListItemText
+          primary="Logout"
+          primaryTypographyProps={{ fontSize: 13, fontWeight: 'medium', lineHeight: '20px', mb: '2px' }}
+          sx={{ my: 0 }}
+        />
       </ListItem>
     </List>
   );

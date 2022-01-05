@@ -131,12 +131,12 @@ export default function LoginPage() {
               </Button>
               <Grid container>
                 <Grid item xs>
-                  <RouterLink to="/ForgotPassword">
+                  <RouterLink to="/ForgotPassword" style={{ textDecoration: 'none' }}>
                     <Typography color="primary">Forgot password?</Typography>
                   </RouterLink>
                 </Grid>
                 <Grid item>
-                  <RouterLink to="/Signup">
+                  <RouterLink to="/Signup" style={{ textDecoration: 'none' }}>
                     <Typography color="primary">Don't have an account? Sign Up</Typography>
                   </RouterLink>
                 </Grid>

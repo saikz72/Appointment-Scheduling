@@ -11,9 +11,11 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
-import { useTheme, ThemeProvider } from '@mui/material/styles';
+import { ThemeProvider } from '@mui/material/styles';
 import { Link as RouterLink, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../utility/AuthProvider';
+import { useTheme } from '@mui/material';
+
 import Navbar from '../components/Navbar';
 
 function Copyright(props: any) {
@@ -109,12 +111,12 @@ export default function SignupPage() {
               </Button>
               <Grid container>
                 <Grid item xs>
-                  <RouterLink to="/ForgotPassword">
+                  <RouterLink to="/ForgotPassword" style={{ textDecoration: 'none' }}>
                     <Typography color="primary">Forgot password?</Typography>
                   </RouterLink>
                 </Grid>
                 <Grid item>
-                  <RouterLink to="/Login">
+                  <RouterLink to="/Login" style={{ textDecoration: 'none' }}>
                     <Typography color="primary">Already have an account? Sign in</Typography>
                   </RouterLink>
                 </Grid>

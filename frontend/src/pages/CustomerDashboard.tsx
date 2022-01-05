@@ -17,7 +17,9 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import { MainListItems } from '../components/listItems';
 import { Link as RouterLink } from 'react-router-dom';
 import Appointment from '../components/Appointment';
-import { Paper } from '@mui/material';
+import { Avatar, Paper, useTheme } from '@mui/material';
+import LogoutModal from '../components/LogoutModal';
+import logo from '../assets/logo.jpeg';
 
 function Copyright(props: any) {
   return (
@@ -80,17 +82,24 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
   },
 }));
 
-const mdTheme = createTheme();
-
 const DashboardContent = () => {
+  const theme = useTheme();
   const [open, setOpen] = React.useState(true);
   const [menuItemSelected, setMenuItemSelected] = React.useState('Appointments');
+  const [openLogoutModal, setOpenLogoutModal] = React.useState(false);
 
   function displayDashboardContent(menuItemSelected: string) {
     if (menuItemSelected === 'Appointments') {
       return (
         <Paper>
           <Appointment />
+        </Paper>
+      );
+    } else if (menuItemSelected === 'Logout') {
+      return (
+        <Paper>
+          <Appointment />
+          <LogoutModal openLogoutModal={openLogoutModal} setOpenLogoutModal={setOpenLogoutModal} />;
         </Paper>
       );
     }
@@ -102,13 +111,14 @@ const DashboardContent = () => {
   };
 
   return (
-    <ThemeProvider theme={mdTheme}>
+    <ThemeProvider theme={theme}>
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />
         <AppBar position="absolute" open={open}>
           <Toolbar
             sx={{
               pr: '24px', // keep right padding when drawer closed
+              marginTop: 0.5,
             }}
           >
             <IconButton
@@ -123,10 +133,9 @@ const DashboardContent = () => {
             >
               <MenuIcon />
             </IconButton>
-            <RouterLink to="/" style={{ flexGrow: 1 }}>
-              <Typography component="h1" variant="h6" color="white" noWrap>
-                Home
-              </Typography>
+            <RouterLink to="/" style={{ flexGrow: 1, textDecoration: 'none' }}>
+              <Avatar src={logo} alt="Logo of the repair shop" />
+              <Typography color="secondary">Home</Typography>
             </RouterLink>
             <IconButton color="inherit">
               <Badge badgeContent={4} color="secondary">
@@ -151,8 +160,7 @@ const DashboardContent = () => {
           <Divider />
 
           {/* Content */}
-          <MainListItems menuItemSelected={menuItemSelected} setMenuItemSelected={setMenuItemSelected} />
-          <Divider />
+          <MainListItems setMenuItemSelected={setMenuItemSelected} setOpenLogoutModal={setOpenLogoutModal} />
         </Drawer>
         <Box
           component="main"
