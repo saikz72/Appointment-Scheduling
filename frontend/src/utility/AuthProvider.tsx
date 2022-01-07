@@ -1,8 +1,9 @@
 import React from 'react';
 import axios from 'axios';
+import { baseURL } from './constants';
 
 const api = axios.create({
-  baseURL: `http://localhost:3000/api/`,
+  baseURL: baseURL,
 });
 
 interface AuthContextType {
@@ -12,7 +13,7 @@ interface AuthContextType {
   signup: (user: any, callback: VoidFunction) => void;
 }
 
-let AuthContext = React.createContext<AuthContextType>(null!);
+const AuthContext = React.createContext<AuthContextType>(null!);
 
 function AuthProvider({ children }: { children: React.ReactNode }) {
   let [user, setUser] = React.useState<any>(null);

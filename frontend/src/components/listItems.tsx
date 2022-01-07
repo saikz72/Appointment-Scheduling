@@ -8,13 +8,16 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import { Divider, List, useTheme } from '@mui/material';
 import FileCopyIcon from '@mui/icons-material/FileCopy';
 import { green, red } from '@mui/material/colors';
+import HomeRepairServiceIcon from '@mui/icons-material/HomeRepairService';
+import BusinessIcon from '@mui/icons-material/Business';
 
 interface propsTypes {
   setMenuItemSelected: (s: string) => void;
   setOpenLogoutModal: (open: boolean) => void;
+  userType: string;
 }
 
-export const MainListItems = ({ setMenuItemSelected, setOpenLogoutModal }: propsTypes) => {
+export const MainListItems = ({ setMenuItemSelected, setOpenLogoutModal, userType }: propsTypes) => {
   const theme = useTheme();
 
   return (
@@ -59,6 +62,30 @@ export const MainListItems = ({ setMenuItemSelected, setOpenLogoutModal }: props
           sx={{ my: 0 }}
         />
       </ListItem>
+      {userType === 'Admin' && (
+        <ListItem button onClick={() => setMenuItemSelected('Business Info')}>
+          <ListItemIcon>
+            <HomeRepairServiceIcon sx={{ color: theme.palette.primary.main }} />
+          </ListItemIcon>
+          <ListItemText
+            primary="Business Info"
+            primaryTypographyProps={{ fontSize: 13, fontWeight: 'medium', lineHeight: '20px', mb: '2px' }}
+            sx={{ my: 0 }}
+          />
+        </ListItem>
+      )}
+      {userType === 'Admin' && (
+        <ListItem button>
+          <ListItemIcon>
+            <BusinessIcon sx={{ color: theme.palette.primary.main }} />
+          </ListItemIcon>
+          <ListItemText
+            primary="Available Services"
+            primaryTypographyProps={{ fontSize: 13, fontWeight: 'medium', lineHeight: '20px', mb: '2px' }}
+            sx={{ my: 0 }}
+          />
+        </ListItem>
+      )}
       <Divider />
       <ListItem
         button

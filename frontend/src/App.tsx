@@ -9,26 +9,29 @@ import LoginPage from './pages/LoginPage';
 import AuthProvider from './utility/AuthProvider';
 import RequireAuth from './components/RequireAuth';
 import SignupPage from './pages/SignupPage';
+import DataProvider from './utility/DataProvider';
 
 function App() {
   return (
     <AuthProvider>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/Login" element={<LoginPage />} />
-          <Route
-            path="/dashboard"
-            element={
-              <RequireAuth>
-                <Dashboard />
-              </RequireAuth>
-            }
-          />
-          <Route path="/ForgotPassword" />
-          <Route path="/Signup" element={<SignupPage />} />
-        </Routes>
-      </BrowserRouter>
+      <DataProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/Login" element={<LoginPage />} />
+            <Route
+              path="/dashboard"
+              element={
+                <RequireAuth>
+                  <Dashboard />
+                </RequireAuth>
+              }
+            />
+            <Route path="/ForgotPassword" />
+            <Route path="/Signup" element={<SignupPage />} />
+          </Routes>
+        </BrowserRouter>
+      </DataProvider>
     </AuthProvider>
   );
 }

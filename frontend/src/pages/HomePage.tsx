@@ -4,6 +4,9 @@ import { Box, Container, Divider, Paper, Typography } from '@mui/material';
 import Footer from '../components/Footer';
 import Testimony from '../components/Testimony';
 import ServiceCard from '../components/ServiceCard';
+import { useEffect } from 'react';
+import { useData } from '../utility/DataProvider';
+import * as actions from '../utility/action';
 
 const ServiceDescription = `  Heat oil in a (14- to 16-inch) paella pan or a large, deep skillet over medium-high heat. Add chicken,
 shrimp and chorizo, and cook, stirring occasionally until lightly browned, 6 to 8 minutes. Transfer shrimp
@@ -12,6 +15,12 @@ tomatoes, onion, salt and pepper, and cook, stirring often until thickened and f
 Add saffron broth and remaining 4 1/2 cups chicken broth; bring to a boil.`;
 
 const HomePage = () => {
+  const { state, dispatch } = useData();
+
+  useEffect(() => {
+    dispatch(actions.setBusiness({ name: 'cee', address: 'sd', phoneNumber: 'sdf', email: 'dafd' }));
+  }, [dispatch]);
+
   return (
     <div>
       <Navbar />

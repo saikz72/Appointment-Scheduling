@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
+import { styled, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import MuiDrawer from '@mui/material/Drawer';
 import Box from '@mui/material/Box';
@@ -20,6 +20,7 @@ import Appointment from '../components/Appointment';
 import { Avatar, Paper, useTheme } from '@mui/material';
 import LogoutModal from '../components/LogoutModal';
 import logo from '../assets/logo.jpeg';
+import BusinessInfoCard from '../components/BusinessInfoCard';
 
 function Copyright(props: any) {
   return (
@@ -102,6 +103,8 @@ const DashboardContent = () => {
           <LogoutModal openLogoutModal={openLogoutModal} setOpenLogoutModal={setOpenLogoutModal} />;
         </Paper>
       );
+    } else if (menuItemSelected === 'Business Info') {
+      return <BusinessInfoCard />;
     }
     return <div></div>;
   }
@@ -163,7 +166,7 @@ const DashboardContent = () => {
           <MainListItems
             setMenuItemSelected={setMenuItemSelected}
             setOpenLogoutModal={setOpenLogoutModal}
-            userType="Customer"
+            userType="Admin"
           />
         </Drawer>
         <Box
@@ -187,6 +190,6 @@ const DashboardContent = () => {
   );
 };
 
-export default function CustomerDashboard() {
+export default function AdminDashboard() {
   return <DashboardContent />;
 }
