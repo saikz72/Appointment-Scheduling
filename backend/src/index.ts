@@ -12,7 +12,8 @@ const PORT = 3000;
 dotenv.config();
 
 mongoose
-  .connect(`${process.env.DB_CONNECT}`)
+  // .connect(`${process.env.DB_CONNECT}`)
+  .connect(`mongodb+srv://saikz72:T2HkFBex1GBHYQZh@cluster0.phmlr.mongodb.net/eagle-eye-db?retryWrites=true&w=majority`)
   .then(() => console.log('Connected to db'))
   .catch((err) => console.log(err));
 

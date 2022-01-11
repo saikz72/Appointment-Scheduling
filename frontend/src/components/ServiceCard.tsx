@@ -11,14 +11,14 @@ import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import repairLogo1 from '../assets/repairLogo1.jpeg';
 import { Box } from '@mui/material';
+import ServiceType from '../types/ServiceType';
 
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean;
 }
 
 interface ServiceCardProps {
-  serviceName: string;
-  description: string;
+  service?: ServiceType;
 }
 
 const ExpandMore = styled((props: ExpandMoreProps) => {
@@ -33,7 +33,7 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
 }));
 
 export default function ServiceCard(props: ServiceCardProps) {
-  const { serviceName, description } = props;
+  const { service } = props;
   const [expanded, setExpanded] = React.useState(false);
 
   const handleExpandClick = () => {
@@ -43,13 +43,8 @@ export default function ServiceCard(props: ServiceCardProps) {
   return (
     <Box m="12px">
       <Card sx={{ maxWidth: 345 }}>
-        <CardHeader title={serviceName} sx={{ textAlign: 'center' }} />
-        <CardMedia component="img" height="194" image={repairLogo1} alt="Paella dish" />
-        <CardContent>
-          <Typography variant="body2" color="primary">
-            Expand the card to learn more about this service....
-          </Typography>
-        </CardContent>
+        <CardHeader title={service?.name} sx={{ textAlign: 'center' }} />
+        <CardMedia component="img" height="140" image={repairLogo1} alt="Service" />
         <CardActions disableSpacing>
           <ExpandMore expand={expanded} onClick={handleExpandClick} aria-expanded={expanded} aria-label="show more">
             <ExpandMoreIcon />
@@ -57,7 +52,16 @@ export default function ServiceCard(props: ServiceCardProps) {
         </CardActions>
         <Collapse in={expanded} timeout="auto" unmountOnExit>
           <CardContent>
-            <Typography paragraph>{description}</Typography>
+            <CardContent
+              sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}
+            >
+              <Typography variant="h6" color="primary" gutterBottom>
+                Cost : {service?.cost}$
+              </Typography>
+              <Typography variant="h6" color="primary" gutterBottom>
+                Duration : {service?.duration}mins
+              </Typography>
+            </CardContent>
           </CardContent>
         </Collapse>
       </Card>

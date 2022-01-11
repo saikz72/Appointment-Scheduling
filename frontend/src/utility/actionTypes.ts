@@ -1,7 +1,7 @@
 // Business action types
 export enum BusinessActionType {
-  UPDATE = 'UPDATE',
-  SET = 'SET',
+  UPDATE = 'UPDATE_BUSINESS',
+  SET = 'SET_BUSINESS',
 }
 
 // Appointment action types
@@ -23,9 +23,15 @@ export enum AdminAppointmentActionTypes {
 
 // Service action types
 export enum ServiceActionTypes {
-  ADD_SERVICE = 'ADD_SERVICE',
-  UPDATE_SERVICE = 'UPDATE_SERVICE',
-  REMOVE_SERVICE = 'REMOVE_SERVICE',
+  SET = 'SET_SERVICE',
+  ADD = 'ADD_SERVICE',
+  UPDATE = 'UPDATE_SERVICE',
+  REMOVE = 'REMOVE_SERVICE',
+}
+
+// Automobile action types
+export enum AutomobileActionTypes {
+  ADD_AUTOMOBILE = 'ADD_AUTOMOBILE',
 }
 
 // Store types

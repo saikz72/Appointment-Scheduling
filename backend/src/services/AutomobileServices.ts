@@ -8,6 +8,7 @@ abstract class AutomobileService {
     const automobile = new Automobile({
       type,
       imgUrl,
+      customer: owner,
     });
 
     owner?.automobiles?.push(automobile);
@@ -33,6 +34,15 @@ abstract class AutomobileService {
   static async getAllAutomobiles() {
     try {
       return await Automobile.find();
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  static async getCustomerAutomobiles(customerId: string) {
+    try {
+      const customer = await Customer.findById(customerId).populate('automobiles');
+      return customer.automobiles;
     } catch (error) {
       throw error;
     }

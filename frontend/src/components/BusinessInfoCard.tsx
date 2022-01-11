@@ -4,7 +4,7 @@ import { alpha } from '@mui/material/styles';
 import EditIcon from '@mui/icons-material/Edit';
 import { Button, Collapse, TextField } from '@mui/material';
 import BusinessType from '../types/BusinessType';
-import { getBusinessInfo, updateBusinessInfo } from '../services/BusinessService';
+import { updateBusinessInfo } from '../services/BusinessService';
 import * as actions from '../utility/action';
 import { useData } from '../utility/DataProvider';
 
@@ -15,12 +15,6 @@ export default function BusinessInfoCard() {
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
-
-  React.useEffect(() => {
-    getBusinessInfo().then((business) => {
-      dispatch(actions.setBusiness(business));
-    });
-  }, [dispatch]);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();

@@ -37,6 +37,16 @@ abstract class AutomobileController {
     }
   }
 
+  static async getCustomerAutomobiles(req: Request, res: Response, next: NextFunction) {
+    const customerId = req.params.customerId;
+    try {
+      const automobiles = await AutomobileService.getCustomerAutomobiles(customerId);
+      res.status(200).send(automobiles);
+    } catch (error) {
+      res.status(400).send(error);
+    }
+  }
+
   static async deleteAutomobile(req: Request, res: Response, next: NextFunction) {
     const automobileId = req.params.automobileId;
     try {

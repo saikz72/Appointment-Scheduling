@@ -1,25 +1,15 @@
 import Navbar from '../components/Navbar';
 import repairLogo1 from '../assets/repairLogo1.jpeg';
-import { Box, Container, Divider, Paper, Typography } from '@mui/material';
+import { Box, Button, Divider, Paper, Typography } from '@mui/material';
 import Footer from '../components/Footer';
 import Testimony from '../components/Testimony';
 import ServiceCard from '../components/ServiceCard';
-import { useEffect } from 'react';
 import { useData } from '../utility/DataProvider';
-import * as actions from '../utility/action';
-
-const ServiceDescription = `  Heat oil in a (14- to 16-inch) paella pan or a large, deep skillet over medium-high heat. Add chicken,
-shrimp and chorizo, and cook, stirring occasionally until lightly browned, 6 to 8 minutes. Transfer shrimp
-to a large plate and set aside, leaving chicken and chorizo in the pan. Add pimentón, bay leaves, garlic,
-tomatoes, onion, salt and pepper, and cook, stirring often until thickened and fragrant, about 10 minutes.
-Add saffron broth and remaining 4 1/2 cups chicken broth; bring to a boil.`;
+import { Link } from 'react-router-dom';
+import ServiceType from '../types/ServiceType';
 
 const HomePage = () => {
   const { state, dispatch } = useData();
-
-  useEffect(() => {
-    dispatch(actions.setBusiness({ name: 'cee', address: 'sd', phoneNumber: 'sdf', email: 'dafd' }));
-  }, [dispatch]);
 
   return (
     <div>
@@ -30,18 +20,27 @@ const HomePage = () => {
         <Typography align="center" gutterBottom variant="h1">
           Welcome to Bittaye repair shop
         </Typography>
-        <Typography align="center" gutterBottom variant="h5">
-          We provide vehicle maintenance, online sparepart shopping and technical advices regarding ones vehicle. We
-          also provides other services such as a car wash, tire change, roadside assistance, towing, and car inspection.
-          Our service is guaranteed and quality oriented.
-        </Typography>
       </Box>
       <Divider />
 
       {/* Logos */}
-      <Container>
-        <img src={repairLogo1} alt="Logo" />
-      </Container>
+      <Box sx={{ display: 'flex' }}>
+        <Box sx={{ flexGrow: 1 }}>
+          <img src={repairLogo1} alt="Logo" height={500} />
+        </Box>
+        <Box>
+          <Typography align="center" gutterBottom variant="h5">
+            We provide vehicle maintenance, online sparepart shopping and technical advices regarding ones vehicle. We
+            also provides other services such as a car wash, tire change, roadside assistance, towing, and car
+            inspection. Our service is guaranteed and quality oriented.
+          </Typography>
+          <Link to="/appointment" style={{ flexGrow: 1, textDecoration: 'none' }}>
+            <Button variant="contained" sx={{ margin: '0 auto', display: 'flex' }}>
+              Make an appointment
+            </Button>
+          </Link>
+        </Box>
+      </Box>
       <Divider />
 
       {/*Services we provide */}
@@ -52,12 +51,13 @@ const HomePage = () => {
         </Typography>
       </Box>
       <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', flexWrap: 'wrap' }}>
-        <ServiceCard serviceName="Car Wash" description={ServiceDescription} />
-        <ServiceCard serviceName="Technical Advise" description={ServiceDescription} />
-        <ServiceCard serviceName="Spareparts Shop" description={ServiceDescription} />
-        <ServiceCard serviceName="Vehicle Repair" description={ServiceDescription} />
-        <ServiceCard serviceName="Towing Service" description={ServiceDescription} />
-        <ServiceCard serviceName="Towing Service" description={ServiceDescription} />
+        {state.services.map((service: ServiceType) => {
+          return (
+            <Box mb={2} key={service?._id}>
+              <ServiceCard service={service} />
+            </Box>
+          );
+        })}
       </Box>
 
       {/**Meet the technicians */}

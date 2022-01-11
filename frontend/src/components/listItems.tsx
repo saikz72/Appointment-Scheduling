@@ -10,6 +10,7 @@ import FileCopyIcon from '@mui/icons-material/FileCopy';
 import { green, red } from '@mui/material/colors';
 import HomeRepairServiceIcon from '@mui/icons-material/HomeRepairService';
 import BusinessIcon from '@mui/icons-material/Business';
+import DirectionsCarIcon from '@mui/icons-material/DirectionsCar';
 
 interface propsTypes {
   setMenuItemSelected: (s: string) => void;
@@ -32,16 +33,18 @@ export const MainListItems = ({ setMenuItemSelected, setOpenLogoutModal, userTyp
           sx={{ my: 0 }}
         />
       </ListItem>
-      <ListItem button onClick={() => setMenuItemSelected('Bills')}>
-        <ListItemIcon>
-          <FileCopyIcon sx={{ color: green[900] }} />
-        </ListItemIcon>
-        <ListItemText
-          primary="Bills"
-          primaryTypographyProps={{ fontSize: 13, fontWeight: 'medium', lineHeight: '20px', mb: '2px' }}
-          sx={{ my: 0 }}
-        />
-      </ListItem>
+      {userType === 'Customer' && (
+        <ListItem button onClick={() => setMenuItemSelected('Bills')}>
+          <ListItemIcon>
+            <FileCopyIcon sx={{ color: green[900] }} />
+          </ListItemIcon>
+          <ListItemText
+            primary="Bills"
+            primaryTypographyProps={{ fontSize: 13, fontWeight: 'medium', lineHeight: '20px', mb: '2px' }}
+            sx={{ my: 0 }}
+          />
+        </ListItem>
+      )}
       <ListItem button onClick={() => setMenuItemSelected('Profile Settings')}>
         <ListItemIcon>
           <PeopleIcon sx={{ color: theme.palette.primary.main }} />
@@ -52,6 +55,30 @@ export const MainListItems = ({ setMenuItemSelected, setOpenLogoutModal, userTyp
           sx={{ my: 0 }}
         />
       </ListItem>
+      {userType === 'Admin' && (
+        <ListItem button onClick={() => setMenuItemSelected('Technicians')}>
+          <ListItemIcon>
+            <PeopleIcon sx={{ color: theme.palette.primary.main }} />
+          </ListItemIcon>
+          <ListItemText
+            primary="Technicians"
+            primaryTypographyProps={{ fontSize: 13, fontWeight: 'medium', lineHeight: '20px', mb: '2px' }}
+            sx={{ my: 0 }}
+          />
+        </ListItem>
+      )}
+      {userType === 'Customer' && (
+        <ListItem button onClick={() => setMenuItemSelected('Automobiles')}>
+          <ListItemIcon>
+            <DirectionsCarIcon sx={{ color: theme.palette.primary.main }} />
+          </ListItemIcon>
+          <ListItemText
+            primary="Automobiles"
+            primaryTypographyProps={{ fontSize: 13, fontWeight: 'medium', lineHeight: '20px', mb: '2px' }}
+            sx={{ my: 0 }}
+          />
+        </ListItem>
+      )}
       <ListItem button onClick={() => setMenuItemSelected('Orders')}>
         <ListItemIcon>
           <ShoppingCartIcon sx={{ color: green[900] }} />
@@ -75,7 +102,7 @@ export const MainListItems = ({ setMenuItemSelected, setOpenLogoutModal, userTyp
         </ListItem>
       )}
       {userType === 'Admin' && (
-        <ListItem button>
+        <ListItem button onClick={() => setMenuItemSelected('Available Services')}>
           <ListItemIcon>
             <BusinessIcon sx={{ color: theme.palette.primary.main }} />
           </ListItemIcon>

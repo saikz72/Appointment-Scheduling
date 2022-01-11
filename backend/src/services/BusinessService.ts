@@ -22,8 +22,6 @@ abstract class BusinessService {
   }
 
   static async updateBusiness(businessId: string, businessDTO: any) {
-    console.log(businessId);
-
     const update = businessDTO;
     try {
       return await Business.findByIdAndUpdate(businessId, update, { new: true });

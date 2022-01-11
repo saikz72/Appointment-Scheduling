@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import { baseURL } from './constants';
 
-const api = axios.create({
+export const api = axios.create({
   baseURL: baseURL,
 });
 
@@ -17,7 +17,6 @@ const AuthContext = React.createContext<AuthContextType>(null!);
 
 function AuthProvider({ children }: { children: React.ReactNode }) {
   let [user, setUser] = React.useState<any>(null);
-
   let signin = async (newUser: any, callback: VoidFunction) => {
     // Login API call here
     try {

@@ -11,4 +11,6 @@ router.get('/automobile', AutomobileController.getAllAutomobiles);
 
 router.delete('/automobile/delete/:automobileId', AutomobileController.deleteAutomobile);
 
+router.get('/automobile/:customerId', AutomobileController.getCustomerAutomobiles);
+
 export default router;

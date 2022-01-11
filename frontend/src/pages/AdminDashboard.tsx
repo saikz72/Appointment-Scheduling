@@ -21,6 +21,8 @@ import { Avatar, Paper, useTheme } from '@mui/material';
 import LogoutModal from '../components/LogoutModal';
 import logo from '../assets/logo.jpeg';
 import BusinessInfoCard from '../components/BusinessInfoCard';
+import AvailableServices from '../components/AvailableServices';
+import TechniciansInfoCard from '../components/TechniciansInfoCard';
 
 function Copyright(props: any) {
   return (
@@ -105,6 +107,14 @@ const DashboardContent = () => {
       );
     } else if (menuItemSelected === 'Business Info') {
       return <BusinessInfoCard />;
+    } else if (menuItemSelected === 'Available Services') {
+      return <AvailableServices />;
+    } else if (menuItemSelected === 'Technicians') {
+      return (
+        <Paper>
+          <TechniciansInfoCard />
+        </Paper>
+      );
     }
     return <div></div>;
   }

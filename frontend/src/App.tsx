@@ -10,6 +10,7 @@ import AuthProvider from './utility/AuthProvider';
 import RequireAuth from './components/RequireAuth';
 import SignupPage from './pages/SignupPage';
 import DataProvider from './utility/DataProvider';
+import BookAppointmentPage from './pages/BookAppointmentPage';
 
 function App() {
   return (
@@ -24,6 +25,14 @@ function App() {
               element={
                 <RequireAuth>
                   <Dashboard />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="/appointment"
+              element={
+                <RequireAuth>
+                  <BookAppointmentPage />
                 </RequireAuth>
               }
             />

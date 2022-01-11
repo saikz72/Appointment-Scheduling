@@ -1,8 +1,10 @@
 import { model, Schema } from 'mongoose';
+import { Customer } from './Customer';
 
 export interface Automobile {
   type: string;
   imgUrl?: string;
+  customer?: Customer;
 }
 
 const AutomobileSchema = new Schema<Automobile>({
@@ -13,6 +15,10 @@ const AutomobileSchema = new Schema<Automobile>({
   imgUrl: {
     type: String,
     required: false,
+  },
+  customer: {
+    type: Schema.Types.ObjectId,
+    ref: 'Customer',
   },
 });
 
