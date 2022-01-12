@@ -55,6 +55,7 @@ export default function SignupPage() {
     };
 
     auth.signup(user, () => {
+      localStorage.setItem('isAuthenticated', 'YES');
       navigate(from, { replace: true });
     });
   };

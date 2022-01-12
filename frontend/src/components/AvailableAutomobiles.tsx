@@ -1,15 +1,22 @@
+import React from 'react';
 import { useData } from '../utility/DataProvider';
 import Box from '@mui/material/Box';
 import AutomobileInfoCard from './AutomobileInfoCard';
 import { Button, TextField } from '@mui/material';
 import { useAuth } from '../utility/AuthProvider';
-import { addAutomobileToServer } from '../services/AutomobileService';
+import { addAutomobileToServer, getAutomobilesFromServer } from '../services/AutomobileService';
 import * as actions from '../utility/action';
+import AutomobileType from '../types/AutomobileType';
 
 export default function AvailableAutomobiles() {
   const { state, dispatch } = useData();
   const { user } = useAuth();
-  console.log(state.automobiles);
+  const [automobiles, setAutomobiles] = React.useState<AutomobileType[]>([]);
+
+  React.useEffect(() => {
+    getAutomobilesFromServer(user?._id).then((res: any) => setAutomobiles(res));
+  }, [user?._id]);
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -46,10 +53,10 @@ export default function AvailableAutomobiles() {
         </Box>
       </Box>
       <Box sx={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', alignContent: 'space-betwenn' }}>
-        {state.automobiles.map((automobile: any) => {
+        {automobiles.map((automobile: AutomobileType) => {
           return (
             <Box mb={2} key={automobile?._id}>
-              <AutomobileInfoCard />
+              <AutomobileInfoCard automobile={automobile} />
             </Box>
           );
         })}

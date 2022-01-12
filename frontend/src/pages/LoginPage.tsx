@@ -53,6 +53,7 @@ export default function LoginPage() {
     };
 
     auth.signin(user, () => {
+      localStorage.setItem('isAuthenticated', 'YES');
       navigate(from, { replace: true });
     });
   };

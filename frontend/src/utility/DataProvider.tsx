@@ -7,6 +7,7 @@ import { getAllServices } from '../services/OfferingService';
 import { getBusinessInfo } from '../services/BusinessService';
 import AutomobileType from '../types/AutomobileType';
 import { useAuth } from './AuthProvider';
+import { getAutomobilesFromServer } from '../services/AutomobileService';
 
 interface StateType {
   business: BusinessType | null;
@@ -94,7 +95,6 @@ const DataProvider = ({ children }: { children: React.ReactNode }) => {
       initialState.business = business;
     });
   }, []);
-  initialState.automobiles = user?.automobiles;
 
   const [state, dispatch] = React.useReducer(reducer, initialState);
   return <DataContext.Provider value={{ state, dispatch }}>{children}</DataContext.Provider>;

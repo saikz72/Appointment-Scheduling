@@ -10,8 +10,11 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import { useData } from '../utility/DataProvider';
 import { Box, Collapse, Modal, TextField } from '@mui/material';
+import AutomobileType from '../types/AutomobileType';
 
-interface AutomobileInfoCardProps {}
+interface AutomobileInfoCardProps {
+  automobile: AutomobileType;
+}
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -26,6 +29,7 @@ const style = {
 };
 
 export default function AutomobileInfoCard(props: AutomobileInfoCardProps) {
+  const { automobile } = props;
   const { state, dispatch } = useData();
   const [openDeleteModal, setOpenDeleteModal] = React.useState(false);
   const [expanded, setExpanded] = React.useState(false);
@@ -76,7 +80,7 @@ export default function AutomobileInfoCard(props: AutomobileInfoCardProps) {
       <CardMedia component="img" height="140" image={repairLogo1} alt="Service" />
       <CardContent sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
         <Typography variant="h6" color="primary" gutterBottom>
-          Name
+          Type: {automobile.type}
         </Typography>
       </CardContent>
       <CardActions sx={{ display: 'flex', justifyContent: 'space-around' }}>
