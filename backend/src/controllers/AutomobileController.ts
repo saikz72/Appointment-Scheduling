@@ -5,8 +5,10 @@ abstract class AutomobileController {
   static async createAutomobile(req: Request, res: Response, next: NextFunction) {
     const type = req.body.type;
     const imgUrl = req.body?.imgUrl;
+    const licensePlate = req.body?.licensePlate;
+    const year = req.body?.year;
     const customerId = req.body.customerId;
-    const automobileDTO = { type, imgUrl, customerId };
+    const automobileDTO = { type, imgUrl, licensePlate, year, customerId };
 
     try {
       const automobile = await AutomobileService.createAutomobile(automobileDTO);

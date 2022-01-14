@@ -5,6 +5,8 @@ export interface Automobile {
   type: string;
   imgUrl?: string;
   customer?: Customer;
+  licensePlate?: string;
+  year?: string;
 }
 
 const AutomobileSchema = new Schema<Automobile>({
@@ -19,6 +21,14 @@ const AutomobileSchema = new Schema<Automobile>({
   customer: {
     type: Schema.Types.ObjectId,
     ref: 'Customer',
+  },
+  licensePlate: {
+    type: String,
+    required: false,
+  },
+  year: {
+    type: String,
+    required: false,
   },
 });
 
