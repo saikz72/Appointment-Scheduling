@@ -7,12 +7,18 @@ import ServiceCard from '../components/ServiceCard';
 import { useData } from '../utility/DataProvider';
 import { Link } from 'react-router-dom';
 import ServiceType from '../types/ServiceType';
+import { ThemeProvider, useTheme } from '@mui/material/styles';
 
 const HomePage = () => {
   const { state, dispatch } = useData();
+  const theme = useTheme();
 
   return (
-    <div>
+    <Box
+      sx={{
+        backgroundColor: (t) => t.palette.grey[200],
+      }}
+    >
       <Navbar />
       <Divider />
       <Box component={Paper}>
@@ -110,7 +116,7 @@ const HomePage = () => {
       <Box>
         <Footer />
       </Box>
-    </div>
+    </Box>
   );
 };
 

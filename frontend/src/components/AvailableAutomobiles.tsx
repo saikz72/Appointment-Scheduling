@@ -35,10 +35,7 @@ export default function AvailableAutomobiles() {
       model,
     };
 
-    console.log(requestBody);
-
     addAutomobileToServer(requestBody).then((result) => {
-      console.log(result);
       dispatch(actions.addAutomobile(result));
     });
   };

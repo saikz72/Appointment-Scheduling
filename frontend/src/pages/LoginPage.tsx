@@ -32,7 +32,7 @@ function Copyright(props: any) {
 
 export default function LoginPage() {
   const theme = useTheme();
-
+  console.log(theme);
   let auth = useAuth();
   let location: any = useLocation();
   let navigate = useNavigate();
@@ -99,7 +99,12 @@ export default function LoginPage() {
             <Typography component="h1" variant="h5">
               Sign in
             </Typography>
-            <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
+            <Box
+              component="form"
+              noValidate
+              onSubmit={handleSubmit}
+              sx={{ display: 'flex', flexDirection: 'column', mt: 1, '& .MuiTextField-root': { width: '50ch' } }}
+            >
               <Typography>Select the role that applies to you</Typography>
               <RadioGroup row aria-label="userType" name="userType">
                 <FormControlLabel value="Customer" control={<Radio />} label="Customer" defaultChecked={true} />

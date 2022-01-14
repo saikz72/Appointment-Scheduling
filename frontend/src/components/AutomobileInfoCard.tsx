@@ -64,6 +64,7 @@ export default function AutomobileInfoCard(props: AutomobileInfoCardProps) {
     );
   };
   const handleDelete = async () => {};
+
   const handleEdit = () => {
     setExpanded(!expanded);
   };

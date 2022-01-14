@@ -94,7 +94,12 @@ export default function SignupPage() {
             <Typography component="h1" variant="h5">
               Sign up
             </Typography>
-            <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
+            <Box
+              component="form"
+              noValidate
+              onSubmit={handleSubmit}
+              sx={{ display: 'flex', flexDirection: 'column', mt: 1, '& .MuiTextField-root': { width: '50ch' } }}
+            >
               <TextField margin="normal" required fullWidth id="name" label="Full Name" name="name" autoFocus />
               <TextField margin="normal" required fullWidth id="email" label="Email Address" name="email" autoFocus />
               <TextField

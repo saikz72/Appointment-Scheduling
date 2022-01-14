@@ -39,10 +39,11 @@ export default function BookAppointmentPage() {
   }, [user?._id]);
 
   return (
-    <div>
+    <Box sx={{ backgroundColor: (t) => t.palette.grey[200] }}>
       <Navbar />
+      {/** START 1*/}
       <Box
-        mt={4}
+        mt={2}
         mx={50}
         component={Paper}
         sx={{
@@ -53,6 +54,7 @@ export default function BookAppointmentPage() {
           alignItems: 'center',
         }}
       >
+        {/** START 2*/}
         <Box mt={4} mb={4}>
           <TextField
             id="outlined-select-currency"
@@ -61,6 +63,7 @@ export default function BookAppointmentPage() {
             value={service}
             onChange={handleServiceChange}
             helperText="Please select a service"
+            sx={{ mx: 2 }}
           >
             {state.services.map((service: ServiceType) => (
               <MenuItem key={service?._id} value={service?._id}>
@@ -75,6 +78,7 @@ export default function BookAppointmentPage() {
             value={automobile}
             onChange={handleAutomobileChange}
             helperText="Please select your Car"
+            sx={{ mx: 2 }}
           >
             {automobiles.map((automobile: AutomobileType) => (
               <MenuItem key={automobile?._id} value={automobile?._id}>
@@ -83,7 +87,9 @@ export default function BookAppointmentPage() {
             ))}
           </TextField>
         </Box>
+        {/** END 2*/}
 
+        {/**START  3*/}
         <Box mb={2}>
           <LocalizationProvider dateAdapter={AdapterDateFns}>
             <DatePicker
@@ -108,15 +114,18 @@ export default function BookAppointmentPage() {
             />
           </LocalizationProvider>
         </Box>
-        <Divider light />
+        {/**END 3*/}
+
+        {/** START 4*/}
         <Box
           component="form"
           noValidate
           onSubmit={handleSubmit}
           sx={{
             display: 'flex',
-            gap: 1,
+            mt: 1,
             flexDirection: 'column',
+            '& .MuiTextField-root': { width: '50ch' },
           }}
         >
           <Typography textAlign="center">Enter payment Information</Typography>
@@ -124,7 +133,6 @@ export default function BookAppointmentPage() {
             sx={{
               display: 'flex',
               flexDirection: 'column',
-              '& .MuiTextField-root': { width: '50ch' },
             }}
           >
             <TextField margin="normal" required fullWidth name="nameOnCard" label="Name on the Card" id="nameOnCard" />
@@ -133,12 +141,16 @@ export default function BookAppointmentPage() {
             <TextField margin="normal" required fullWidth name="cvv" label="Security Code" id="cvv" />
           </Box>
 
-          <Button sx={{ mb: 4 }} variant="contained">
+          <Button sx={{ my: 2 }} variant="contained">
             Book Appointment
           </Button>
         </Box>
+        {/**END 4 */}
+        {/**END 1*/}
       </Box>
-      <Footer />
-    </div>
+      <Box>
+        <Footer />
+      </Box>
+    </Box>
   );
 }

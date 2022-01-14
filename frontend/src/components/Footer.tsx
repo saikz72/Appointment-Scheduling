@@ -26,7 +26,14 @@ const Footer = (props: FooterProps) => {
   return (
     <Box
       id="Contact"
-      sx={{ py: 4, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}
+      sx={{
+        py: 2,
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: (t) => t.palette.grey[200],
+      }}
     >
       <Typography sx={{ py: 4 }}> Want to get in touch?</Typography>
       <Stack direction="row" sx={{ display: 'flex', gap: '20px', mb: 2 }}>
