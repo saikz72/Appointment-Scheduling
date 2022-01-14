@@ -7,6 +7,7 @@ export interface Automobile {
   customer?: Customer;
   licensePlate?: string;
   year?: string;
+  model?: string;
 }
 
 const AutomobileSchema = new Schema<Automobile>({
@@ -27,6 +28,10 @@ const AutomobileSchema = new Schema<Automobile>({
     required: false,
   },
   year: {
+    type: String,
+    required: false,
+  },
+  model: {
     type: String,
     required: false,
   },

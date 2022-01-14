@@ -22,14 +22,21 @@ export default function AvailableAutomobiles() {
     const data = new FormData(event.currentTarget);
 
     const type: string | undefined = data.get('type')?.toString();
+    const year: string | undefined = data.get('year')?.toString();
+    const licensePlate: string | undefined = data.get('licensePlate')?.toString();
+    const model: string | undefined = data.get('model')?.toString();
 
     const customerId = user?._id;
     const requestBody: any = {
       type,
       customerId,
+      year,
+      licensePlate,
+      model,
     };
 
-    // dispatch action and call server
+    console.log(requestBody);
+
     addAutomobileToServer(requestBody).then((result) => {
       console.log(result);
       dispatch(actions.addAutomobile(result));
@@ -45,8 +52,27 @@ export default function AvailableAutomobiles() {
         noValidate
         onSubmit={handleSubmit}
       >
-        <Box mt={2}>
-          <TextField margin="normal" fullWidth id="type" label="Type of Automobile" name="type" autoFocus />
+        <Box mt={2} sx={{ display: 'flex', justifyContent: 'center', flexDirection: 'column' }}>
+          <Box
+            component="span"
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              '& .MuiTextField-root': { width: '50ch' },
+            }}
+          >
+            <TextField
+              margin="normal"
+              fullWidth
+              id="licensePlate"
+              label="License Plate"
+              name="licensePlate"
+              autoFocus
+            />
+            <TextField margin="normal" fullWidth id="type" label="Type" name="type" autoFocus />
+            <TextField margin="normal" fullWidth id="model" label="Model" name="model" autoFocus />
+            <TextField margin="normal" fullWidth id="year" label="Year" name="year" autoFocus />
+          </Box>
           <Button sx={{ marginTop: 2 }} variant="contained" type="submit">
             Add Automobile
           </Button>

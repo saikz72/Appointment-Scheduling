@@ -80,7 +80,16 @@ export default function AutomobileInfoCard(props: AutomobileInfoCardProps) {
       <CardMedia component="img" height="140" image={repairLogo1} alt="Service" />
       <CardContent sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
         <Typography variant="h6" color="primary" gutterBottom>
-          Type: {automobile.type}
+          Type: {automobile?.type}
+        </Typography>
+        <Typography variant="h6" color="primary" gutterBottom>
+          Model: {automobile?.model}
+        </Typography>
+        <Typography variant="h6" color="primary" gutterBottom>
+          LicensePlate: {automobile?.licensePlate}
+        </Typography>
+        <Typography variant="h6" color="primary" gutterBottom>
+          Year: {automobile?.year}
         </Typography>
       </CardContent>
       <CardActions sx={{ display: 'flex', justifyContent: 'space-around' }}>

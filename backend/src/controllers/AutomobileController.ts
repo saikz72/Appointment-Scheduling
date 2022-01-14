@@ -6,9 +6,10 @@ abstract class AutomobileController {
     const type = req.body.type;
     const imgUrl = req.body?.imgUrl;
     const licensePlate = req.body?.licensePlate;
+    const model = req.body?.model;
     const year = req.body?.year;
     const customerId = req.body.customerId;
-    const automobileDTO = { type, imgUrl, licensePlate, year, customerId };
+    const automobileDTO = { type, imgUrl, licensePlate, year, model, customerId };
 
     try {
       const automobile = await AutomobileService.createAutomobile(automobileDTO);

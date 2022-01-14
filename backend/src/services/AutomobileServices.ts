@@ -3,7 +3,7 @@ import Customer from '../models/Customer';
 
 abstract class AutomobileService {
   static async createAutomobile(automobileDTO: any) {
-    const { type, imgUrl, licensePlate, year, customerId } = automobileDTO;
+    const { type, imgUrl, licensePlate, year, model, customerId } = automobileDTO;
     const owner = await Customer.findById(customerId);
     const automobile = new Automobile({
       type,
@@ -11,6 +11,7 @@ abstract class AutomobileService {
       customer: owner,
       licensePlate,
       year,
+      model,
     });
 
     owner?.automobiles?.push(automobile);
