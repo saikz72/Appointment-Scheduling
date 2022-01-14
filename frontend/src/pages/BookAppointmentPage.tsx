@@ -1,129 +1,144 @@
-import { Box, MenuItem, Paper, TextField, Button } from '@mui/material';
+import { Box, MenuItem, Paper, TextField, Button, Typography, Divider } from '@mui/material';
 import React from 'react';
 import Navbar from '../components/Navbar';
 import { useAuth } from '../utility/AuthProvider';
+import { LocalizationProvider } from '@mui/lab';
+import DatePicker from '@mui/lab/DatePicker';
+import TimePicker from '@mui/lab/TimePicker';
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import { useData } from '../utility/DataProvider';
+import ServiceType from '../types/ServiceType';
+import AutomobileType from '../types/AutomobileType';
+import { getAutomobilesFromServer } from '../services/AutomobileService';
+import Footer from '../components/Footer';
 
 export default function BookAppointmentPage() {
   const { user } = useAuth();
-  const [currency, setCurrency] = React.useState('EUR');
-  const [date, setDate] = React.useState(Date.now);
-  console.log(date);
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setCurrency(event.target.value);
+  const { state } = useData();
+  const [service, setService] = React.useState('');
+  const [automobile, setAutomobile] = React.useState('');
+  const [automobiles, setAutomobiles] = React.useState<AutomobileType[]>([]);
+  const [startDate, setStartDate] = React.useState<Date | null>(new Date());
+  const [time, setTime] = React.useState<Date | null>(null);
+
+  const handleServiceChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setService(event.target.value as string);
   };
 
-  const handleClick = () => {};
+  const handleAutomobileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setAutomobile(event.target.value as string);
+  };
 
-  const currencies = [
-    {
-      value: 'USD',
-      label: '$',
-    },
-    {
-      value: 'EUR',
-      label: '€',
-    },
-    {
-      value: 'BTC',
-      label: '฿',
-    },
-    {
-      value: 'JPY',
-      label: '¥',
-    },
-  ];
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+  };
+
+  React.useEffect(() => {
+    getAutomobilesFromServer(user?._id).then((res: any) => setAutomobiles(res));
+  }, [user?._id]);
+
   return (
     <div>
       <Navbar />
       <Box
-        mx={50}
         mt={4}
+        mx={50}
         component={Paper}
-        sx={{ display: 'flex', justifyContent: 'center', flexDirection: 'column', alignItems: 'center' }}
+        sx={{
+          borderRadius: 4,
+          display: 'flex',
+          justifyContent: 'center',
+          flexDirection: 'column',
+          alignItems: 'center',
+        }}
       >
-        <Box mt={2} component="form">
+        <Box mt={4} mb={4}>
           <TextField
             id="outlined-select-currency"
             select
-            label="Select"
-            value={currency}
-            onChange={handleChange}
-            helperText="Please select your currency"
+            label="Service"
+            value={service}
+            onChange={handleServiceChange}
+            helperText="Please select a service"
           >
-            {currencies.map((option) => (
-              <MenuItem key={option.value} value={option.value}>
-                {option.label}
+            {state.services.map((service: ServiceType) => (
+              <MenuItem key={service?._id} value={service?._id}>
+                {service?.name}
               </MenuItem>
             ))}
           </TextField>
           <TextField
             id="outlined-select-currency"
             select
-            label="Select"
-            value={currency}
-            onChange={handleChange}
-            helperText="Please select your currency"
+            label="Car"
+            value={automobile}
+            onChange={handleAutomobileChange}
+            helperText="Please select your Car"
           >
-            {currencies.map((option) => (
-              <MenuItem key={option.value} value={option.value}>
-                {option.label}
+            {automobiles.map((automobile: AutomobileType) => (
+              <MenuItem key={automobile?._id} value={automobile?._id}>
+                {automobile?.type}
               </MenuItem>
             ))}
           </TextField>
-          <Box></Box>
         </Box>
+
+        <Box mb={2}>
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <DatePicker
+              label="Select Date"
+              value={startDate}
+              onChange={(newValue) => {
+                setStartDate(newValue);
+              }}
+              renderInput={(params) => <TextField {...params} helperText={params?.inputProps?.placeholder} />}
+            />
+          </LocalizationProvider>
+        </Box>
+        <Box mb={2}>
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <TimePicker
+              label="Select Time"
+              value={time}
+              onChange={(newValue) => {
+                setTime(newValue);
+              }}
+              renderInput={(params) => <TextField {...params} helperText={params?.inputProps?.placeholder} />}
+            />
+          </LocalizationProvider>
+        </Box>
+        <Divider light />
         <Box
+          component="form"
+          noValidate
+          onSubmit={handleSubmit}
           sx={{
-            display: 'grid',
+            display: 'flex',
             gap: 1,
-            gridTemplateColumns: 'repeat(2, 1fr)',
+            flexDirection: 'column',
           }}
         >
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-          />
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-          />
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-          />
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-          />
-          <Button variant="contained" onClick={handleClick}>
+          <Typography textAlign="center">Enter payment Information</Typography>
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              '& .MuiTextField-root': { width: '50ch' },
+            }}
+          >
+            <TextField margin="normal" required fullWidth name="nameOnCard" label="Name on the Card" id="nameOnCard" />
+            <TextField margin="normal" required fullWidth name="cardNumber" label="Card Number" id="cardNumber" />
+            <TextField margin="normal" required fullWidth name="expiryDate" label="Expiry Date" id="expiryDate" />
+            <TextField margin="normal" required fullWidth name="cvv" label="Security Code" id="cvv" />
+          </Box>
+
+          <Button sx={{ mb: 4 }} variant="contained">
             Book Appointment
           </Button>
         </Box>
       </Box>
+      <Footer />
     </div>
   );
 }
