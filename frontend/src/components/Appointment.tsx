@@ -1,9 +1,21 @@
 import { Box, Tab, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tabs } from '@mui/material';
 import React from 'react';
+import { getAllAppointmentsOfCustomer } from '../services/AppointmentService';
+import { useAuth } from '../utility/AuthProvider';
 
 const Appointment = () => {
   const [value, setValue] = React.useState(0);
+  const [appointments, setAppointments] = React.useState<any[]>([]);
+  const { user } = useAuth();
 
+  const customerId: string = user?._id;
+  React.useEffect(() => {
+    getAllAppointmentsOfCustomer(customerId)
+      .then((response) => setAppointments(response))
+      .catch((error) => console.log(error));
+  }, [customerId]);
+
+  console.log(appointments);
   interface TabPanelProps {
     children?: React.ReactNode;
     index: number;
@@ -57,7 +69,7 @@ const Appointment = () => {
             <TableRow>
               <TableCell>Technician</TableCell>
               <TableCell align="right">Appt Date</TableCell>
-              <TableCell align="right">Booking Date</TableCell>
+              <TableCell align="right">Service</TableCell>
               <TableCell align="right">Amount</TableCell>
               <TableCell align="right">Status</TableCell>
             </TableRow>

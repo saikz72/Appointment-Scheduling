@@ -15,7 +15,6 @@ const HomePage = () => {
   useEffect(() => {
     getAllServices().then((result) => {
       setServices(result?.data);
-      //console.log(services);
     });
   }, []);
 

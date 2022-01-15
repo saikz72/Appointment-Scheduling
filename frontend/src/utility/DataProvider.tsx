@@ -6,8 +6,6 @@ import ServiceType from '../types/ServiceType';
 import { getAllServices } from '../services/OfferingService';
 import { getBusinessInfo } from '../services/BusinessService';
 import AutomobileType from '../types/AutomobileType';
-import { useAuth } from './AuthProvider';
-import { getAutomobilesFromServer } from '../services/AutomobileService';
 
 interface StateType {
   business: BusinessType | null;
@@ -86,7 +84,6 @@ const DataContext = React.createContext<{ state: StateType; dispatch: React.Disp
 });
 
 const DataProvider = ({ children }: { children: React.ReactNode }) => {
-  const { user } = useAuth();
   React.useEffect(() => {
     getAllServices().then((result) => {
       result?.data.forEach((service: ServiceType) => initialState.services.push(service));
