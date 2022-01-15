@@ -4,14 +4,20 @@ import { Box, Button, Divider, Paper, Typography } from '@mui/material';
 import Footer from '../components/Footer';
 import Testimony from '../components/Testimony';
 import ServiceCard from '../components/ServiceCard';
-import { useData } from '../utility/DataProvider';
 import { Link } from 'react-router-dom';
 import ServiceType from '../types/ServiceType';
-import { ThemeProvider, useTheme } from '@mui/material/styles';
+import { useEffect, useState } from 'react';
+import { getAllServices } from '../services/OfferingService';
 
 const HomePage = () => {
-  const { state, dispatch } = useData();
-  const theme = useTheme();
+  const [services, setServices] = useState<ServiceType[]>([]);
+
+  useEffect(() => {
+    getAllServices().then((result) => {
+      setServices(result?.data);
+      //console.log(services);
+    });
+  }, []);
 
   return (
     <Box
@@ -57,7 +63,7 @@ const HomePage = () => {
         </Typography>
       </Box>
       <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', flexWrap: 'wrap' }}>
-        {state.services.map((service: ServiceType) => {
+        {services.map((service: ServiceType) => {
           return (
             <Box mb={2} key={service?._id}>
               <ServiceCard service={service} />
