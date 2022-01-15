@@ -11,12 +11,11 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
-import { ThemeProvider } from '@mui/material/styles';
 import { Link as RouterLink, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../utility/AuthProvider';
-import { useTheme } from '@mui/material';
 
 import Navbar from '../components/Navbar';
+import { Card } from '@mui/material';
 
 function Copyright(props: any) {
   return (
@@ -32,7 +31,6 @@ function Copyright(props: any) {
 }
 
 export default function SignupPage() {
-  const theme = useTheme();
   let auth = useAuth();
   let location: any = useLocation();
   let navigate = useNavigate();
@@ -61,7 +59,7 @@ export default function SignupPage() {
   };
 
   return (
-    <ThemeProvider theme={theme}>
+    <Box>
       <Navbar />
       <Grid id="signup" container component="main" sx={{ height: '100vh' }}>
         <CssBaseline />
@@ -73,13 +71,13 @@ export default function SignupPage() {
           sx={{
             backgroundImage: 'url(https://source.unsplash.com/random)',
             backgroundRepeat: 'no-repeat',
-            backgroundColor: (t) => (t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900]),
             backgroundSize: 'cover',
             backgroundPosition: 'center',
           }}
         />
         <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
           <Box
+            component={Card}
             sx={{
               my: 8,
               mx: 4,
@@ -132,6 +130,6 @@ export default function SignupPage() {
           </Box>
         </Grid>
       </Grid>
-    </ThemeProvider>
+    </Box>
   );
 }

@@ -26,13 +26,13 @@ const lightTheme: Theme = createTheme({
   palette: {
     primary: {
       main: '#001E3C',
-      light: '#fff',
+      light: '#ffff',
     },
     secondary: {
       main: '#001E3C',
     },
     background: {
-      paper: 'white',
+      paper: '#FFFF',
       default: '#001E3C',
     },
     text: {

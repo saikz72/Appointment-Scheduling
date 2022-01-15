@@ -11,10 +11,9 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
-import { ThemeProvider } from '@mui/material/styles';
 import { useAuth } from '../utility/AuthProvider';
 import { useLocation, useNavigate, Link as RouterLink } from 'react-router-dom';
-import { Radio, RadioGroup, useTheme } from '@mui/material';
+import { Card, Radio, RadioGroup } from '@mui/material';
 import Navbar from '../components/Navbar';
 
 function Copyright(props: any) {
@@ -31,8 +30,6 @@ function Copyright(props: any) {
 }
 
 export default function LoginPage() {
-  const theme = useTheme();
-  console.log(theme);
   let auth = useAuth();
   let location: any = useLocation();
   let navigate = useNavigate();
@@ -59,7 +56,7 @@ export default function LoginPage() {
   };
 
   return (
-    <ThemeProvider theme={theme}>
+    <Box>
       <Navbar />
       <Grid
         id="Signin"
@@ -78,14 +75,15 @@ export default function LoginPage() {
           sx={{
             backgroundImage: 'url(https://source.unsplash.com/random)',
             backgroundRepeat: 'no-repeat',
-            backgroundColor: (t) => (t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900]),
             backgroundSize: 'cover',
             backgroundPosition: 'center',
           }}
         />
         <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
           <Box
+            component={Card}
             sx={{
+              backgroundColor: (t) => t.palette.primary.light,
               my: 8,
               mx: 4,
               display: 'flex',
@@ -152,6 +150,6 @@ export default function LoginPage() {
           </Box>
         </Grid>
       </Grid>
-    </ThemeProvider>
+    </Box>
   );
 }
