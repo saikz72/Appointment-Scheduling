@@ -1,5 +1,5 @@
 {
-  "homepage": "http://saikz72.github.io/appointment-scheduling",
+  "homepage": "https://saikz72.github.io/Appointment-Scheduling/",
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
@@ -55,6 +55,7 @@
   },
   "devDependencies": {
     "@types/react-swipeable-views": "^0.13.1",
-    "@types/react-swipeable-views-utils": "^0.13.3"
+    "@types/react-swipeable-views-utils": "^0.13.3",
+    "gh-pages": "^3.2.3"
   }
 }
