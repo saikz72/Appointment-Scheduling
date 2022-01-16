@@ -1,1 +1,2 @@
-export const baseURL = 'http://localhost:3000/api/';
+const webURL = 'https://automobile-backend.herokuapp.com/';
+export const baseURL = `${webURL}api/`;
