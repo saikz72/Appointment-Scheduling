@@ -12,9 +12,9 @@ import {
 import React from 'react';
 import Navbar from '../components/Navbar';
 import { useAuth } from '../utility/AuthProvider';
-import { LocalizationProvider } from '@mui/lab';
-import DateTimePicker from '@mui/lab/DateTimePicker';
-import AdapterDateFns from '@mui/lab/AdapterDateFns';
+// import { LocalizationProvider } from '@mui/lab';
+// import DateTimePicker from '@mui/lab/DateTimePicker';
+// import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import { useData } from '../utility/DataProvider';
 import ServiceType from '../types/ServiceType';
 import AutomobileType from '../types/AutomobileType';
@@ -167,7 +167,7 @@ export default function BookAppointmentPage() {
 
           {/**START  3*/}
           <Box mb={2}>
-            <LocalizationProvider dateAdapter={AdapterDateFns}>
+            {/* <LocalizationProvider dateAdapter={AdapterDateFns}>
               <DateTimePicker
                 label="Select Date and Time"
                 value={startDate}
@@ -178,7 +178,7 @@ export default function BookAppointmentPage() {
                 minDate={Date.now()}
                 renderInput={(params) => <TextField {...params} helperText={params?.inputProps?.placeholder} />}
               />
-            </LocalizationProvider>
+            </LocalizationProvider> */}
           </Box>
 
           {/**END 3*/}
