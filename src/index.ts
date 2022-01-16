@@ -8,7 +8,7 @@ import BusinessRouter from './routes/BusinessRoute';
 import AppointmentRouter from './routes/AppointmentRoute';
 import AutomobileRouter from './routes/AutomobileRoute';
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 dotenv.config();
 
 mongoose
