@@ -41,6 +41,7 @@ const lightTheme: Theme = createTheme({
   },
 });
 function App() {
+  console.log('here');
   return (
     <ThemeProvider theme={lightTheme}>
       <AuthProvider>
