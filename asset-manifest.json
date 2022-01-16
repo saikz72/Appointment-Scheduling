@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/Appointment-Scheduling/static/css/main.159197b5.css",
-    "main.js": "/Appointment-Scheduling/static/js/main.08e93cd1.js",
+    "main.js": "/Appointment-Scheduling/static/js/main.f6084a2b.js",
     "static/js/787.774729bc.chunk.js": "/Appointment-Scheduling/static/js/787.774729bc.chunk.js",
     "static/media/pj.jpeg": "/Appointment-Scheduling/static/media/pj.3544ea7999dfcd98ab29.jpeg",
     "static/media/repairLogo1.jpeg": "/Appointment-Scheduling/static/media/repairLogo1.e9c203d150cc22ebedcd.jpeg",
@@ -40,11 +40,11 @@
     "static/media/roboto-greek-ext-700-normal.woff2": "/Appointment-Scheduling/static/media/roboto-greek-ext-700-normal.9674bc0ae12c2551d9d1.woff2",
     "index.html": "/Appointment-Scheduling/index.html",
     "main.159197b5.css.map": "/Appointment-Scheduling/static/css/main.159197b5.css.map",
-    "main.08e93cd1.js.map": "/Appointment-Scheduling/static/js/main.08e93cd1.js.map",
+    "main.f6084a2b.js.map": "/Appointment-Scheduling/static/js/main.f6084a2b.js.map",
     "787.774729bc.chunk.js.map": "/Appointment-Scheduling/static/js/787.774729bc.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.159197b5.css",
-    "static/js/main.08e93cd1.js"
+    "static/js/main.f6084a2b.js"
   ]
 }
