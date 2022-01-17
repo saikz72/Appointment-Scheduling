@@ -1,6 +1,17 @@
 import { Request, Response, NextFunction } from 'express';
-import { createUser, authenticateUser } from '../services/authService';
+import { createUser, authenticateUser, getUserInfo } from '../services/authService';
 
+export const getUserInformation = async (req: Request, res: Response, next: NextFunction) => {
+  const userId = req.body.userId;
+  const userType = req.body.userType;
+
+  try {
+    const userInfo = await getUserInfo(userId, userType);
+    res.send(userInfo).status(200);
+  } catch (err) {
+    res.status(400).send(err);
+  }
+};
 /**
  * Login Controller
  * @param req

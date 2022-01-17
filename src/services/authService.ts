@@ -112,3 +112,13 @@ export const authenticateUser = async (userDTO: any) => {
   //return token; // token == user
   return user;
 };
+
+export const getUserInfo = async (userId: string, userType: string) => {
+  const UserType = getUserType(userType);
+  try {
+    const user = await UserType.findById(userId);
+    return user;
+  } catch (error) {
+    throw error;
+  }
+};
