@@ -12,9 +12,10 @@ import {
 import React from 'react';
 import Navbar from '../components/Navbar';
 import { useAuth } from '../utility/AuthProvider';
-// import { LocalizationProvider } from '@mui/lab';
+// import LocalizationProvider from '@mui/lab/LocalizationProvider';
 // import DateTimePicker from '@mui/lab/DateTimePicker';
-// import AdapterDateFns from '@mui/lab/AdapterDateFns';
+// import AdapterDateFns from '@mui/lab/AdapterMoment';
+import DateTimePicker from 'react-datetime-picker';
 import { useData } from '../utility/DataProvider';
 import ServiceType from '../types/ServiceType';
 import AutomobileType from '../types/AutomobileType';
@@ -29,7 +30,7 @@ export default function BookAppointmentPage() {
   const [service, setService] = React.useState('');
   const [automobile, setAutomobile] = React.useState('');
   const [automobiles, setAutomobiles] = React.useState<AutomobileType[]>([]);
-  const [startDate, setStartDate] = React.useState<Date | null>(new Date());
+  const [startDate, setStartDate] = React.useState<Date>(new Date());
   const [status, setStatus] = React.useState('');
   const [loading, setLoading] = React.useState(false);
 
@@ -51,14 +52,13 @@ export default function BookAppointmentPage() {
     const cvv: string | undefined = data.get('cvv')?.toString();
 
     const customerId: string = user?._id;
-
     const requestBody: any = {
       serviceId: service,
       customerId: customerId,
       startDate: startDate,
       automobileId: automobile,
     };
-    console.log(loading);
+
     if (!loading) {
       setLoading(true);
       setStatus('');
@@ -179,6 +179,21 @@ export default function BookAppointmentPage() {
                 renderInput={(params) => <TextField {...params} helperText={params?.inputProps?.placeholder} />}
               />
             </LocalizationProvider> */}
+            <DateTimePicker
+              amPmAriaLabel="Select AM/PM"
+              calendarAriaLabel="Toggle calendar"
+              clearAriaLabel="Clear value"
+              dayAriaLabel="Day"
+              hourAriaLabel="Hour"
+              maxDetail="second"
+              minuteAriaLabel="Minute"
+              monthAriaLabel="Month"
+              nativeInputAriaLabel="Date and time"
+              onChange={setStartDate}
+              secondAriaLabel="Second"
+              value={startDate}
+              yearAriaLabel="Year"
+            />
           </Box>
 
           {/**END 3*/}
