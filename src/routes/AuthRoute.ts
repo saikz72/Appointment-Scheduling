@@ -14,6 +14,6 @@ router.post('/auth/logout', logout); // add , authorize,
 router.post('/auth/register', register);
 
 //Get user information
-router.get('/auth/user', getUserInformation);
+router.post('/auth/user', getUserInformation);
 
 export default router;
