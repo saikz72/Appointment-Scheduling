@@ -23,9 +23,11 @@ import Footer from '../components/Footer';
 import { bookAppointment } from '../services/AppointmentService';
 import { blue } from '@mui/material/colors';
 import { usePersist } from '../utility/PersistenceProvider';
+import { useAuth } from '../utility/AuthProvider';
 
 export default function BookAppointmentPage() {
-  const { user } = usePersist();
+  const persist = usePersist();
+  const auth = useAuth();
   const { state } = useData();
   const [service, setService] = React.useState('');
   const [automobile, setAutomobile] = React.useState('');
@@ -33,7 +35,9 @@ export default function BookAppointmentPage() {
   const [startDate, setStartDate] = React.useState<Date>(new Date());
   const [status, setStatus] = React.useState('');
   const [loading, setLoading] = React.useState(false);
-  //console.log('state', state);
+
+  const user = auth.user ? auth.user : persist.user;
+
   const handleServiceChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setService(event.target.value as string);
   };

@@ -39,6 +39,7 @@ export default function LogoutModal(props: any) {
             <Button
               onClick={() => {
                 localStorage.clear();
+                window.location.reload();
                 auth.signout(() => navigate('/'));
               }}
             >

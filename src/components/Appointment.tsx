@@ -1,12 +1,15 @@
 import { Box, Tab, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tabs } from '@mui/material';
 import React from 'react';
 import { getAllAppointmentsOfCustomer } from '../services/AppointmentService';
+import { useAuth } from '../utility/AuthProvider';
 import { usePersist } from '../utility/PersistenceProvider';
 
 const Appointment = () => {
   const [value, setValue] = React.useState(0);
   const [appointments, setAppointments] = React.useState<any[]>([]);
-  const { user } = usePersist();
+  const persist = usePersist();
+  const auth = useAuth();
+  const user = auth.user ? auth.user : persist.user;
 
   const customerId: string = user?._id;
   React.useEffect(() => {

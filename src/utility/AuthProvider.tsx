@@ -24,10 +24,6 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
       const response = await api.post('/auth/login', newUser);
       setUser(response.data);
       localStorage.setItem('user', JSON.stringify(response.data));
-      // const storedUser = localStorage.getItem('user');
-      //  let foundUser: any;
-      //if (storedUser !== null) foundUser = JSON.parse(storedUser);
-      //console.log(foundUser);
       callback();
     } catch (error) {
       console.log(error);
