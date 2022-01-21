@@ -1,12 +1,12 @@
 import { Box, Tab, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tabs } from '@mui/material';
 import React from 'react';
 import { getAllAppointmentsOfCustomer } from '../services/AppointmentService';
-import { useAuth } from '../utility/AuthProvider';
+import { usePersist } from '../utility/PersistenceProvider';
 
 const Appointment = () => {
   const [value, setValue] = React.useState(0);
   const [appointments, setAppointments] = React.useState<any[]>([]);
-  const { user } = useAuth();
+  const { user } = usePersist();
 
   const customerId: string = user?._id;
   React.useEffect(() => {
@@ -15,7 +15,6 @@ const Appointment = () => {
       .catch((error) => console.log(error));
   }, [customerId]);
 
-  console.log(appointments);
   interface TabPanelProps {
     children?: React.ReactNode;
     index: number;

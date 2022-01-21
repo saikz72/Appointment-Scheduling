@@ -11,7 +11,6 @@ import {
 } from '@mui/material';
 import React from 'react';
 import Navbar from '../components/Navbar';
-import { useAuth } from '../utility/AuthProvider';
 // import LocalizationProvider from '@mui/lab/LocalizationProvider';
 // import DateTimePicker from '@mui/lab/DateTimePicker';
 // import AdapterDateFns from '@mui/lab/AdapterMoment';
@@ -23,9 +22,10 @@ import { getAutomobilesFromServer } from '../services/AutomobileService';
 import Footer from '../components/Footer';
 import { bookAppointment } from '../services/AppointmentService';
 import { blue } from '@mui/material/colors';
+import { usePersist } from '../utility/PersistenceProvider';
 
 export default function BookAppointmentPage() {
-  const { user } = useAuth();
+  const { user } = usePersist();
   const { state } = useData();
   const [service, setService] = React.useState('');
   const [automobile, setAutomobile] = React.useState('');
@@ -33,7 +33,7 @@ export default function BookAppointmentPage() {
   const [startDate, setStartDate] = React.useState<Date>(new Date());
   const [status, setStatus] = React.useState('');
   const [loading, setLoading] = React.useState(false);
-
+  //console.log('state', state);
   const handleServiceChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setService(event.target.value as string);
   };

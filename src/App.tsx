@@ -6,14 +6,13 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Dashboard from './pages/Dashboard';
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
-import AuthProvider from './utility/AuthProvider';
 import RequireAuth from './components/RequireAuth';
 import SignupPage from './pages/SignupPage';
 import DataProvider from './utility/DataProvider';
 import BookAppointmentPage from './pages/BookAppointmentPage';
 import { createTheme, Theme, ThemeProvider } from '@mui/material/styles';
-import { useEffect } from 'react';
-import { getUserInformation } from './services/AuthService';
+import React from 'react';
+import { PersistenceProvider } from './utility/PersistenceProvider';
 
 /*Common Theme configuration for both dark and light mode */
 const commonTheme: any = {
@@ -43,13 +42,9 @@ const lightTheme: Theme = createTheme({
   },
 });
 function App() {
-  // fet from local storage
-  useEffect(() => {
-    getUserInformation({ userId: '61ca3883268903c90ea30035', userType: 'Customer' });
-  }, []);
   return (
     <ThemeProvider theme={lightTheme}>
-      <AuthProvider>
+      <PersistenceProvider>
         <DataProvider>
           <BrowserRouter>
             <Routes>
@@ -76,7 +71,7 @@ function App() {
             </Routes>
           </BrowserRouter>
         </DataProvider>
-      </AuthProvider>
+      </PersistenceProvider>
     </ThemeProvider>
   );
 }

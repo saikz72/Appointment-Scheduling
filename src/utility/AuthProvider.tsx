@@ -11,7 +11,7 @@ interface AuthContextType {
   signin: (user: any, callback: VoidFunction) => void;
   signout: (callback: VoidFunction) => void;
   signup: (user: any, callback: VoidFunction) => void;
-  getUserInformation: (requestBody: any) => void;
+  setUser: (user: any) => void;
 }
 
 const AuthContext = React.createContext<AuthContextType>(null!);
@@ -23,6 +23,11 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
     try {
       const response = await api.post('/auth/login', newUser);
       setUser(response.data);
+      localStorage.setItem('user', JSON.stringify(response.data));
+      // const storedUser = localStorage.getItem('user');
+      //  let foundUser: any;
+      //if (storedUser !== null) foundUser = JSON.parse(storedUser);
+      //console.log(foundUser);
       callback();
     } catch (error) {
       console.log(error);
@@ -51,29 +56,8 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
       console.log(error);
     }
   };
-  const getUserInformation = async (requestBody: any) => {
-    try {
-      const response = await fetch(baseURL + '/auth/user', {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(requestBody),
-      });
-      if (!response.ok) {
-        throw new Error(`Error : ${response.status}`);
-      }
-      setUser(response);
-      // return await response.json();
-    } catch (error) {
-      console.log(error);
-      throw error;
-    }
-  };
 
-  // getUserInformation({ userId: '61ca3883268903c90ea30035', userType: 'Customer' });
-
-  let value = { user, signin, signout, signup, getUserInformation };
+  let value = { user, signin, signout, signup, setUser };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
