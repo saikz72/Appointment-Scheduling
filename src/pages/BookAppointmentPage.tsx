@@ -11,9 +11,6 @@ import {
 } from '@mui/material';
 import React from 'react';
 import Navbar from '../components/Navbar';
-// import LocalizationProvider from '@mui/lab/LocalizationProvider';
-// import DateTimePicker from '@mui/lab/DateTimePicker';
-// import AdapterDateFns from '@mui/lab/AdapterMoment';
 import DateTimePicker from 'react-datetime-picker';
 import { useData } from '../utility/DataProvider';
 import ServiceType from '../types/ServiceType';
@@ -171,18 +168,6 @@ export default function BookAppointmentPage() {
 
           {/**START  3*/}
           <Box mb={2}>
-            {/* <LocalizationProvider dateAdapter={AdapterDateFns}>
-              <DateTimePicker
-                label="Select Date and Time"
-                value={startDate}
-                onChange={(newValue) => {
-                  if (newValue == null) return;
-                  setStartDate(new Date(newValue));
-                }}
-                minDate={Date.now()}
-                renderInput={(params) => <TextField {...params} helperText={params?.inputProps?.placeholder} />}
-              />
-            </LocalizationProvider> */}
             <DateTimePicker
               amPmAriaLabel="Select AM/PM"
               calendarAriaLabel="Toggle calendar"
