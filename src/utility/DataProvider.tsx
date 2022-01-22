@@ -121,7 +121,6 @@ const DataProvider = ({ children }: { children: React.ReactNode }) => {
     });
 
     getAutomobilesFromServer(user?._id).then((res: any) => {
-      console.log(res);
       initialState.automobiles = res;
     });
   }, [user?._id]);
