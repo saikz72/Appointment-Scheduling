@@ -40,10 +40,10 @@ const HomePage = () => {
         <Box sx={{ maxWidth: 600, alignSelf: 'center' }}>
           <Typography align="center" gutterBottom variant="h4" paragraph>
             We provide vehicle maintenance, online sparepart shopping and technical advices regarding ones vehicle.
-            <Typography gutterBottom variant="subtitle1" sx={{ fontSize: 15 }}>
-              We also provides other services such as a car wash, tire change, roadside assistance, towing, and car
-              inspection. Our service is guaranteed and quality oriented.
-            </Typography>
+          </Typography>
+          <Typography gutterBottom variant="subtitle1" sx={{ fontSize: 15 }}>
+            We also provides other services such as a car wash, tire change, roadside assistance, towing, and car
+            inspection. Our service is guaranteed and quality oriented.
           </Typography>
         </Box>
         <Box m={8}>

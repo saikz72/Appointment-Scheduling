@@ -15,6 +15,28 @@ import { getAllAppointmentsOfCustomer } from '../services/AppointmentService';
 import { useAuth } from '../utility/AuthProvider';
 import { usePersist } from '../utility/PersistenceProvider';
 
+interface TabPanelProps {
+  children?: React.ReactNode;
+  index: number;
+  value: number;
+}
+
+function TabPanel(props: TabPanelProps) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
+    </div>
+  );
+}
+
 const Appointment = () => {
   const [value, setValue] = React.useState(0);
   const [appointments, setAppointments] = React.useState<any[]>([]);
@@ -23,33 +45,14 @@ const Appointment = () => {
   const user = auth.user ? auth.user : persist.user;
 
   const customerId: string = user?._id;
+
   React.useEffect(() => {
     getAllAppointmentsOfCustomer(customerId)
       .then((response) => setAppointments(response))
       .catch((error) => console.log(error));
   }, [customerId]);
 
-  interface TabPanelProps {
-    children?: React.ReactNode;
-    index: number;
-    value: number;
-  }
-
-  function TabPanel(props: TabPanelProps) {
-    const { children, value, index, ...other } = props;
-
-    return (
-      <div
-        role="tabpanel"
-        hidden={value !== index}
-        id={`simple-tabpanel-${index}`}
-        aria-labelledby={`simple-tab-${index}`}
-        {...other}
-      >
-        {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
-      </div>
-    );
-  }
+  console.log(appointments);
 
   const handleChange = (event: React.SyntheticEvent<Element, Event>, newValue: number) => {
     setValue(newValue);
@@ -81,7 +84,7 @@ const Appointment = () => {
           <TableHead>
             <TableRow>
               <TableCell>Technician</TableCell>
-              <TableCell align="right"> Date</TableCell>
+              <TableCell align="center"> Date</TableCell>
               <TableCell align="right">Service</TableCell>
               <TableCell align="right">Amount</TableCell>
               <TableCell align="right">License Plate</TableCell>
@@ -89,16 +92,16 @@ const Appointment = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => (
-              <TableRow key={row.name} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+            {appointments.map((appointment) => (
+              <TableRow key={appointment?._id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                 <TableCell component="th" scope="row">
-                  {row.name}
+                  {appointment?.technician?.name}
                 </TableCell>
-                <TableCell align="right">{row.calories}</TableCell>
-                <TableCell align="right">{row.fat}</TableCell>
-                <TableCell align="right">{row.carbs}</TableCell>
-                <TableCell align="right">{row.protein}</TableCell>
-                <TableCell align="right">{row.protein}</TableCell>
+                <TableCell align="right">{appointment?.startDate}</TableCell>
+                <TableCell align="right">{appointment?.service?.name}</TableCell>
+                <TableCell align="right">{appointment?.service?.cost}</TableCell>
+                <TableCell align="right">{appointment?.automobile?.licensePlate}</TableCell>
+                <TableCell align="right">{appointment?.status}</TableCell>
                 <TableCell align="right">
                   <Box sx={{ display: 'flex', justifyContent: 'center' }}>
                     <Button sx={{ mx: 1, px: 3 }} variant="contained">

@@ -11,7 +11,6 @@ interface AuthContextType {
   signin: (user: any, callback: VoidFunction) => void;
   signout: (callback: VoidFunction) => void;
   signup: (user: any, callback: VoidFunction) => void;
-  setUser: (user: any) => void;
 }
 
 const AuthContext = React.createContext<AuthContextType>(null!);
@@ -54,7 +53,7 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
-  let value = { user, signin, signout, signup, setUser };
+  let value = { user, signin, signout, signup };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
