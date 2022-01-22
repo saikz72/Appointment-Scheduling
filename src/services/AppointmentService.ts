@@ -72,8 +72,12 @@ abstract class AppointmentService {
 
   static async getAllAppointmentsOfCustomer(customerId: string) {
     try {
-      const customer = await Customer.findById(customerId).populate('appointments');
-      return customer.appointments;
+      const appointments = await Appointment.find({ customer: customerId })
+        .populate('technician', 'name')
+        .populate('service', 'name cost')
+        .populate('automobile', 'licensePlate');
+      console.log(appointments);
+      return appointments;
     } catch (error) {
       throw error;
     }
