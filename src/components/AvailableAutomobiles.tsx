@@ -2,9 +2,9 @@ import React from 'react';
 import { useData } from '../utility/DataProvider';
 import Box from '@mui/material/Box';
 import AutomobileInfoCard from './AutomobileInfoCard';
-import { Button, TextField } from '@mui/material';
+import { Alert, Button, TextField } from '@mui/material';
 import { useAuth } from '../utility/AuthProvider';
-import { addAutomobileToServer, getAutomobilesFromServer } from '../services/AutomobileService';
+import { addAutomobileToServer } from '../services/AutomobileService';
 import * as actions from '../utility/action';
 import AutomobileType from '../types/AutomobileType';
 import { usePersist } from '../utility/PersistenceProvider';
@@ -13,14 +13,9 @@ export default function AvailableAutomobiles() {
   const { state, dispatch } = useData();
   const auth = useAuth();
   const persist = usePersist();
-  const [automobiles, setAutomobiles] = React.useState<AutomobileType[]>([]);
+  const [added, setAdded] = React.useState('null');
 
   const user = auth.user ? auth.user : persist.user;
-
-  React.useEffect(() => {
-    getAutomobilesFromServer(user?._id).then((res: any) => setAutomobiles(res));
-  }, [user?._id]);
-
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -39,9 +34,16 @@ export default function AvailableAutomobiles() {
       model,
     };
 
-    addAutomobileToServer(requestBody).then((result) => {
-      dispatch(actions.addAutomobile(result));
-    });
+    addAutomobileToServer(requestBody)
+      .then((result) => {
+        setAdded('added');
+        dispatch(actions.addAutomobile(result));
+        setTimeout(() => setAdded('null'), 3000);
+      })
+      .catch(() => {
+        setAdded('notAdded');
+        setTimeout(() => setAdded('null'), 3000);
+      });
   };
 
   return (
@@ -77,13 +79,24 @@ export default function AvailableAutomobiles() {
           <Button sx={{ marginTop: 2 }} variant="contained" type="submit">
             Add Automobile
           </Button>
+          {added === 'added' ? (
+            <Alert variant="filled" severity="success">
+              Added new Vehicle
+            </Alert>
+          ) : added === 'notAdded' ? (
+            <Alert variant="filled" severity="error">
+              Something went wrong!
+            </Alert>
+          ) : (
+            <></>
+          )}
         </Box>
       </Box>
       <Box sx={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', alignContent: 'space-betwenn' }}>
-        {automobiles.map((automobile: AutomobileType) => {
+        {state.automobiles.map((automobile: AutomobileType) => {
           return (
             <Box mb={2} key={automobile?._id}>
-              <AutomobileInfoCard automobile={automobile} />
+              <AutomobileInfoCard key={automobile?._id} automobile={automobile} />
             </Box>
           );
         })}

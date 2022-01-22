@@ -9,8 +9,10 @@ import repairLogo1 from '../assets/repairLogo1.jpeg';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import { useData } from '../utility/DataProvider';
-import { Box, Collapse, Modal, TextField } from '@mui/material';
+import { Alert, Box, Collapse, Modal, TextField } from '@mui/material';
 import AutomobileType from '../types/AutomobileType';
+import { deleteAutomobileFromServer, updateAutomobileInServer } from '../services/AutomobileService';
+import * as actions from '../utility/action';
 
 interface AutomobileInfoCardProps {
   automobile: AutomobileType;
@@ -33,6 +35,7 @@ export default function AutomobileInfoCard(props: AutomobileInfoCardProps) {
   const { state, dispatch } = useData();
   const [openDeleteModal, setOpenDeleteModal] = React.useState(false);
   const [expanded, setExpanded] = React.useState(false);
+  const [updated, setUpdated] = React.useState(false);
 
   const handleClose = () => setOpenDeleteModal(false);
 
@@ -63,9 +66,15 @@ export default function AutomobileInfoCard(props: AutomobileInfoCardProps) {
       </Modal>
     );
   };
-  const handleDelete = async () => {};
+  const handleDelete = async () => {
+    if (!automobile?._id) return;
+    deleteAutomobileFromServer(automobile._id).then((result) => {
+      dispatch(actions.deleteAutomobile(automobile));
+    });
+  };
 
   const handleEdit = () => {
+    setUpdated(false);
     setExpanded(!expanded);
   };
 
@@ -73,7 +82,25 @@ export default function AutomobileInfoCard(props: AutomobileInfoCardProps) {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
 
-    const name: string | undefined = data.get('name')?.toString();
+    const type = data.get('type')?.toString();
+    const model = data.get('model')?.toString();
+    const licensePlate = data.get('licensePlate')?.toString();
+    const year = data.get('year')?.toString();
+
+    if (!automobile?._id) return;
+
+    const requestBody: any = {
+      type,
+      model,
+      licensePlate,
+      year,
+    };
+
+    updateAutomobileInServer(automobile._id, requestBody).then((result) => {
+      dispatch(actions.updateAutomobile(result));
+      setExpanded(false);
+      setUpdated(true);
+    });
   };
 
   return (
@@ -122,15 +149,21 @@ export default function AutomobileInfoCard(props: AutomobileInfoCardProps) {
               display: 'grid',
             }}
           >
-            <TextField margin="normal" fullWidth id="name" label="Service Name" name="name" autoFocus />
-            <TextField margin="normal" fullWidth name="duration" label="Service Duration" id="duration" />
-            <TextField margin="normal" fullWidth name="cost" label="Service Cost" id="cost" />
+            <TextField margin="normal" fullWidth id="type" label="Type" name="type" autoFocus />
+            <TextField margin="normal" fullWidth name="model" label="Model" id="model" />
+            <TextField margin="normal" fullWidth name="licensePlate" label="License Plate" id="licensePlate" />
+            <TextField margin="normal" fullWidth name="year" label="Year" id="year" />
           </Box>
           <Button sx={{ marginTop: 2 }} variant="contained" type="submit">
             Update Information
           </Button>
         </Box>
       </Collapse>
+      {updated && (
+        <Alert variant="filled" severity="success">
+          Vehicle Info Updated
+        </Alert>
+      )}
     </Card>
   );
 }

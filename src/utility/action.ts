@@ -11,6 +11,8 @@ export interface Action {
     | actionTypes.ServiceActionTypes.REMOVE
     | actionTypes.ServiceActionTypes.UPDATE
     | actionTypes.AutomobileActionTypes.ADD_AUTOMOBILE
+    | actionTypes.AutomobileActionTypes.UPDATE_AUTOMOBILE
+    | actionTypes.AutomobileActionTypes.REMOVE_AUTOMOBILE
     | null;
   payload: BusinessType | ServiceType | AutomobileType | null;
 }
@@ -46,6 +48,20 @@ export const updateService = (payload?: ServiceType) => {
 export const addAutomobile = (payload: AutomobileType) => {
   return {
     type: actionTypes.AutomobileActionTypes.ADD_AUTOMOBILE,
+    payload: payload,
+  };
+};
+
+export const updateAutomobile = (payload: AutomobileType) => {
+  return {
+    type: actionTypes.AutomobileActionTypes.UPDATE_AUTOMOBILE,
+    payload: payload,
+  };
+};
+
+export const deleteAutomobile = (payload: AutomobileType) => {
+  return {
+    type: actionTypes.AutomobileActionTypes.REMOVE_AUTOMOBILE,
     payload: payload,
   };
 };

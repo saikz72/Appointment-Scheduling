@@ -32,6 +32,8 @@ export enum ServiceActionTypes {
 // Automobile action types
 export enum AutomobileActionTypes {
   ADD_AUTOMOBILE = 'ADD_AUTOMOBILE',
+  UPDATE_AUTOMOBILE = 'UPDATE_AUTOMOBILE',
+  REMOVE_AUTOMOBILE = 'REMOVE_AUTOMOBILE',
 }
 
 // Store types
