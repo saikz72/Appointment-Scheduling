@@ -10,7 +10,7 @@
 ![ER Diagram](https://github.com/saikz72/Appointment-Scheduling/blob/master/resources/ER_Diagram.jpeg)
 
 
-## Build Automation
+## Deployment
 ### Backend
 ``` git push heroku backend:master```
 ### Frontend
