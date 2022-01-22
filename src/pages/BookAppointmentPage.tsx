@@ -233,7 +233,7 @@ export default function BookAppointmentPage() {
           {/**END 4 */}
           {/**END 1*/}
         </Box>
-        <Box>
+        <Box m={12}>
           <Footer />
           {/** FOR UNFORMITY OF COLOR */}
           <CssBaseline />

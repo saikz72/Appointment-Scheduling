@@ -22,8 +22,6 @@ const Appointment = () => {
   const auth = useAuth();
   const user = auth.user ? auth.user : persist.user;
 
-  console.log(appointments);
-
   const customerId: string = user?._id;
   React.useEffect(() => {
     getAllAppointmentsOfCustomer(customerId)
@@ -126,10 +124,10 @@ const Appointment = () => {
           <TableHead>
             <TableRow>
               <TableCell>Technician</TableCell>
-              <TableCell align="right">Appt Date</TableCell>
-              <TableCell align="right">Booking Date</TableCell>
+              <TableCell align="right"> Date</TableCell>
+              <TableCell align="right">Service</TableCell>
               <TableCell align="right">Amount</TableCell>
-              <TableCell align="right">Status</TableCell>
+              <TableCell align="right">License Plate</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
