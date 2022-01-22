@@ -7,11 +7,15 @@ import { useAuth } from '../utility/AuthProvider';
 import { addAutomobileToServer, getAutomobilesFromServer } from '../services/AutomobileService';
 import * as actions from '../utility/action';
 import AutomobileType from '../types/AutomobileType';
+import { usePersist } from '../utility/PersistenceProvider';
 
 export default function AvailableAutomobiles() {
   const { state, dispatch } = useData();
-  const { user } = useAuth();
+  const auth = useAuth();
+  const persist = usePersist();
   const [automobiles, setAutomobiles] = React.useState<AutomobileType[]>([]);
+
+  const user = auth.user ? auth.user : persist.user;
 
   React.useEffect(() => {
     getAutomobilesFromServer(user?._id).then((res: any) => setAutomobiles(res));

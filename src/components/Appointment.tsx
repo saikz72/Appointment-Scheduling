@@ -1,4 +1,15 @@
-import { Box, Tab, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tabs } from '@mui/material';
+import {
+  Box,
+  Button,
+  Tab,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Tabs,
+} from '@mui/material';
 import React from 'react';
 import { getAllAppointmentsOfCustomer } from '../services/AppointmentService';
 import { useAuth } from '../utility/AuthProvider';
@@ -10,6 +21,8 @@ const Appointment = () => {
   const persist = usePersist();
   const auth = useAuth();
   const user = auth.user ? auth.user : persist.user;
+
+  console.log(appointments);
 
   const customerId: string = user?._id;
   React.useEffect(() => {
@@ -70,9 +83,10 @@ const Appointment = () => {
           <TableHead>
             <TableRow>
               <TableCell>Technician</TableCell>
-              <TableCell align="right">Appt Date</TableCell>
+              <TableCell align="right"> Date</TableCell>
               <TableCell align="right">Service</TableCell>
               <TableCell align="right">Amount</TableCell>
+              <TableCell align="right">License Plate</TableCell>
               <TableCell align="right">Status</TableCell>
             </TableRow>
           </TableHead>
@@ -86,6 +100,17 @@ const Appointment = () => {
                 <TableCell align="right">{row.fat}</TableCell>
                 <TableCell align="right">{row.carbs}</TableCell>
                 <TableCell align="right">{row.protein}</TableCell>
+                <TableCell align="right">{row.protein}</TableCell>
+                <TableCell align="right">
+                  <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                    <Button sx={{ mx: 1, px: 3 }} variant="contained">
+                      Edit
+                    </Button>
+                    <Button sx={{ mx: 1 }} variant="outlined" color="error">
+                      Cancel
+                    </Button>
+                  </Box>
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>

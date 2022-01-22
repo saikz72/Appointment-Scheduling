@@ -9,7 +9,6 @@ const Dashboard = () => {
   const auth = useAuth();
   const user = auth.user ? auth.user : persist.user;
 
-  console.log('da', user, persist.user, auth.user);
   const content =
     user.userType === 'Customer' ? (
       <CustomerDashboard />

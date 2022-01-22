@@ -1,6 +1,6 @@
 import Navbar from '../components/Navbar';
 import repairLogo1 from '../assets/repairLogo1.jpeg';
-import { Box, Button, Divider, Paper, Typography } from '@mui/material';
+import { Box, Button, Divider, Typography } from '@mui/material';
 import Footer from '../components/Footer';
 import Testimony from '../components/Testimony';
 import ServiceCard from '../components/ServiceCard';
@@ -25,28 +25,30 @@ const HomePage = () => {
       }}
     >
       <Navbar />
-      <Divider />
-      <Box component={Paper}>
+      <Box>
         {/* What the site is about */}
-        <Typography align="center" gutterBottom variant="h1">
-          Welcome to Bittaye repair shop
+        <Typography align="center" variant="h1" mt={4}>
+          Welcome to Geek repair shop
         </Typography>
       </Box>
-      <Divider />
-
       {/* Logos */}
-      <Box sx={{ display: 'flex' }}>
-        <Box sx={{ flexGrow: 1 }}>
-          <img src={repairLogo1} alt="Logo" height={500} />
-        </Box>
-        <Box>
-          <Typography align="center" gutterBottom variant="h5">
-            We provide vehicle maintenance, online sparepart shopping and technical advices regarding ones vehicle. We
-            also provides other services such as a car wash, tire change, roadside assistance, towing, and car
-            inspection. Our service is guaranteed and quality oriented.
+      <Box mx={25} mt={5} mb={10}>
+        <img width="100%" src={repairLogo1} alt="Logo" />
+      </Box>
+
+      <Box mb={5} sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignContent: 'center' }}>
+        <Box sx={{ maxWidth: 600, alignSelf: 'center' }}>
+          <Typography align="center" gutterBottom variant="h4" paragraph>
+            We provide vehicle maintenance, online sparepart shopping and technical advices regarding ones vehicle.
+            <Typography gutterBottom variant="subtitle1" sx={{ fontSize: 15 }}>
+              We also provides other services such as a car wash, tire change, roadside assistance, towing, and car
+              inspection. Our service is guaranteed and quality oriented.
+            </Typography>
           </Typography>
+        </Box>
+        <Box m={8}>
           <Link to="/appointment" style={{ flexGrow: 1, textDecoration: 'none' }}>
-            <Button variant="contained" sx={{ margin: '0 auto', display: 'flex' }}>
+            <Button variant="outlined" sx={{ margin: '0 auto', display: 'flex' }}>
               Make an appointment
             </Button>
           </Link>
@@ -56,19 +58,21 @@ const HomePage = () => {
 
       {/*Services we provide */}
       {/**Meet the technicians */}
-      <Box>
-        <Typography gutterBottom variant="h4" sx={{ textAlign: 'center' }}>
-          Services we provide
-        </Typography>
-      </Box>
-      <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', flexWrap: 'wrap' }}>
-        {services.map((service: ServiceType) => {
-          return (
-            <Box mb={2} key={service?._id}>
-              <ServiceCard service={service} />
-            </Box>
-          );
-        })}
+      <Box m={10}>
+        <Box>
+          <Typography gutterBottom variant="h4" sx={{ textAlign: 'center' }}>
+            Services we provide
+          </Typography>
+        </Box>
+        <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', flexWrap: 'wrap' }}>
+          {services.map((service: ServiceType) => {
+            return (
+              <Box mb={2} key={service?._id}>
+                <ServiceCard service={service} />
+              </Box>
+            );
+          })}
+        </Box>
       </Box>
 
       {/**Meet the technicians */}
@@ -119,6 +123,7 @@ const HomePage = () => {
 
       {/**Footer | social media contact */}
       <Box>
+        <Divider />
         <Footer />
       </Box>
     </Box>
