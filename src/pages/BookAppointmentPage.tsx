@@ -21,11 +21,13 @@ import { bookAppointment } from '../services/AppointmentService';
 import { blue } from '@mui/material/colors';
 import { usePersist } from '../utility/PersistenceProvider';
 import { useAuth } from '../utility/AuthProvider';
+import { useNavigate, Link } from 'react-router-dom';
 
 export default function BookAppointmentPage() {
   const persist = usePersist();
   const auth = useAuth();
   const { state } = useData();
+  const navigate = useNavigate();
   const [service, setService] = React.useState('');
   const [automobile, setAutomobile] = React.useState('');
   const [automobiles, setAutomobiles] = React.useState<AutomobileType[]>([]);
@@ -108,6 +110,12 @@ export default function BookAppointmentPage() {
             Fail to book appointment, something went wrong.
           </Alert>
         ) : null}
+
+        {status === 'book' && (
+          <Link to="/dashboard" style={{ flexGrow: 1, textDecoration: 'none' }}>
+            <Button color="success">Click here to view appointment</Button>
+          </Link>
+        )}
       </Box>
       <Box
         sx={{

@@ -52,8 +52,6 @@ const Appointment = () => {
       .catch((error) => console.log(error));
   }, [customerId]);
 
-  console.log(appointments);
-
   const handleChange = (event: React.SyntheticEvent<Element, Event>, newValue: number) => {
     setValue(newValue);
   };
