@@ -29,7 +29,17 @@ abstract class AppointmentController {
    * @param res
    * @param next
    */
-  static async updateAppointment(req: Request, res: Response, next: NextFunction) {}
+  static async updateAppointment(req: Request, res: Response, next: NextFunction) {
+    const appointmentId = req.params.appointmentId;
+    const appointmentDTO = req.body;
+
+    try {
+      const appointment = await AppointmentService.updateAppointment(appointmentId, appointmentDTO);
+      res.status(200).send(appointment);
+    } catch (error) {
+      res.status(400).send(error);
+    }
+  }
 
   /**
    * Cancel an appointment
@@ -37,7 +47,16 @@ abstract class AppointmentController {
    * @param res
    * @param next
    */
-  static async deleteAppointment(req: Request, res: Response, next: NextFunction) {}
+  static async deleteAppointment(req: Request, res: Response, next: NextFunction) {
+    const appointmentId = req.params.appointmentId;
+
+    try {
+      const appointment = await AppointmentService.deleteAppointment(appointmentId);
+      res.status(200).send('Appointment successfully deleted');
+    } catch (error) {
+      res.status(400).send(error);
+    }
+  }
 
   /**
    * Get all the appointments in the system [for admin]

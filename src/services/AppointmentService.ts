@@ -59,12 +59,48 @@ abstract class AppointmentService {
     return savedAppointment;
   }
 
-  static async updateAppointment(appointmentId: string, appointmentDTO: any) {}
+  static async updateAppointment(appointmentId: string, appointmentDTO: any) {
+    const appointment = await Appointment.findById(appointmentId);
+    if (appointment === null) {
+      throw new Error('Could not find appointment with given ID.');
+    }
+
+    const startDate = appointmentDTO.startDate;
+    const automobileId = appointmentDTO.automobileId;
+    const serviceId = appointmentDTO.serviceId;
+
+    const service = await Service.findById(serviceId);
+    if (service !== null) {
+      appointment.service = service;
+    }
+
+    // TODO:: need to do date validation
+    if (startDate) {
+      appointment.startDate = startDate;
+    }
+
+    const automobile = await Automobile.findById(automobileId);
+    if (automobile !== null) {
+      appointment.automobile = automobile;
+    }
+
+    return await appointment.save();
+  }
 
   static async getAllAppointments() {
     try {
       const appointments = await Appointment.find();
       return appointments;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  static async deleteAppointment(appointmentId: string) {
+    // TODO :: check date range before allowing delete
+    try {
+      const appointment = await Appointment.findByIdAndDelete(appointmentId);
+      return appointment;
     } catch (error) {
       throw error;
     }
@@ -76,7 +112,6 @@ abstract class AppointmentService {
         .populate('technician', 'name')
         .populate('service', 'name cost')
         .populate('automobile', 'licensePlate');
-      console.log(appointments);
       return appointments;
     } catch (error) {
       throw error;
@@ -85,8 +120,10 @@ abstract class AppointmentService {
 
   static async getAllAppointmentsOfTechnician(technicianId: string) {
     try {
-      const technician = await Technician.findById(technicianId);
-      const appointments = await technician?.appointments;
+      const appointments = await Appointment.find({ technician: technicianId })
+        .populate('customer', 'name email')
+        .populate('service', 'name')
+        .populate('automobile', 'licensePlate');
       return appointments;
     } catch (error) {
       throw error;
