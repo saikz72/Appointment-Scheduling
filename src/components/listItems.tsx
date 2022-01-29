@@ -33,7 +33,7 @@ export const MainListItems = ({ setMenuItemSelected, setOpenLogoutModal, userTyp
           sx={{ my: 0 }}
         />
       </ListItem>
-      {userType === 'Customer' && (
+      {/* {userType === 'Customer' && (
         <ListItem button onClick={() => setMenuItemSelected('Bills')}>
           <ListItemIcon>
             <FileCopyIcon sx={{ color: green[900] }} />
@@ -44,7 +44,7 @@ export const MainListItems = ({ setMenuItemSelected, setOpenLogoutModal, userTyp
             sx={{ my: 0 }}
           />
         </ListItem>
-      )}
+      )} */}
       <ListItem button onClick={() => setMenuItemSelected('Profile Settings')}>
         <ListItemIcon>
           <PeopleIcon sx={{ color: theme.palette.primary.main }} />
