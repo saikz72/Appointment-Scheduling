@@ -23,6 +23,7 @@ import logo from '../assets/logo.jpeg';
 import BusinessInfoCard from '../components/BusinessInfoCard';
 import AvailableServices from '../components/AvailableServices';
 import TechniciansInfoCard from '../components/TechniciansInfoCard';
+import ProfileSettingsCard from '../components/ProfileSettingsCard';
 
 function Copyright(props: any) {
   return (
@@ -115,6 +116,8 @@ const DashboardContent = () => {
           <TechniciansInfoCard />
         </Paper>
       );
+    } else if (menuItemSelected === 'Profile Settings') {
+      return <ProfileSettingsCard />;
     }
     return <div></div>;
   }
