@@ -66,6 +66,7 @@ export default function AutomobileInfoCard(props: AutomobileInfoCardProps) {
       </Modal>
     );
   };
+
   const handleDelete = async () => {
     if (!automobile?._id) return;
     deleteAutomobileFromServer(automobile._id).then((result) => {
