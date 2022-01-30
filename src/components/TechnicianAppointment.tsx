@@ -93,7 +93,7 @@ const TechnicianAppointment = () => {
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell>Technician</TableCell>
+              <TableCell>Customer</TableCell>
               <TableCell align="center"> Date</TableCell>
               <TableCell align="right">Service</TableCell>
               <TableCell align="right">Amount</TableCell>
@@ -105,7 +105,7 @@ const TechnicianAppointment = () => {
             {appointments.map((appointment) => (
               <TableRow key={appointment?._id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                 <TableCell component="th" scope="row">
-                  {appointment?.technician?.name}
+                  {appointment?.customer?.name}
                 </TableCell>
                 <TableCell align="right">{appointment?.startDate}</TableCell>
                 <TableCell align="right">{appointment?.service?.name}</TableCell>
@@ -114,7 +114,7 @@ const TechnicianAppointment = () => {
                 <TableCell align="right">{appointment?.status}</TableCell>
                 <TableCell align="right">
                   <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                    <Button sx={{ mx: 1 }} variant="outlined" color="error" onClick={handleAccept}>
+                    <Button sx={{ mx: 1 }} variant="contained" onClick={handleAccept}>
                       Accept
                     </Button>
                     <Button sx={{ mx: 1 }} variant="outlined" color="error" onClick={handleReject}>
