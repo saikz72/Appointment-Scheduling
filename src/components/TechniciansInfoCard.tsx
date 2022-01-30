@@ -14,7 +14,7 @@ import FirstPageIcon from '@mui/icons-material/FirstPage';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import LastPageIcon from '@mui/icons-material/LastPage';
-import { Button, TableHead } from '@mui/material';
+import { Button, Divider, TableHead, TextField } from '@mui/material';
 
 interface TablePaginationActionsProps {
   count: number;
@@ -107,6 +107,32 @@ export default function CustomPaginationActionsTable() {
 
   return (
     <TableContainer component={Paper}>
+      <Box
+        component="form"
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+        }}
+      >
+        <Box
+          sx={{
+            display: 'grid',
+            columnGap: 3,
+            rowGap: 1,
+            gridTemplateColumns: 'repeat(2, 1fr)',
+            m: 3,
+          }}
+        >
+          <TextField margin="normal" id="name" label="Name" name="name" autoFocus />
+          <TextField margin="normal" name="email" label="Email" id="email" />
+          <TextField margin="normal" type="password" name="password" label="Password" id="password" />
+          <TextField margin="normal" type="password" name="password" label="Password" id="password" />
+        </Box>
+        <Button sx={{ mx: 60, mb: 4 }} variant="contained" type="submit">
+          Add a Technician
+        </Button>
+      </Box>
+      <Divider />
       <Table sx={{ minWidth: 500 }} aria-label="custom pagination table">
         <TableHead>
           <TableRow>
@@ -133,9 +159,6 @@ export default function CustomPaginationActionsTable() {
         </TableBody>
         <TableFooter>
           <TableRow>
-            <Button variant="contained" sx={{ marginTop: 1, marginLeft: 10 }}>
-              sdfd
-            </Button>
             <TablePagination
               rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
               colSpan={3}

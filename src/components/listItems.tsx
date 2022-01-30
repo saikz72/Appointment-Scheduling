@@ -79,16 +79,18 @@ export const MainListItems = ({ setMenuItemSelected, setOpenLogoutModal, userTyp
           />
         </ListItem>
       )}
-      <ListItem button onClick={() => setMenuItemSelected('Orders')}>
-        <ListItemIcon>
-          <ShoppingCartIcon sx={{ color: green[900] }} />
-        </ListItemIcon>
-        <ListItemText
-          primary="Orders"
-          primaryTypographyProps={{ fontSize: 13, fontWeight: 'medium', lineHeight: '20px', mb: '2px' }}
-          sx={{ my: 0 }}
-        />
-      </ListItem>
+      {userType !== 'Technician' && (
+        <ListItem button onClick={() => setMenuItemSelected('Orders')}>
+          <ListItemIcon>
+            <ShoppingCartIcon sx={{ color: green[900] }} />
+          </ListItemIcon>
+          <ListItemText
+            primary="Orders"
+            primaryTypographyProps={{ fontSize: 13, fontWeight: 'medium', lineHeight: '20px', mb: '2px' }}
+            sx={{ my: 0 }}
+          />
+        </ListItem>
+      )}
       {userType === 'Admin' && (
         <ListItem button onClick={() => setMenuItemSelected('Business Info')}>
           <ListItemIcon>
