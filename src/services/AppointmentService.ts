@@ -122,7 +122,7 @@ abstract class AppointmentService {
     try {
       const appointments = await Appointment.find({ technician: technicianId })
         .populate('customer', 'name email')
-        .populate('service', 'name')
+        .populate('service', 'name cost')
         .populate('automobile', 'licensePlate');
       return appointments;
     } catch (error) {
