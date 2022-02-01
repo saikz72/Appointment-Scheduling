@@ -2,6 +2,7 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import { alpha } from '@mui/material/styles';
 import EditIcon from '@mui/icons-material/Edit';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { Button, Collapse, TextField } from '@mui/material';
 import BusinessType from '../types/BusinessType';
 import { updateBusinessInfo } from '../services/BusinessService';
@@ -42,6 +43,7 @@ export default function ProfileSettingsCard() {
     // });
   };
 
+  const handleAccountDelete = () => {};
   return (
     <Box
       sx={{
@@ -80,28 +82,48 @@ export default function ProfileSettingsCard() {
         <Box component="span" sx={{ fontSize: 16, mt: 1 }}>
           Email : {user?.email}
         </Box>
-        <Button
-          sx={{
-            mt: 1.5,
-            p: 0.5,
-            backgroundColor: (theme) => alpha(theme.palette.primary.main, 0.1),
-            borderRadius: '5px',
-            color: 'primary.main',
-            fontWeight: 'medium',
-            display: 'flex',
-            fontSize: 12,
-            alignItems: 'center',
-            '& svg': {
-              fontSize: 21,
-              mr: 0.5,
-            },
-          }}
-          variant="contained"
-          startIcon={<EditIcon />}
-          onClick={handleExpandClick}
-        >
-          Edit Profile Info
-        </Button>
+        <Box sx={{ display: 'flex', flexDirection: 'row' }}>
+          <Button
+            sx={{
+              mt: 1.5,
+              p: 0.5,
+              mx: 2,
+              borderRadius: '5px',
+              fontWeight: 'medium',
+              display: 'flex',
+              fontSize: 12,
+              alignItems: 'center',
+              '& svg': {
+                fontSize: 21,
+                mr: 0.5,
+              },
+            }}
+            variant="contained"
+            startIcon={<EditIcon />}
+            onClick={handleExpandClick}
+          >
+            Edit Profile Info
+          </Button>
+          <Button
+            sx={{
+              mt: 1.5,
+              p: 0.5,
+              borderRadius: '5px',
+              fontSize: 12,
+              alignItems: 'center',
+              '& svg': {
+                fontSize: 21,
+                mr: 0.5,
+              },
+            }}
+            variant="contained"
+            color="error"
+            startIcon={<DeleteForeverIcon />}
+            onClick={handleAccountDelete}
+          >
+            Delete Account
+          </Button>
+        </Box>
         <Collapse in={expanded} timeout="auto" unmountOnExit>
           <Box sx={{ display: 'flex', flexDirection: 'column' }} component="form" noValidate onSubmit={handleSubmit}>
             <Box
