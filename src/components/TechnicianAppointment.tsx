@@ -113,7 +113,7 @@ const TechnicianAppointment = () => {
                 <TableCell align="right">{appointment?.automobile?.licensePlate}</TableCell>
                 <TableCell align="right">{appointment?.status}</TableCell>
                 <TableCell align="right">
-                  {appointment?.status !== 'Pending' && (
+                  {appointment?.status === 'Pending' && (
                     <Box sx={{ display: 'flex', justifyContent: 'center' }}>
                       <Button sx={{ mx: 1 }} variant="contained" onClick={handleAccept}>
                         Accept
