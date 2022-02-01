@@ -192,6 +192,7 @@ export default function ProfileSettingsCard() {
             </Button>
           </Box>
         </Collapse>
+        <DeleteModal />
       </Box>
     </Box>
   );
