@@ -15,7 +15,7 @@ mongoose
   // .connect(`${process.env.DB_CONNECT}`)
   .connect(`mongodb+srv://saikz72:T2HkFBex1GBHYQZh@cluster0.phmlr.mongodb.net/eagle-eye-db?retryWrites=true&w=majority`)
   .then(() => console.log('Connected to db'))
-  .catch((err) => console.log(err));
+  .catch((error) => console.log(error));
 
 const app: Application = express();
 app.use(express.json());
