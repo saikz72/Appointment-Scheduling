@@ -7,6 +7,7 @@ import ServiceRouter from './routes/ServiceRoute';
 import BusinessRouter from './routes/BusinessRoute';
 import AppointmentRouter from './routes/AppointmentRoute';
 import AutomobileRouter from './routes/AutomobileRoute';
+import OrderRouter from './routes/OrderRoute';
 
 const PORT = process.env.PORT || 3000;
 dotenv.config();
@@ -26,4 +27,5 @@ app.use('/api', ServiceRouter);
 app.use('/api', BusinessRouter);
 app.use('/api', AppointmentRouter);
 app.use('/api', AutomobileRouter);
+app.use('/api', OrderRouter);
 app.listen(PORT, () => console.log(`listening ${PORT}`));
