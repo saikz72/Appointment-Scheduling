@@ -2,13 +2,36 @@ import { Request, Response, NextFunction } from 'express';
 import OrderService from '../services/OrderService';
 
 abstract class OrderController {
-  static async createOrder(req: Request, res: Response, next: NextFunction) {}
+  static async createOrder(req: Request, res: Response, next: NextFunction) {
+    try {
+      const order = await OrderService.createOrder(req.body);
+      res.send(order).status(200);
+    } catch (err) {
+      res.send(err).status(400);
+    }
+  }
 
   static async updateOrder(req: Request, res: Response, next: NextFunction) {}
 
-  static async cancelOrder(req: Request, res: Response, next: NextFunction) {}
+  static async cancelOrder(req: Request, res: Response, next: NextFunction) {
+    const orderId = req.params.orderId;
+    try {
+      await OrderService.cancelOrder(orderId);
+      res.send('Order has been cancell').status(200);
+    } catch (err) {
+      throw err;
+    }
+  }
 
-  static async getOrdersOfCustomer(req: Request, res: Response, next: NextFunction) {}
+  static async getOrdersOfCustomer(req: Request, res: Response, next: NextFunction) {
+    const customerId = req.params.customerId;
+    try {
+      const orders = await OrderService.getOrdersOfCustomer(customerId);
+      res.send(orders).status(200);
+    } catch (err) {
+      res.send(err).status(400);
+    }
+  }
 
   // products
   static async createProduct(req: Request, res: Response, next: NextFunction) {

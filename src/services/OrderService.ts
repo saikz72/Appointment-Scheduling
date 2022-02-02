@@ -1,13 +1,44 @@
+import Customer from '../models/Customer';
+import Order from '../models/Order';
 import Product from '../models/Product';
 
 abstract class OrderService {
-  static async createOrder() {}
+  static async createOrder(options: any) {
+    const { customerId, products } = options;
+    const customer = await Customer.findById(customerId);
+
+    const order = new Order({
+      customer: customer,
+      products: [],
+    });
+
+    products.forEach(async (productId: string) => {
+      const product = await Product.findById(productId);
+      if (product !== null) order.products.push(product);
+    });
+
+    customer?.orders?.push(order);
+    await customer?.save();
+    return await order.save();
+  }
 
   static async updateOrder() {}
 
-  static async cancelOrder() {}
+  static async cancelOrder(orderId: string) {
+    const order = await Order.findById(orderId);
+    if (order === null) throw new Error('Order does not exist');
+    const customerId = order.customer;
+    const customer = await Customer.findById(customerId);
+    const customerOrders = customer?.orders?.filter((customerOrder) => {
+      order._id.toString() === customerOrder.toString();
+    });
+    return await Order.findByIdAndDelete(orderId);
+  }
 
-  static async getOrdersOfCustomer() {}
+  static async getOrdersOfCustomer(customerId: string) {
+    const customer = await Customer.findById(customerId);
+    return customer?.orders;
+  }
 
   // Products
   static async createProduct(options: any) {
