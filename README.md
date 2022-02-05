@@ -27,7 +27,7 @@ Firstly clone the repo: ```git clone https://github.com/saikz72/Appointment-Sche
 ```
 
 ### To run the backend
-NOTE: If you wish to run the backend locally, then update value of [baseURL](https://github.com/saikz72/Appointment-Scheduling/blob/frontend/src/utility/constants.ts) to ```baseURL = `'http://localhost:3000/api/'``` 
+NOTE: If you wish to run the backend locally, then update value of [baseURL](https://github.com/saikz72/Appointment-Scheduling/blob/frontend/src/utility/constants.ts) to ```baseURL = `http://localhost:3000/api/```` 
 ```
 1. git checkout backend
 2. npm install
