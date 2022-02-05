@@ -19,7 +19,7 @@
 ## Running Locally
 Firstly clone the repo: ```git clone https://github.com/saikz72/Appointment-Scheduling```
 
-### To run the client
+### To run the frontend
 ```
 1. git checkout frontend
 2. npm install
