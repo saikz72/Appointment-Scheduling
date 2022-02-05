@@ -17,7 +17,7 @@
 ``` git push heroku frontend:master```
 
 ## Running Locally
-1. git clone https://github.com/saikz72/Appointment-Scheduling
+Firstly clone the repo: ```git clone https://github.com/saikz72/Appointment-Scheduling```
 
 ### To run the client
 ```
