@@ -19,7 +19,7 @@
 ## Running Locally
 
 ## Option 1: [For developer]
-Firstly clone the repo: ```git clone https://github.com/saikz72/Appointment-Scheduling```
+Clone the repo: ```git clone https://github.com/saikz72/Appointment-Scheduling```
 
 ### To run the frontend
 ```
@@ -37,7 +37,7 @@ NOTE: If you wish to run the backend locally, then update value of [baseURL](htt
 ```
 
 ## Option 2: [For anyone]
-clone the repo: ```git clone https://github.com/saikz72/Appointment-Scheduling```
+Clone the repo: ```git clone https://github.com/saikz72/Appointment-Scheduling```
 
 ### To run the backend
 ```
