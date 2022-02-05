@@ -17,6 +17,8 @@
 ``` git push heroku frontend:master```
 
 ## Running Locally
+
+## Option 1: [For developer]
 Firstly clone the repo: ```git clone https://github.com/saikz72/Appointment-Scheduling```
 
 ### To run the frontend
@@ -33,3 +35,25 @@ NOTE: If you wish to run the backend locally, then update value of [baseURL](htt
 2. npm install
 3. npm run dev
 ```
+
+## Option 2: [For anyone]
+clone the repo: ```git clone https://github.com/saikz72/Appointment-Scheduling```
+
+### To run the backend
+```
+1. cd backend
+2. npm install
+3. npm run dev
+```
+
+### To run the frontend
+```
+1. cd frontend
+2. npm install
+3. npm run start
+```
+
+
+
+
+
