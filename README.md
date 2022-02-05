@@ -15,3 +15,21 @@
 ``` git push heroku backend:master```
 ### Frontend
 ``` git push heroku frontend:master```
+
+## Running Locally
+1. git clone https://github.com/saikz72/Appointment-Scheduling
+
+### To run the client
+```
+1. git checkout frontend
+2. npm install
+3. npm run start
+```
+
+### To run the backend
+NOTE: If you wish to run the backend locally, then update value of [baseURL](https://github.com/saikz72/Appointment-Scheduling/blob/frontend/src/utility/constants.ts) to ```baseURL = `'http://localhost:3000/api/'``` 
+```
+1. git checkout backend
+2. npm install
+3. npm run dev
+```
