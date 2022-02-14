@@ -21,3 +21,12 @@ export const getAllAppointmentsOfCustomer = async (customerId: string) => {
   }
   return await response.json();
 };
+
+export const getAllAppointmentsOfTechnician = async (technicianId: string) => {
+  const response = await fetch(baseURL + `/appointment/getAllAppointmentsOfTechnician/${technicianId}`);
+  if (!response.ok) {
+    const message: string = `An error has occured: ${response.status}`;
+    throw new Error(message);
+  }
+  return await response.json();
+};

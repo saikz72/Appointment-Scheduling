@@ -14,7 +14,21 @@ import FirstPageIcon from '@mui/icons-material/FirstPage';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import LastPageIcon from '@mui/icons-material/LastPage';
-import { Button, TableHead } from '@mui/material';
+import { Button, Divider, TableHead, TextField, Typography } from '@mui/material';
+import { createTechnician, deleteTechnician, getAllTechnicians } from '../services/AuthService';
+import { Modal } from '@mui/material';
+
+const style = {
+  position: 'absolute' as 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 800,
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
+};
 
 interface TablePaginationActionsProps {
   count: number;
@@ -92,6 +106,14 @@ const rows = [
 export default function CustomPaginationActionsTable() {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [technicians, setTechnicians] = React.useState<any[]>([]);
+  const [revokeAccessModal, setRevokeAccessModal] = React.useState(false);
+
+  React.useEffect(() => {
+    getAllTechnicians().then((technicians: any) => {
+      setTechnicians(technicians);
+    });
+  }, []);
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
@@ -105,56 +127,161 @@ export default function CustomPaginationActionsTable() {
     setPage(0);
   };
 
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+
+    const email: string | undefined = data.get('email')?.toString();
+    const password: string | undefined = data.get('password')?.toString();
+    const confirmPassword: string | undefined = data.get('confirmPassword')?.toString();
+    const name: string | undefined = data.get('name')?.toString();
+
+    if (password?.trim() !== confirmPassword?.trim()) {
+      //display error message
+      return;
+    }
+    const requestBody: any = {
+      email,
+      password,
+      name,
+      userType: 'Technician',
+    };
+
+    createTechnician(requestBody).then((technician: any) => {
+      setTechnicians((state) => [...state, technician]);
+    });
+  };
+
+  const openModalForTechnicianRemoval = (technician: any) => {
+    // setRevokeAccessModal(true);
+    handleRevokeAccess(technician);
+  };
+
+  const handleRevokeAccess = (technician: any) => {
+    const userId = technician?._id;
+    const userType = technician?.userType;
+    if (userType === undefined || userId === undefined) return;
+
+    const requestBody: any = {
+      userId,
+      userType,
+    };
+
+    deleteTechnician(requestBody)
+      .then((response) => {
+        // setTechnicians((state) => {
+        //   const index = state.findIndex((oldTechnician) => technician?._id === oldTechnician?._id);
+        //   if (index >= 0) {
+        //     console.log(state);
+        //     return state.splice(index, 1);
+        //   }
+        //   console.log('state', state);
+        //   return state;
+        // });
+        window.location.reload();
+      })
+      .catch((err) => {
+        window.location.reload();
+      });
+  };
+
+  const RevokeAccessModal = (props: any) => {
+    const { technician } = props;
+
+    return (
+      <Modal
+        open={revokeAccessModal}
+        onClose={() => setRevokeAccessModal(false)}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <Typography align="center" id="modal-modal-title" variant="h6" component="h2">
+            Are you sure you want to cancel this appointment?
+          </Typography>
+          <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+            <Button
+              onClick={() => {
+                handleRevokeAccess(technician);
+                setRevokeAccessModal(false);
+              }}
+            >
+              Yes
+            </Button>
+            <Button onClick={() => setRevokeAccessModal(false)}>No</Button>
+          </Box>
+        </Box>
+      </Modal>
+    );
+  };
+
   return (
     <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 500 }} aria-label="custom pagination table">
-        <TableHead>
-          <TableRow>
-            <TableCell>Name</TableCell>
-            <TableCell>Email</TableCell>
-            <TableCell>Create At</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {(rowsPerPage > 0 ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage) : rows).map((row) => (
-            <TableRow key={row.name}>
-              <TableCell component="th" scope="row">
-                {row.name}
-              </TableCell>
-              <TableCell>{row.calories}</TableCell>
-              <TableCell>{row.fat}</TableCell>
+      <Box
+        component="form"
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+        }}
+        onSubmit={handleSubmit}
+      >
+        <Box
+          sx={{
+            display: 'grid',
+            columnGap: 3,
+            rowGap: 1,
+            gridTemplateColumns: 'repeat(2, 1fr)',
+            m: 3,
+          }}
+        >
+          <TextField margin="normal" id="name" label="Name" name="name" autoFocus />
+          <TextField margin="normal" name="email" label="Email" id="email" />
+          <TextField margin="normal" type="password" name="password" label="Password" id="password" />
+          <TextField
+            margin="normal"
+            type="password"
+            name="confirmPassword"
+            label="Confirm Password"
+            id="confirmPassword"
+          />
+        </Box>
+        <Button sx={{ mx: 60, mb: 4 }} variant="contained" type="submit">
+          Add a Technician
+        </Button>
+      </Box>
+      <Divider />
+      <TableContainer>
+        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <TableCell align="center">Technician</TableCell>
+              <TableCell align="center"> Email</TableCell>
+              <TableCell align="center">Access Control</TableCell>
             </TableRow>
-          ))}
-          {emptyRows > 0 && (
-            <TableRow style={{ height: 53 * emptyRows }}>
-              <TableCell colSpan={6} />
-            </TableRow>
-          )}
-        </TableBody>
-        <TableFooter>
-          <TableRow>
-            <Button variant="contained" sx={{ marginTop: 1, marginLeft: 10 }}>
-              sdfd
-            </Button>
-            <TablePagination
-              rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
-              colSpan={3}
-              count={rows.length}
-              rowsPerPage={rowsPerPage}
-              page={page}
-              SelectProps={{
-                inputProps: {
-                  'aria-label': 'rows per page',
-                },
-                native: true,
-              }}
-              onPageChange={handleChangePage}
-              onRowsPerPageChange={handleChangeRowsPerPage}
-              ActionsComponent={TablePaginationActions}
-            />
-          </TableRow>
-        </TableFooter>
-      </Table>
+          </TableHead>
+          <TableBody>
+            {technicians.map((technician) => (
+              <TableRow key={technician?._id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                <TableCell align="center">{technician?.name}</TableCell>
+                <TableCell align="center">{technician?.email}</TableCell>
+                <TableCell align="center">
+                  <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                    <Button
+                      sx={{ mx: 1 }}
+                      variant="outlined"
+                      color="error"
+                      onClick={() => handleRevokeAccess(technician)}
+                    >
+                      Revoke Access
+                    </Button>
+                  </Box>
+                  <RevokeAccessModal technician={technician} />
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
     </TableContainer>
   );
 }

@@ -22,6 +22,7 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
     try {
       const response = await api.post('/auth/login', newUser);
       setUser(response.data);
+      localStorage.setItem('user', JSON.stringify(response.data));
       callback();
     } catch (error) {
       console.log(error);
@@ -45,6 +46,7 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
     try {
       const response = await api.post('/auth/register', newUser);
       setUser(response.data);
+      localStorage.setItem('user', JSON.stringify(response.data));
       callback();
     } catch (error) {
       console.log(error);

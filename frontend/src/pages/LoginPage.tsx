@@ -13,7 +13,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { useAuth } from '../utility/AuthProvider';
 import { useLocation, useNavigate, Link as RouterLink } from 'react-router-dom';
-import { Card, Radio, RadioGroup } from '@mui/material';
+import { Alert, Card, Radio, RadioGroup } from '@mui/material';
 import Navbar from '../components/Navbar';
 
 function Copyright(props: any) {
@@ -30,6 +30,7 @@ function Copyright(props: any) {
 }
 
 export default function LoginPage() {
+  const [loading, setLoading] = React.useState(false);
   let auth = useAuth();
   let location: any = useLocation();
   let navigate = useNavigate();
@@ -53,7 +54,10 @@ export default function LoginPage() {
       localStorage.setItem('isAuthenticated', 'YES');
       navigate(from, { replace: true });
     });
+    setTimeout(() => setLoading(true), 1000);
   };
+
+  setTimeout(() => setLoading(false), 10000);
 
   return (
     <Box>
@@ -91,6 +95,11 @@ export default function LoginPage() {
               alignItems: 'center',
             }}
           >
+            {loading && (
+              <Alert variant="filled" severity="error">
+                Fail to authenticate, Input correct Email & Password
+              </Alert>
+            )}
             <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
               <LockOutlinedIcon />
             </Avatar>
@@ -133,6 +142,7 @@ export default function LoginPage() {
               <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
                 Sign In
               </Button>
+
               <Grid container>
                 <Grid item xs>
                   <RouterLink to="/ForgotPassword" style={{ textDecoration: 'none' }}>

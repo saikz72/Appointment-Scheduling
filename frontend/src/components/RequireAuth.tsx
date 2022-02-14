@@ -1,12 +1,14 @@
 import { Navigate, useLocation } from 'react-router-dom';
+import React from 'react';
+import { usePersist } from '../utility/PersistenceProvider';
 import { useAuth } from '../utility/AuthProvider';
 
 const RequireAuth = ({ children }: { children: JSX.Element }) => {
   const location = useLocation();
+  const { user } = usePersist();
   const auth = useAuth();
-  const isAuthenticated: string | null = localStorage.getItem('isAuthenticated');
 
-  if (!auth.user) {
+  if (!user && !auth.user) {
     return <Navigate to="/login" state={{ from: location }} />;
   }
   return children;

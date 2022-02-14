@@ -21,6 +21,7 @@ import { Avatar, Paper, useTheme } from '@mui/material';
 import LogoutModal from '../components/LogoutModal';
 import logo from '../assets/logo.jpeg';
 import AvailableAutomobiles from '../components/AvailableAutomobiles';
+import ProfileSettingsCard from '../components/ProfileSettingsCard';
 
 function Copyright(props: any) {
   return (
@@ -105,6 +106,8 @@ const DashboardContent = () => {
       );
     } else if (menuItemSelected === 'Automobiles') {
       return <AvailableAutomobiles />;
+    } else if (menuItemSelected === 'Profile Settings') {
+      return <ProfileSettingsCard />;
     }
     return <div></div>;
   }

@@ -11,10 +11,7 @@ import {
 } from '@mui/material';
 import React from 'react';
 import Navbar from '../components/Navbar';
-import { useAuth } from '../utility/AuthProvider';
-import { LocalizationProvider } from '@mui/lab';
-import DateTimePicker from '@mui/lab/DateTimePicker';
-import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import DateTimePicker from 'react-datetime-picker';
 import { useData } from '../utility/DataProvider';
 import ServiceType from '../types/ServiceType';
 import AutomobileType from '../types/AutomobileType';
@@ -22,16 +19,23 @@ import { getAutomobilesFromServer } from '../services/AutomobileService';
 import Footer from '../components/Footer';
 import { bookAppointment } from '../services/AppointmentService';
 import { blue } from '@mui/material/colors';
+import { usePersist } from '../utility/PersistenceProvider';
+import { useAuth } from '../utility/AuthProvider';
+import { useNavigate, Link } from 'react-router-dom';
 
 export default function BookAppointmentPage() {
-  const { user } = useAuth();
+  const persist = usePersist();
+  const auth = useAuth();
   const { state } = useData();
+  const navigate = useNavigate();
   const [service, setService] = React.useState('');
   const [automobile, setAutomobile] = React.useState('');
   const [automobiles, setAutomobiles] = React.useState<AutomobileType[]>([]);
-  const [startDate, setStartDate] = React.useState<Date | null>(new Date());
+  const [startDate, setStartDate] = React.useState<Date>(new Date());
   const [status, setStatus] = React.useState('');
   const [loading, setLoading] = React.useState(false);
+
+  const user = auth.user ? auth.user : persist.user;
 
   const handleServiceChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setService(event.target.value as string);
@@ -51,14 +55,13 @@ export default function BookAppointmentPage() {
     const cvv: string | undefined = data.get('cvv')?.toString();
 
     const customerId: string = user?._id;
-
     const requestBody: any = {
       serviceId: service,
       customerId: customerId,
       startDate: startDate,
       automobileId: automobile,
     };
-    console.log(loading);
+
     if (!loading) {
       setLoading(true);
       setStatus('');
@@ -107,6 +110,12 @@ export default function BookAppointmentPage() {
             Fail to book appointment, something went wrong.
           </Alert>
         ) : null}
+
+        {status === 'book' && (
+          <Link to="/dashboard" style={{ flexGrow: 1, textDecoration: 'none' }}>
+            <Button color="success">Click here to view appointment</Button>
+          </Link>
+        )}
       </Box>
       <Box
         sx={{
@@ -167,18 +176,21 @@ export default function BookAppointmentPage() {
 
           {/**START  3*/}
           <Box mb={2}>
-            <LocalizationProvider dateAdapter={AdapterDateFns}>
-              <DateTimePicker
-                label="Select Date and Time"
-                value={startDate}
-                onChange={(newValue) => {
-                  if (newValue == null) return;
-                  setStartDate(new Date(newValue));
-                }}
-                minDate={Date.now()}
-                renderInput={(params) => <TextField {...params} helperText={params?.inputProps?.placeholder} />}
-              />
-            </LocalizationProvider>
+            <DateTimePicker
+              amPmAriaLabel="Select AM/PM"
+              calendarAriaLabel="Toggle calendar"
+              clearAriaLabel="Clear value"
+              dayAriaLabel="Day"
+              hourAriaLabel="Hour"
+              maxDetail="second"
+              minuteAriaLabel="Minute"
+              monthAriaLabel="Month"
+              nativeInputAriaLabel="Date and time"
+              onChange={setStartDate}
+              secondAriaLabel="Second"
+              value={startDate}
+              yearAriaLabel="Year"
+            />
           </Box>
 
           {/**END 3*/}
@@ -229,7 +241,7 @@ export default function BookAppointmentPage() {
           {/**END 4 */}
           {/**END 1*/}
         </Box>
-        <Box>
+        <Box m={12}>
           <Footer />
           {/** FOR UNFORMITY OF COLOR */}
           <CssBaseline />

@@ -38,7 +38,8 @@ export default function LogoutModal(props: any) {
           <Box sx={{ display: 'flex', justifyContent: 'center' }}>
             <Button
               onClick={() => {
-                localStorage.setItem('isAuthenticated', 'NO');
+                localStorage.clear();
+                window.location.reload();
                 auth.signout(() => navigate('/'));
               }}
             >

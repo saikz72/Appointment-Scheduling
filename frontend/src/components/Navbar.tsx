@@ -1,37 +1,3 @@
-// import { AppBar, Avatar, CssBaseline, Stack, Toolbar, Typography, useTheme } from '@mui/material';
-// import { Link } from 'react-router-dom';
-// import logo from '../assets/logo.jpeg';
-// import userPhoto from '../assets/pj.jpeg';
-
-// const Navbar = () => {
-//   const theme = useTheme();
-//   return (
-//     <div>
-//       <CssBaseline />
-//       <AppBar
-//         position="sticky"
-//         enableColorOnDark={true}
-//         elevation={0}
-//         sx={{ backgroundColor: theme.palette.secondary.main }}
-//       >
-//         <Toolbar>
-//           <Link to="/" style={{ flexGrow: 1, textDecoration: 'none', marginTop: 8 }}>
-//             <Avatar src={logo} alt="Logo of the repair shop" />
-//             <Typography color="primary.light">Home</Typography>
-//           </Link>
-//           <Link to="/dashboard" style={{ textDecoration: 'none', marginTop: 8 }}>
-//             <Stack sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', paddingRight: 2 }}>
-//               <Avatar alt="User's Dashboard" src={userPhoto} />
-//               <Typography color="primary.light">Dashboard</Typography>
-//             </Stack>
-//           </Link>
-//         </Toolbar>
-//       </AppBar>
-//     </div>
-//   );
-// };
-
-// export default Navbar;
 import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
