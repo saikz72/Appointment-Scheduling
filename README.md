@@ -16,6 +16,12 @@
 ### Frontend
 ``` git push heroku frontend:master```
 
+### Backend [Master]
+```git subtree push --prefix backend heroku-server master```
+
+### Frontend [Master]
+```git subtree push --prefix frontend heroku-client master```
+
 ## Running Locally
 
 ## Option 1: [For developer]
