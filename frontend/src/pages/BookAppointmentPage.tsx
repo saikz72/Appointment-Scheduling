@@ -61,6 +61,7 @@ export default function BookAppointmentPage() {
       startDate: startDate,
       automobileId: automobile,
     };
+    console.log(startDate)
 
     if (!loading) {
       setLoading(true);

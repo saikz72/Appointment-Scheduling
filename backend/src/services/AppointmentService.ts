@@ -1,9 +1,9 @@
-import Appointment from '../models/Appointment';
-import Service from '../models/Service';
-import Bill from '../models/Bill';
-import Automobile from '../models/Automobile';
-import Technician from '../models/Technician';
-import Customer from '../models/Customer';
+import Appointment from "../models/Appointment";
+import Service from "../models/Service";
+import Bill from "../models/Bill";
+import Automobile from "../models/Automobile";
+import Technician from "../models/Technician";
+import Customer from "../models/Customer";
 
 abstract class AppointmentService {
   static async createAppointment(appointmentDTO: any) {
@@ -20,8 +20,7 @@ abstract class AppointmentService {
         technician = techGuy;
       }
     });
-    console.log(startDate);
-    return
+
     // get service
     const service = await Service.findById(serviceId);
 
@@ -63,7 +62,7 @@ abstract class AppointmentService {
   static async updateAppointment(appointmentId: string, appointmentDTO: any) {
     const appointment = await Appointment.findById(appointmentId);
     if (appointment === null) {
-      throw new Error('Could not find appointment with given ID.');
+      throw new Error("Could not find appointment with given ID.");
     }
 
     const startDate = appointmentDTO.startDate;
@@ -110,9 +109,9 @@ abstract class AppointmentService {
   static async getAllAppointmentsOfCustomer(customerId: string) {
     try {
       const appointments = await Appointment.find({ customer: customerId })
-        .populate('technician', 'name')
-        .populate('service', 'name cost')
-        .populate('automobile', 'licensePlate');
+        .populate("technician", "name")
+        .populate("service", "name cost")
+        .populate("automobile", "licensePlate");
       return appointments;
     } catch (error) {
       throw error;
@@ -122,9 +121,9 @@ abstract class AppointmentService {
   static async getAllAppointmentsOfTechnician(technicianId: string) {
     try {
       const appointments = await Appointment.find({ technician: technicianId })
-        .populate('customer', 'name email')
-        .populate('service', 'name cost')
-        .populate('automobile', 'licensePlate');
+        .populate("customer", "name email")
+        .populate("service", "name cost")
+        .populate("automobile", "licensePlate");
       return appointments;
     } catch (error) {
       throw error;

@@ -13,16 +13,18 @@ import {
   TableRow,
   Tabs,
   TextField,
+  useTheme,
   Typography,
-} from '@mui/material';
-import React from 'react';
-import { getAllAppointmentsOfCustomer } from '../services/AppointmentService';
-import { useAuth } from '../utility/AuthProvider';
-import { usePersist } from '../utility/PersistenceProvider';
-import DateTimePicker from 'react-datetime-picker';
-import AutomobileType from '../types/AutomobileType';
-import ServiceType from '../types/ServiceType';
-import { useData } from '../utility/DataProvider';
+} from "@mui/material";
+import React from "react";
+import { getAllAppointmentsOfCustomer } from "../services/AppointmentService";
+import { useAuth } from "../utility/AuthProvider";
+import { usePersist } from "../utility/PersistenceProvider";
+import DateTimePicker from "react-datetime-picker";
+import AutomobileType from "../types/AutomobileType";
+import ServiceType from "../types/ServiceType";
+import { useData } from "../utility/DataProvider";
+import AppointmentType from "types/AppointmentType";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -31,13 +33,13 @@ interface TabPanelProps {
 }
 
 const style = {
-  position: 'absolute' as 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
+  position: "absolute" as "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
   width: 800,
-  bgcolor: 'background.paper',
-  border: '2px solid #000',
+  bgcolor: "background.paper",
+  border: "2px solid #000",
   boxShadow: 24,
   p: 4,
 };
@@ -59,15 +61,16 @@ function TabPanel(props: TabPanelProps) {
 }
 
 const Appointment = () => {
+  const theme = useTheme();
   const [value, setValue] = React.useState(0);
   const [openCancelModal, setOpenCancelModal] = React.useState(false);
-  const [service, setService] = React.useState('');
-  const [automobile, setAutomobile] = React.useState('');
+  const [service, setService] = React.useState("");
+  const [automobile, setAutomobile] = React.useState("");
   const [automobiles, setAutomobiles] = React.useState<AutomobileType[]>([]);
   const { state } = useData();
   const [startDate, setStartDate] = React.useState<Date>(new Date());
   const [openEditModal, setOpenEditModal] = React.useState(false);
-  const [appointments, setAppointments] = React.useState<any[]>([]);
+  const [appointments, setAppointments] = React.useState<AppointmentType[]>([]);
   const persist = usePersist();
   const auth = useAuth();
   const user = auth.user ? auth.user : persist.user;
@@ -80,14 +83,17 @@ const Appointment = () => {
       .catch((error) => console.log(error));
   }, [customerId]);
 
-  const handleChange = (event: React.SyntheticEvent<Element, Event>, newValue: number) => {
+  const handleChange = (
+    event: React.SyntheticEvent<Element, Event>,
+    newValue: number
+  ) => {
     setValue(newValue);
   };
 
   function a11yProps(index: number) {
     return {
       id: `simple-tab-${index}`,
-      'aria-controls': `simple-tabpanel-${index}`,
+      "aria-controls": `simple-tabpanel-${index}`,
     };
   }
 
@@ -100,10 +106,15 @@ const Appointment = () => {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <Typography align="center" id="modal-modal-title" variant="h6" component="h2">
+          <Typography
+            align="center"
+            id="modal-modal-title"
+            variant="h6"
+            component="h2"
+          >
             Are you sure you want to cancel this appointment?
           </Typography>
-          <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+          <Box sx={{ display: "flex", justifyContent: "center" }}>
             <Button
               onClick={() => {
                 handleCancel();
@@ -123,7 +134,9 @@ const Appointment = () => {
     setService(event.target.value as string);
   };
 
-  const handleAutomobileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleAutomobileChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     setAutomobile(event.target.value as string);
   };
 
@@ -131,18 +144,18 @@ const Appointment = () => {
     return (
       <Box
         sx={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          flexDirection: 'column',
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          flexDirection: "column",
         }}
       >
         <Box
           sx={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            flexDirection: 'column',
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            flexDirection: "column",
           }}
         >
           {/** START 1*/}
@@ -151,10 +164,10 @@ const Appointment = () => {
             component={Card}
             sx={{
               borderRadius: 4,
-              display: 'flex',
-              justifyContent: 'center',
-              flexDirection: 'column',
-              alignItems: 'center',
+              display: "flex",
+              justifyContent: "center",
+              flexDirection: "column",
+              alignItems: "center",
               width: 500,
             }}
           >
@@ -211,18 +224,20 @@ const Appointment = () => {
             <Box
               component="form"
               noValidate
-              onSubmit={() => console.log('here')}
+              onSubmit={() => console.log("here")}
               sx={{
-                display: 'flex',
+                display: "flex",
                 mt: 1,
-                flexDirection: 'column',
+                flexDirection: "column",
               }}
             >
-              <Typography textAlign="center">Enter payment Information</Typography>
+              <Typography textAlign="center">
+                Enter payment Information
+              </Typography>
               <Box
                 sx={{
-                  display: 'flex',
-                  flexDirection: 'column',
+                  display: "flex",
+                  flexDirection: "column",
                   width: 300,
                 }}
               >
@@ -234,7 +249,14 @@ const Appointment = () => {
                   label="Name on the Card"
                   id="nameOnCard"
                 />
-                <TextField margin="normal" required fullWidth name="cardNumber" label="Card Number" id="cardNumber" />
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  name="cardNumber"
+                  label="Card Number"
+                  id="cardNumber"
+                />
                 <TextField
                   margin="normal"
                   required
@@ -243,7 +265,14 @@ const Appointment = () => {
                   label="Expiry Date (MM/YY)"
                   id="expiryDate"
                 />
-                <TextField margin="normal" required fullWidth name="cvv" label="Security Code" id="cvv" />
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  name="cvv"
+                  label="Security Code"
+                  id="cvv"
+                />
               </Box>
             </Box>
           </Box>
@@ -262,7 +291,7 @@ const Appointment = () => {
       >
         <Box sx={style}>
           <AppointmentUpdateContent />
-          <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+          <Box sx={{ display: "flex", justifyContent: "center" }}>
             <Button
               onClick={() => {
                 handleEdit();
@@ -273,12 +302,39 @@ const Appointment = () => {
             >
               Update
             </Button>
-            <Button color="error" sx={{ my: 2, mx: 2 }} variant="contained" onClick={() => setOpenEditModal(false)}>
+            <Button
+              color="error"
+              sx={{ my: 2, mx: 2 }}
+              variant="contained"
+              onClick={() => setOpenEditModal(false)}
+            >
               Cancel
             </Button>
           </Box>
         </Box>
       </Modal>
+    );
+  };
+
+  const pendingElement = (status: string | null) => {
+    if (status === "Pending") {
+      return (
+        <Typography color="primary" fontSize={11}>
+          {status}
+        </Typography>
+      );
+    }
+    if (status === "Confirm") {
+      return (
+        <Typography color="green" fontSize={11}>
+          {status}
+        </Typography>
+      );
+    }
+    return (
+      <Typography color="red" fontSize={11}>
+        {status}
+      </Typography>
     );
   };
 
@@ -294,6 +350,7 @@ const Appointment = () => {
             <TableRow>
               <TableCell>Technician</TableCell>
               <TableCell align="center"> Date</TableCell>
+              <TableCell align="center"> Time</TableCell>
               <TableCell align="right">Service</TableCell>
               <TableCell align="right">Amount</TableCell>
               <TableCell align="right">License Plate</TableCell>
@@ -302,21 +359,49 @@ const Appointment = () => {
           </TableHead>
           <TableBody>
             {appointments.map((appointment) => (
-              <TableRow key={appointment?._id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+              <TableRow
+                key={appointment?._id}
+                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+              >
                 <TableCell component="th" scope="row">
                   {appointment?.technician?.name}
                 </TableCell>
-                <TableCell align="right">{appointment?.startDate}</TableCell>
-                <TableCell align="right">{appointment?.service?.name}</TableCell>
-                <TableCell align="right">{appointment?.service?.cost}</TableCell>
-                <TableCell align="right">{appointment?.automobile?.licensePlate}</TableCell>
-                <TableCell align="right">{appointment?.status}</TableCell>
+                <TableCell align="center">
+                  {new Date(appointment?.startDate).toLocaleDateString()}
+                </TableCell>
                 <TableCell align="right">
-                  <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                    <Button sx={{ mx: 1, px: 3 }} variant="contained" onClick={() => setOpenEditModal(true)}>
+                  {new Date(appointment?.startDate).toLocaleTimeString()}
+                </TableCell>
+                <TableCell align="right">
+                  {appointment?.service?.name}
+                </TableCell>
+                <TableCell align="right">
+                  {appointment?.service?.cost}
+                </TableCell>
+                <TableCell align="right">
+                  {appointment?.automobile?.licensePlate}
+                </TableCell>
+                <TableCell align="right">
+                  {/* <Typography color="red" fontSize={11}>
+                    {appointment?.status}
+                  </Typography> */}
+                  {pendingElement(appointment?.status)}
+                </TableCell>
+                <TableCell align="right">
+                  <Box sx={{ display: "flex", justifyContent: "center" }}>
+                    <Button
+                      sx={{ mx: 1, px: 3 }}
+                      variant="contained"
+                      onClick={() => setOpenEditModal(true)}
+                    >
                       Edit
                     </Button>
-                    <Button sx={{ mx: 1 }} variant="outlined" color="error" onClick={() => setOpenCancelModal(true)}>
+                    <Button
+                      sx={{ mx: 1 }}
+                      variant="outlined"
+                      color="error"
+                      onClick={() => setOpenCancelModal(true)}
+                    >
                       Cancel
                     </Button>
                   </Box>
@@ -331,8 +416,8 @@ const Appointment = () => {
 
   return (
     <React.Fragment>
-      <Box sx={{ width: '100%' }}>
-        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+      <Box sx={{ width: "100%" }}>
+        <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
           <Tabs
             value={value}
             onChange={handleChange}
