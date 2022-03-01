@@ -1,18 +1,18 @@
-import '@fontsource/roboto/300.css';
-import '@fontsource/roboto/400.css';
-import '@fontsource/roboto/500.css';
-import '@fontsource/roboto/700.css';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import Dashboard from './pages/Dashboard';
-import HomePage from './pages/HomePage';
-import LoginPage from './pages/LoginPage';
-import RequireAuth from './components/RequireAuth';
-import SignupPage from './pages/SignupPage';
-import DataProvider from './utility/DataProvider';
-import BookAppointmentPage from './pages/BookAppointmentPage';
-import { createTheme, Theme, ThemeProvider } from '@mui/material/styles';
-import React from 'react';
-import { PersistenceProvider } from './utility/PersistenceProvider';
+import "@fontsource/roboto/300.css";
+import "@fontsource/roboto/400.css";
+import "@fontsource/roboto/500.css";
+import "@fontsource/roboto/700.css";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Dashboard from "./pages/Dashboard";
+import HomePage from "./pages/HomePage";
+import LoginPage from "./pages/LoginPage";
+import RequireAuth from "./components/RequireAuth";
+import SignupPage from "./pages/SignupPage";
+import DataProvider from "./utility/DataProvider";
+import BookAppointmentPage from "./pages/BookAppointmentPage";
+import { createTheme, Theme, ThemeProvider } from "@mui/material/styles";
+import React from "react";
+import { PersistenceProvider } from "./utility/PersistenceProvider";
 
 /*Common Theme configuration for both dark and light mode */
 const commonTheme: any = {
@@ -26,18 +26,18 @@ const lightTheme: Theme = createTheme({
   ...commonTheme,
   palette: {
     primary: {
-      main: '#001E3C',
-      light: '#ffff',
+      main: "#2F2888",
+      light: "#ffff",
     },
     secondary: {
-      main: '#001E3C',
+      main: "#001E3C",
     },
     background: {
-      paper: '#FFFF',
-      default: '#001E3C',
+      paper: "#FFFF",
+      default: "#001E3C",
     },
     text: {
-      primary: '#000',
+      primary: "#000",
     },
   },
 });

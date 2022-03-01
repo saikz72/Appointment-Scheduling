@@ -35,11 +35,14 @@ const Footer = (props: FooterProps) => {
       }}
     >
       <Typography
+        align="center"
+        variant="h2"
+        mt={4}
         color="#2F2888"
-        variant="h4"
-        sx={{ py: 4, fontWeight: "bold" }}
+        sx={{ fontWeight: "bold" }}
+        gutterBottom
       >
-        Want to get in touch?
+        Contact
       </Typography>
       <Stack direction="row" sx={{ display: "flex", gap: "40px", mb: 2 }}>
         <Link href="" target="_blank">

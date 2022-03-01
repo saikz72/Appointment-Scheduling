@@ -1,31 +1,33 @@
-import * as React from 'react';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
-import Paper from '@mui/material/Paper';
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Typography from '@mui/material/Typography';
-import { Link as RouterLink, useLocation, useNavigate } from 'react-router-dom';
-import { useAuth } from '../utility/AuthProvider';
-
-import Navbar from '../components/Navbar';
-import { Card } from '@mui/material';
+import * as React from "react";
+import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
+import Link from "@mui/material/Link";
+import Box from "@mui/material/Box";
+import Grid from "@mui/material/Grid";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import Typography from "@mui/material/Typography";
+import { Link as RouterLink, useLocation, useNavigate } from "react-router-dom";
+import { useAuth } from "../utility/AuthProvider";
+import Navbar from "../components/Navbar";
+import paintJob from "../assets/paint job 1.jpg";
 
 function Copyright(props: any) {
   return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
+    <Typography
+      variant="body2"
+      color="text.secondary"
+      align="center"
+      {...props}
+    >
+      {"Copyright © "}
       <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{' '}
+        AutoReair.com
+      </Link>{" "}
       {new Date().getFullYear()}
-      {'.'}
+      {"."}
     </Typography>
   );
 }
@@ -34,16 +36,16 @@ export default function SignupPage() {
   let auth = useAuth();
   let location: any = useLocation();
   let navigate = useNavigate();
-  let from = location.state?.from?.pathname || '/';
+  let from = location.state?.from?.pathname || "/";
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
 
-    const name: FormDataEntryValue | null = data.get('name');
-    const email: FormDataEntryValue | null = data.get('email');
-    const password: FormDataEntryValue | null = data.get('password');
-    const userType: string = 'Customer';
+    const name: FormDataEntryValue | null = data.get("name");
+    const email: FormDataEntryValue | null = data.get("email");
+    const password: FormDataEntryValue | null = data.get("password");
+    const userType: string = "Customer";
 
     const user: any = {
       name,
@@ -53,53 +55,75 @@ export default function SignupPage() {
     };
 
     auth.signup(user, () => {
-      localStorage.setItem('isAuthenticated', 'YES');
+      localStorage.setItem("isAuthenticated", "YES");
       navigate(from, { replace: true });
     });
   };
 
   return (
-    <Box>
+    <Box width="100%" sx={{ backgroundColor: "#FFFFF" }}>
       <Navbar />
-      <Grid id="signup" container component="main" sx={{ height: '100vh' }}>
-        <CssBaseline />
+      <Grid id="signup" container component="main">
         <Grid
           item
-          xs={false}
-          sm={4}
-          md={7}
+          xs={5}
           sx={{
-            backgroundImage: 'url(https://source.unsplash.com/random)',
-            backgroundRepeat: 'no-repeat',
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
+            mt: 45,
           }}
-        />
-        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+        >
+          <img width="100%" height="100%" src={paintJob} alt="Logo" />
+        </Grid>
+        <Grid item xs={7}>
           <Box
-            component={Card}
             sx={{
               my: 8,
-              mx: 4,
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
+              mx: 10,
+              mt: 20,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
             }}
           >
-            <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+            <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
               <LockOutlinedIcon />
             </Avatar>
-            <Typography component="h1" variant="h5">
+            <Typography
+              align="center"
+              variant="h4"
+              color="#2F2888"
+              sx={{ fontWeight: "bold" }}
+              gutterBottom
+              component="h1"
+            >
               Sign up
             </Typography>
             <Box
               component="form"
               noValidate
               onSubmit={handleSubmit}
-              sx={{ display: 'flex', flexDirection: 'column', mt: 1, '& .MuiTextField-root': { width: '50ch' } }}
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                mt: 1,
+                "& .MuiTextField-root": { width: "50ch" },
+              }}
             >
-              <TextField margin="normal" required fullWidth id="name" label="Full Name" name="name" autoFocus />
-              <TextField margin="normal" required fullWidth id="email" label="Email Address" name="email" autoFocus />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="name"
+                label="Full Name"
+                name="name"
+              />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="email"
+                label="Email Address"
+                name="email"
+              />
               <TextField
                 margin="normal"
                 required
@@ -109,19 +133,34 @@ export default function SignupPage() {
                 type="password"
                 id="password"
               />
-              <FormControlLabel control={<Checkbox value="remember" color="primary" />} label="Remember me" />
-              <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
+              <FormControlLabel
+                control={<Checkbox value="remember" color="primary" />}
+                label="Remember me"
+              />
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2, fontSize: 16 }}
+              >
                 Sign Up
               </Button>
               <Grid container>
                 <Grid item xs>
-                  <RouterLink to="/ForgotPassword" style={{ textDecoration: 'none' }}>
-                    <Typography color="primary">Forgot password?</Typography>
+                  <RouterLink
+                    to="/ForgotPassword"
+                    style={{ textDecoration: "none" }}
+                  >
+                    <Typography color="primary" sx={{ fontSize: 16 }}>
+                      Forgot password?
+                    </Typography>
                   </RouterLink>
                 </Grid>
                 <Grid item>
-                  <RouterLink to="/Login" style={{ textDecoration: 'none' }}>
-                    <Typography color="primary">Already have an account? Sign in</Typography>
+                  <RouterLink to="/Login" style={{ textDecoration: "none" }}>
+                    <Typography color="primary" sx={{ fontSize: 16 }}>
+                      Already have an account? Sign in
+                    </Typography>
                   </RouterLink>
                 </Grid>
               </Grid>

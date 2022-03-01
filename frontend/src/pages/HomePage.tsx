@@ -2,7 +2,6 @@ import Navbar from "../components/Navbar";
 import {
   Box,
   Button,
-  Divider,
   Typography,
   Grid,
   Table,
@@ -10,18 +9,23 @@ import {
   TableCell,
   TableContainer,
   TableRow,
+  Stack,
+  Divider,
 } from "@mui/material";
 import Footer from "../components/Footer";
-import Testimony from "../components/Testimony";
-import ServiceCard from "../components/ServiceCard";
 import { Link } from "react-router-dom";
-import ServiceType from "../types/ServiceType";
-import { useEffect, useState } from "react";
-import { getAllServices } from "../services/OfferingService";
 import landingPageHero from "../assets/landing-hero.png";
 import paintJob from "../assets/paint job 1.jpg";
 import tow from "../assets/towing.png";
 import hours from "../assets/openingHours.png";
+import wash from "../assets/car-wash.png";
+import towing from "../assets/tow-truck.png";
+import inspection from "../assets/inspection.png";
+import oilChange from "../assets/oil.png";
+import roadSide from "../assets/roadsideAssistance.png";
+import tyre from "../assets/tire.png";
+import repair from "../assets/car-repairService.png";
+import Testimonial from "components/Testimonial";
 
 function createData(day: string, time: string) {
   return { day, time };
@@ -37,15 +41,6 @@ const rows = [
 ];
 
 const HomePage = () => {
-  const [services, setServices] = useState<ServiceType[]>([]);
-
-  useEffect(() => {
-    getAllServices().then((result) => {
-      setServices(result?.data);
-    });
-  }, []);
-  //sx={{ justifyContent: "center", alignItems: "center" }}
-
   return (
     <Box
       sx={{
@@ -74,7 +69,7 @@ const HomePage = () => {
               sx={{ fontWeight: "bold" }}
               gutterBottom
             >
-              Welcome to Geek repair shop.
+              Welcome to Geek repair shop
             </Typography>
             <Typography align="center" variant="h6" sx={{ fontWeight: "500" }}>
               When it comes to your car repair requirement our team offers a
@@ -154,7 +149,6 @@ const HomePage = () => {
             sx={{
               display: "flex",
               mt: 8,
-              mx: 20,
               alignItems: "center",
               justifyContent: "center",
               flexDirection: "column",
@@ -170,41 +164,62 @@ const HomePage = () => {
             >
               Services
             </Typography>
-            <Typography align="center" variant="h6" sx={{ fontWeight: "500" }}>
+            <Typography
+              align="center"
+              variant="h6"
+              sx={{ fontWeight: "500", mx: 20 }}
+            >
               Our ASE Certified mechanics are committed to quality for our
               community of drivers in Montreal,Quebec. We make sure to continue
               providing to-quality services by providing biannual trainings. At
               Prestige, we offer a variety of services:
             </Typography>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                flexDirection: "row",
+                mt: 4,
+              }}
+            >
+              <Box sx={{ flexDirection: "row", display: "flex", ml: 10 }}>
+                <Stack direction="column">
+                  <img width="50%" height="100%" src={wash} alt="Logo" />
+                  <Typography> Car Wash</Typography>
+                </Stack>
+                <Stack direction="column">
+                  <img width="50%" height="100%" src={oilChange} alt="Logo" />
+                  <Typography> Oil Change</Typography>
+                </Stack>
+                <Stack direction="column">
+                  <img width="50%" height="100%" src={inspection} alt="Logo" />
+                  <Typography>Inspection</Typography>
+                </Stack>
+                <Stack direction="column">
+                  <img width="50%" height="100%" src={tyre} alt="Logo" />
+                  <Typography> Tyre Change </Typography>
+                </Stack>
+                <Stack direction="column">
+                  <img width="50%" height="100%" src={repair} alt="Logo" />
+                  <Typography> Repairs</Typography>
+                </Stack>
+                <Stack direction="column">
+                  <img width="50%" height="100%" src={roadSide} alt="Logo" />
+                  <Typography> Roadside </Typography>
+                  <Typography> Assistance </Typography>
+                </Stack>
+                <Stack direction="column">
+                  <img width="50%" height="100%" src={towing} alt="Logo" />
+                  <Typography>Towing</Typography>
+                </Stack>
+              </Box>
+            </Box>
           </Box>
         </Grid>
         <Grid item xs={6}>
           <img width="100%" height="100%" src={tow} alt="Logo" />
         </Grid>
       </Grid>
-      <Box m={10}>
-        <Box>
-          <Typography gutterBottom variant="h4" sx={{ textAlign: "center" }}>
-            Services we provide
-          </Typography>
-        </Box>
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "center",
-            flexWrap: "wrap",
-          }}
-        >
-          {services.map((service: ServiceType) => {
-            return (
-              <Box mb={2} key={service?._id}>
-                <ServiceCard service={service} />
-              </Box>
-            );
-          })}
-        </Box>
-      </Box>
 
       {/** Opening hours */}
       <Grid container rowSpacing={6} columnSpacing={{ xs: 4, sm: 2, md: 4 }}>
@@ -254,60 +269,29 @@ const HomePage = () => {
         </Grid>
       </Grid>
 
-      {/**Meet the technicians */}
-      <Box>
-        <Typography gutterBottom variant="h4" sx={{ textAlign: "center" }}>
-          Meet our capable technicians
-        </Typography>
-        <Typography gutterBottom variant="h4" sx={{ textAlign: "center" }}>
-          [TODO]
-        </Typography>
-      </Box>
-
       {/**Testimonies */}
 
       <Box>
-        <Typography gutterBottom variant="h4" sx={{ textAlign: "center" }}>
+        <Typography
+          align="center"
+          variant="h2"
+          mt={4}
+          color="#2F2888"
+          sx={{ fontWeight: "bold" }}
+          gutterBottom
+        >
           Some testimonies from our customers
         </Typography>
       </Box>
 
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "center",
-          flexWrap: "wrap",
-        }}
-      >
-        <Testimony
-          author="saikou"
-          description="I built a Q & A app between students and their teachers to ensure better interaction. Added a sophisticated algorithm that populates the trending/hot topics on top of the question feed"
-          date="5th May, 2021"
-        />
-        <Testimony
-          author="saikou"
-          description="I built a Q & A app between students and their teachers to ensure better interaction. Added a sophisticated algorithm that populates the trending/hot topics on top of the question feed"
-          date="5th May, 2021"
-        />
-        <Testimony
-          author="saikou"
-          description="I built a Q & A app between students and their teachers to ensure better interaction. Added a sophisticated algorithm that populates the trending/hot topics on top of the question feed"
-          date="5th May, 2021"
-        />
-        <Testimony
-          author="saikou"
-          description="I built a Q & A app between students and their teachers to ensure better interaction. Added a sophisticated algorithm that populates the trending/hot topics on top of the question feed"
-          date="5th May, 2021"
-        />
-        <Testimony
-          author="saikou"
-          description="I built a Q & A app between students and their teachers to ensure better interaction. Added a sophisticated algorithm that populates the trending/hot topics on top of the question feed"
-          date="5th May, 2021"
-        />
+      <Box sx={{ display: "flex", justifyContent: "center", flexWrap: "wrap" }}>
+        <Testimonial />
+        <Testimonial />
+        <Testimonial />
+        <Testimonial />
+        <Testimonial />
       </Box>
 
-      {/**Footer | social media contact */}
       <Divider />
       <Footer />
     </Box>
