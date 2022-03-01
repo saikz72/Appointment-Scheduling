@@ -1,6 +1,6 @@
 # Appointment-Scheduling
 
-## Deployed Site [Work In Progress]
+## Deployed Site [Work In Progress | No Longer maintained]
 [www.geeks-auto-service.com](https://automobile-frontend.herokuapp.com/)
 
 ## UML Diagram
