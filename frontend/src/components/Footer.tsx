@@ -1,23 +1,22 @@
-import { Stack, Tooltip, Typography } from '@mui/material';
-import Box from '@mui/material/Box';
-import Link from '@mui/material/Link';
-import LinkedInIcon from '@mui/icons-material/LinkedIn';
-import GitHubIcon from '@mui/icons-material/GitHub';
-import MailIcon from '@mui/icons-material/Mail';
-import InstagramIcon from '@mui/icons-material/Instagram';
-import TwitterIcon from '@mui/icons-material/Twitter';
+import { Stack, Tooltip, Typography } from "@mui/material";
+import Box from "@mui/material/Box";
+import Link from "@mui/material/Link";
+import LinkedInIcon from "@mui/icons-material/LinkedIn";
+import MailIcon from "@mui/icons-material/Mail";
+import InstagramIcon from "@mui/icons-material/Instagram";
+import TwitterIcon from "@mui/icons-material/Twitter";
 
 type FooterProps = {};
 
 const Copyright = () => {
   return (
     <Typography variant="body2" color="text.secondary">
-      {'Copyright © '}
+      {"Copyright © "}
       <Link color="inherit" href="">
         mustikrepair.com
-      </Link>{' '}
+      </Link>{" "}
       {new Date().getFullYear()}
-      {'.'}
+      {"."}
     </Typography>
   );
 };
@@ -28,38 +27,39 @@ const Footer = (props: FooterProps) => {
       id="Contact"
       sx={{
         py: 2,
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: (t) => t.palette.grey[200],
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: "#FAFBFF",
       }}
     >
-      <Typography sx={{ py: 4 }}> Want to get in touch?</Typography>
-      <Stack direction="row" sx={{ display: 'flex', gap: '20px', mb: 2 }}>
-        <Link href="" target="_blank">
-          <Tooltip title="Visit my github profile">
-            <GitHubIcon />
-          </Tooltip>
-        </Link>
+      <Typography
+        color="#2F2888"
+        variant="h4"
+        sx={{ py: 4, fontWeight: "bold" }}
+      >
+        Want to get in touch?
+      </Typography>
+      <Stack direction="row" sx={{ display: "flex", gap: "40px", mb: 2 }}>
         <Link href="" target="_blank">
           <Tooltip title="Visit my linkedIn profile">
-            <LinkedInIcon />
+            <LinkedInIcon fontSize="large" />
           </Tooltip>
         </Link>
         <Link href="" target="_blank">
           <Tooltip title="Send me an email">
-            <MailIcon />
+            <MailIcon fontSize="large" />
           </Tooltip>
         </Link>
         <Link href="" target="_blank">
           <Tooltip title="Visit my twitter profile">
-            <TwitterIcon />
+            <TwitterIcon fontSize="large" />
           </Tooltip>
         </Link>
         <Link href="" target="_blank">
           <Tooltip title="Visit my instagram profile">
-            <InstagramIcon />
+            <InstagramIcon fontSize="large" />
           </Tooltip>
         </Link>
       </Stack>
