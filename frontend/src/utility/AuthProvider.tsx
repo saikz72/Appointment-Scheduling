@@ -1,6 +1,6 @@
-import React from 'react';
-import axios from 'axios';
-import { baseURL } from './constants';
+import React from "react";
+import axios from "axios";
+import { baseURL } from "./constants";
 
 export const api = axios.create({
   baseURL: baseURL,
@@ -20,9 +20,9 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
   let signin = async (newUser: any, callback: VoidFunction) => {
     // Login API call here
     try {
-      const response = await api.post('/auth/login', newUser);
+      const response = await api.post("/auth/login", newUser);
       setUser(response.data);
-      localStorage.setItem('user', JSON.stringify(response.data));
+      localStorage.setItem("user", JSON.stringify(response.data));
       callback();
     } catch (error) {
       console.log(error);
@@ -33,7 +33,7 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
     //Logout API call here
 
     try {
-      await api.post('/auth/logout');
+      await api.post("/auth/logout");
       setUser(null);
       callback();
     } catch (error) {
@@ -44,9 +44,9 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
   let signup = async (newUser: any, callback: VoidFunction) => {
     // Sign up API call here
     try {
-      const response = await api.post('/auth/register', newUser);
+      const response = await api.post("/auth/register", newUser);
       setUser(response.data);
-      localStorage.setItem('user', JSON.stringify(response.data));
+      localStorage.setItem("user", JSON.stringify(response.data));
       callback();
     } catch (error) {
       console.log(error);

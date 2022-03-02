@@ -12,8 +12,6 @@ import {
   TableHead,
   TableRow,
   Tabs,
-  TextField,
-  useTheme,
   Typography,
 } from "@mui/material";
 import React from "react";
@@ -21,9 +19,6 @@ import { getAllAppointmentsOfCustomer } from "../services/AppointmentService";
 import { useAuth } from "../utility/AuthProvider";
 import { usePersist } from "../utility/PersistenceProvider";
 import DateTimePicker from "react-datetime-picker";
-import AutomobileType from "../types/AutomobileType";
-import ServiceType from "../types/ServiceType";
-import { useData } from "../utility/DataProvider";
 import AppointmentType from "types/AppointmentType";
 
 interface TabPanelProps {
@@ -61,13 +56,8 @@ function TabPanel(props: TabPanelProps) {
 }
 
 const Appointment = () => {
-  const theme = useTheme();
   const [value, setValue] = React.useState(0);
   const [openCancelModal, setOpenCancelModal] = React.useState(false);
-  const [service, setService] = React.useState("");
-  const [automobile, setAutomobile] = React.useState("");
-  const [automobiles, setAutomobiles] = React.useState<AutomobileType[]>([]);
-  const { state } = useData();
   const [startDate, setStartDate] = React.useState<Date>(new Date());
   const [openEditModal, setOpenEditModal] = React.useState(false);
   const [appointments, setAppointments] = React.useState<AppointmentType[]>([]);
@@ -130,16 +120,6 @@ const Appointment = () => {
     );
   };
 
-  const handleServiceChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setService(event.target.value as string);
-  };
-
-  const handleAutomobileChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setAutomobile(event.target.value as string);
-  };
-
   const AppointmentUpdateContent = () => {
     return (
       <Box
@@ -161,7 +141,6 @@ const Appointment = () => {
           {/** START 1*/}
           <Box
             mt={2}
-            component={Card}
             sx={{
               borderRadius: 4,
               display: "flex",
@@ -172,38 +151,7 @@ const Appointment = () => {
             }}
           >
             {/** START 2*/}
-            <Box mt={4} mb={4}>
-              <TextField
-                id="outlined-select-currency"
-                select
-                label="Service"
-                value={service}
-                onChange={handleServiceChange}
-                helperText="Please select a service"
-                sx={{ mx: 2 }}
-              >
-                {state.services.map((service: ServiceType) => (
-                  <MenuItem key={service?._id} value={service?._id}>
-                    {service?.name}
-                  </MenuItem>
-                ))}
-              </TextField>
-              <TextField
-                id="outlined-select-currency"
-                select
-                label="Car"
-                value={automobile}
-                onChange={handleAutomobileChange}
-                helperText="Please select your Car"
-                sx={{ mx: 2 }}
-              >
-                {automobiles.map((automobile: AutomobileType) => (
-                  <MenuItem key={automobile?._id} value={automobile?._id}>
-                    {automobile?.type}
-                  </MenuItem>
-                ))}
-              </TextField>
-            </Box>
+
             <Box mb={2}>
               <DateTimePicker
                 amPmAriaLabel="Select AM/PM"
@@ -220,60 +168,6 @@ const Appointment = () => {
                 value={startDate}
                 yearAriaLabel="Year"
               />
-            </Box>
-            <Box
-              component="form"
-              noValidate
-              onSubmit={() => console.log("here")}
-              sx={{
-                display: "flex",
-                mt: 1,
-                flexDirection: "column",
-              }}
-            >
-              <Typography textAlign="center">
-                Enter payment Information
-              </Typography>
-              <Box
-                sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                  width: 300,
-                }}
-              >
-                <TextField
-                  margin="normal"
-                  required
-                  fullWidth
-                  name="nameOnCard"
-                  label="Name on the Card"
-                  id="nameOnCard"
-                />
-                <TextField
-                  margin="normal"
-                  required
-                  fullWidth
-                  name="cardNumber"
-                  label="Card Number"
-                  id="cardNumber"
-                />
-                <TextField
-                  margin="normal"
-                  required
-                  fullWidth
-                  name="expiryDate"
-                  label="Expiry Date (MM/YY)"
-                  id="expiryDate"
-                />
-                <TextField
-                  margin="normal"
-                  required
-                  fullWidth
-                  name="cvv"
-                  label="Security Code"
-                  id="cvv"
-                />
-              </Box>
             </Box>
           </Box>
         </Box>
@@ -390,11 +284,11 @@ const Appointment = () => {
                 <TableCell align="right">
                   <Box sx={{ display: "flex", justifyContent: "center" }}>
                     <Button
-                      sx={{ mx: 1, px: 3 }}
+                      sx={{ mx: 1, px: 1 }}
                       variant="contained"
                       onClick={() => setOpenEditModal(true)}
                     >
-                      Edit
+                      PostPoned
                     </Button>
                     <Button
                       sx={{ mx: 1 }}
