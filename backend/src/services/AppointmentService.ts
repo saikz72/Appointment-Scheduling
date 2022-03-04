@@ -4,10 +4,18 @@ import Bill from "../models/Bill";
 import Automobile from "../models/Automobile";
 import Technician from "../models/Technician";
 import Customer from "../models/Customer";
+import Product from "../models/Product";
 
 abstract class AppointmentService {
   static async createAppointment(appointmentDTO: any) {
-    const { startDate, serviceId, customerId, automobileId } = appointmentDTO;
+    const {
+      startDate,
+      serviceId,
+      customerId,
+      automobileId,
+      productNames,
+      description,
+    } = appointmentDTO;
     // search for a technician to give the appointment
     // For starter, pick the technician with the least amount of scheduled appointments
     // TODO:: cannot assign same technician to the same timeslot for an appointment
@@ -39,7 +47,17 @@ abstract class AppointmentService {
       customer: customer,
       technician: technician,
       automobile: automobile,
+      description: description,
     });
+
+    // get products
+    for (let name of productNames) {
+      console.log(name);
+      const product = await Product.findOne({ name: name });
+      if (product !== null) {
+        appointment.products?.push(product);
+      }
+    }
 
     const bill = new Bill({
       date: startDate,

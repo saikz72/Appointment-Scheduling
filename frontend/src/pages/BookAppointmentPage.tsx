@@ -5,9 +5,13 @@ import {
   Button,
   Typography,
   Card,
-  CssBaseline,
   Alert,
   CircularProgress,
+  Chip,
+  OutlinedInput,
+  Select,
+  SelectChangeEvent,
+  Theme,
 } from "@mui/material";
 import React from "react";
 import Navbar from "../components/Navbar";
@@ -16,13 +20,42 @@ import { useData } from "../utility/DataProvider";
 import ServiceType from "../types/ServiceType";
 import AutomobileType from "../types/AutomobileType";
 import { getAutomobilesFromServer } from "../services/AutomobileService";
+import { getAllProductsFromServer } from "../services/ProductService";
 import Footer from "../components/Footer";
 import { bookAppointment } from "../services/AppointmentService";
 import { blue } from "@mui/material/colors";
 import { usePersist } from "../utility/PersistenceProvider";
 import { useAuth } from "../utility/AuthProvider";
 import { useNavigate, Link } from "react-router-dom";
+import { useTheme } from "@mui/material/styles";
+import ProductType from "types/ProductType";
 
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      width: 250,
+    },
+  },
+};
+
+function getStyles(
+  name: string | undefined,
+  parts: readonly string[],
+  theme: Theme
+) {
+  if (name === undefined) {
+    return;
+  }
+  return {
+    fontWeight:
+      parts.indexOf(name) === -1
+        ? theme.typography.fontWeightRegular
+        : theme.typography.fontWeightMedium,
+  };
+}
 export default function BookAppointmentPage() {
   const persist = usePersist();
   const auth = useAuth();
@@ -34,6 +67,10 @@ export default function BookAppointmentPage() {
   const [startDate, setStartDate] = React.useState<Date>(new Date());
   const [status, setStatus] = React.useState("");
   const [loading, setLoading] = React.useState(false);
+  const [parts, setParts] = React.useState<string[]>([]);
+  const [products, setProducts] = React.useState<ProductType[]>([]);
+  const [description, setDescription] = React.useState<String>("");
+  const theme = useTheme();
 
   const user = auth.user ? auth.user : persist.user;
 
@@ -45,6 +82,11 @@ export default function BookAppointmentPage() {
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     setAutomobile(event.target.value as string);
+  };
+  const handleDescriptionChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setDescription(event.target.value as string);
   };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -62,8 +104,10 @@ export default function BookAppointmentPage() {
       customerId: customerId,
       startDate: startDate,
       automobileId: automobile,
+      productNames: parts,
+      description: description,
     };
-    console.log(startDate);
+    console.log(requestBody);
 
     if (!loading) {
       setLoading(true);
@@ -80,12 +124,27 @@ export default function BookAppointmentPage() {
     }
   };
 
+  const handleChange = (event: SelectChangeEvent<typeof parts>) => {
+    const {
+      target: { value },
+    } = event;
+
+    console.log(value);
+    setParts(
+      // On autofill we get a stringified value.
+      typeof value === "string" ? value.split(",") : value
+    );
+  };
+
   React.useEffect(() => {
     getAutomobilesFromServer(user?._id).then((res: any) => setAutomobiles(res));
+    getAllProductsFromServer().then((res: any) => {
+      setProducts(res.data);
+    });
   }, [user?._id]);
 
   return (
-    <>
+    <Box bgcolor="#FAFBFF">
       <Navbar />
       <Box
         sx={{
@@ -93,7 +152,7 @@ export default function BookAppointmentPage() {
           justifyContent: "center",
           alignItems: "center",
           flexDirection: "column",
-          backgroundColor: (t) => t.palette.grey[200],
+          backgroundColor: "#FAFBFF",
         }}
       >
         {loading && (
@@ -126,13 +185,14 @@ export default function BookAppointmentPage() {
           justifyContent: "center",
           alignItems: "center",
           flexDirection: "column",
-          backgroundColor: (t) => t.palette.grey[200],
+          backgroundColor: "#FAFBFF",
         }}
       >
         {/** START 1*/}
         <Box
           mt={2}
           component={Card}
+          elevation={4}
           sx={{
             borderRadius: 4,
             display: "flex",
@@ -175,6 +235,37 @@ export default function BookAppointmentPage() {
               ))}
             </TextField>
           </Box>
+          <Typography textAlign="center" variant="h6">
+            Select spare parts
+          </Typography>
+          <Select
+            sx={{ mb: 4, width: 300 }}
+            labelId="demo-multiple-chip-label"
+            id="demo-multiple-chip"
+            multiple
+            fullWidth
+            value={parts}
+            onChange={handleChange}
+            input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
+            renderValue={(selected) => (
+              <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
+                {selected.map((value) => (
+                  <Chip key={value} label={value} />
+                ))}
+              </Box>
+            )}
+            MenuProps={MenuProps}
+          >
+            {products.map((product) => (
+              <MenuItem
+                key={product?.name}
+                value={product?.name}
+                style={getStyles(product?.name, parts, theme)}
+              >
+                {product?.name}
+              </MenuItem>
+            ))}
+          </Select>
           {/** END 2*/}
 
           {/**START  3*/}
@@ -209,7 +300,25 @@ export default function BookAppointmentPage() {
               flexDirection: "column",
             }}
           >
-            <Typography textAlign="center">
+            <Box>
+              <Typography textAlign="center" variant="h6">
+                Description of problem
+              </Typography>
+              <Box width={300}>
+                <TextField
+                  margin="normal"
+                  multiline
+                  minRows={5}
+                  value={description}
+                  onChange={handleDescriptionChange}
+                  fullWidth
+                  name="description"
+                  label="Please input details of the problem here."
+                  id="description"
+                />
+              </Box>
+            </Box>
+            <Typography textAlign="center" variant="h6">
               Enter payment Information
             </Typography>
             <Box
@@ -268,9 +377,8 @@ export default function BookAppointmentPage() {
         <Box m={12}>
           <Footer />
           {/** FOR UNFORMITY OF COLOR */}
-          <CssBaseline />
         </Box>
       </Box>
-    </>
+    </Box>
   );
 }

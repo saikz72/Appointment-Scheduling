@@ -87,22 +87,7 @@ const Navbar = () => {
                   </Link>
                 </Tooltip>
               </Box>
-              <Box>
-                <Tooltip title="Buy spare parts">
-                  <Link to="/" style={{ textDecoration: "none" }}>
-                    <Button
-                      variant="outlined"
-                      sx={{
-                        color: "white",
-                        textTransform: "none",
-                        fontSize: 15,
-                      }}
-                    >
-                      Store
-                    </Button>
-                  </Link>
-                </Tooltip>
-              </Box>
+
               <Box>
                 <Tooltip title="Read more about us">
                   <Link to="/" style={{ textDecoration: "none" }}>
@@ -135,6 +120,20 @@ const Navbar = () => {
                   </Link>
                 </Tooltip>
               </Box>
+            </Box>
+            <Box>
+              <Tooltip title="Buy spare parts">
+                <Link to="/" style={{ textDecoration: "none" }}>
+                  <Button
+                    variant="outlined"
+                    sx={{
+                      color: "white",
+                      textTransform: "none",
+                      fontSize: 15,
+                    }}
+                  ></Button>
+                </Link>
+              </Tooltip>
             </Box>
 
             <Box sx={{ justifyContent: "flex-end" }}>
@@ -191,7 +190,7 @@ const Navbar = () => {
                         fontSize: 15,
                       }}
                     >
-                      Sign up
+                      Register
                     </Button>
                   </Link>
                 </Box>

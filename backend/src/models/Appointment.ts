@@ -1,9 +1,10 @@
-import { model, Schema } from 'mongoose';
-import { Automobile } from './Automobile';
-import { Bill } from './Bill';
-import { Customer } from './Customer';
-import { Service } from './Service';
-import { Technician } from './Technician';
+import { model, Schema } from "mongoose";
+import { Automobile } from "./Automobile";
+import { Bill } from "./Bill";
+import { Customer } from "./Customer";
+import { Product } from "./Product";
+import { Service } from "./Service";
+import { Technician } from "./Technician";
 
 export interface Appointment {
   startDate: Date;
@@ -15,6 +16,8 @@ export interface Appointment {
   bill: Bill;
   automobile: Automobile;
   status: string;
+  products?: Product[];
+  description?: string;
 }
 
 const AppointmentSchema = new Schema<Appointment>({
@@ -33,31 +36,36 @@ const AppointmentSchema = new Schema<Appointment>({
   },
   status: {
     type: String,
-    enum: ['Pending', 'Confirm', 'Cancelled'],
+    enum: ["Pending", "Confirm", "Cancelled"],
     required: true,
-    default: 'Pending',
+    default: "Pending",
   },
   service: {
     type: Schema.Types.ObjectId,
-    ref: 'Service',
+    ref: "Service",
   },
 
   customer: {
     type: Schema.Types.ObjectId,
-    ref: 'Customer',
+    ref: "Customer",
   },
   technician: {
     type: Schema.Types.ObjectId,
-    ref: 'Technician',
+    ref: "Technician",
   },
   bill: {
     type: Schema.Types.ObjectId,
-    ref: 'Bill',
+    ref: "Bill",
   },
   automobile: {
     type: Schema.Types.ObjectId,
-    ref: 'Automobile',
+    ref: "Automobile",
+  },
+  products: [{ type: Schema.Types.ObjectId, ref: "Product" }],
+  description: {
+    type: String,
+    required: false,
   },
 });
 
-export default model<Appointment>('Appointment', AppointmentSchema);
+export default model<Appointment>("Appointment", AppointmentSchema);

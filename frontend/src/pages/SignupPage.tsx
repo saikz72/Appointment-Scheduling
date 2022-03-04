@@ -95,7 +95,7 @@ export default function SignupPage() {
               gutterBottom
               component="h1"
             >
-              Sign up
+              Register for a new Account
             </Typography>
             <Box
               component="form"
@@ -143,7 +143,7 @@ export default function SignupPage() {
                 variant="contained"
                 sx={{ mt: 3, mb: 2, fontSize: 16 }}
               >
-                Sign Up
+                Register
               </Button>
               <Grid container>
                 <Grid item xs>
