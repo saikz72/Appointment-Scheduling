@@ -26,6 +26,8 @@ import roadSide from "../assets/roadsideAssistance.png";
 import tyre from "../assets/tire.png";
 import repair from "../assets/car-repairService.png";
 import Testimonial from "components/Testimonial";
+import { useAuth } from "utility/AuthProvider";
+import { usePersist } from "utility/PersistenceProvider";
 
 function createData(day: string, time: string) {
   return { day, time };
@@ -41,6 +43,10 @@ const rows = [
 ];
 
 const HomePage = () => {
+  const persist = usePersist();
+  const auth = useAuth();
+  const user = auth.user ? auth.user : persist.user;
+
   return (
     <Box
       sx={{
@@ -125,19 +131,36 @@ const HomePage = () => {
                 quality oriented.
               </Typography>
             </Box>
-            <Box m={8}>
-              <Link
-                to="/appointment"
-                style={{ flexGrow: 1, textDecoration: "none" }}
-              >
-                <Button
-                  variant="contained"
-                  sx={{ margin: "0 auto", display: "flex" }}
+            {user && user.userType === "Customer" && (
+              <Box m={8}>
+                <Link
+                  to="/appointment"
+                  style={{ flexGrow: 1, textDecoration: "none" }}
                 >
-                  Make an appointment
-                </Button>
-              </Link>
-            </Box>
+                  <Button
+                    variant="contained"
+                    sx={{ margin: "0 auto", display: "flex" }}
+                  >
+                    Make an appointment
+                  </Button>
+                </Link>
+              </Box>
+            )}
+            {user === undefined && (
+              <Box m={8}>
+                <Link
+                  to="/appointment"
+                  style={{ flexGrow: 1, textDecoration: "none" }}
+                >
+                  <Button
+                    variant="contained"
+                    sx={{ margin: "0 auto", display: "flex" }}
+                  >
+                    Make an appointment
+                  </Button>
+                </Link>
+              </Box>
+            )}
           </Grid>
         </Grid>
       </Box>

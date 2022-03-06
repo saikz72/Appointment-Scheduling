@@ -55,22 +55,42 @@ const Navbar = () => {
                   </Link>
                 </Tooltip>
               </Box>
-              <Box>
-                <Tooltip title="Book an appointment">
-                  <Link to="/Appointment" style={{ textDecoration: "none" }}>
-                    <Button
-                      variant="outlined"
-                      sx={{
-                        color: "white",
-                        textTransform: "none",
-                        fontSize: 15,
-                      }}
-                    >
-                      Appointment
-                    </Button>
-                  </Link>
-                </Tooltip>
-              </Box>
+              {user && user.userType === "Customer" && (
+                <Box>
+                  <Tooltip title="Book an appointment">
+                    <Link to="/Appointment" style={{ textDecoration: "none" }}>
+                      <Button
+                        variant="outlined"
+                        sx={{
+                          color: "white",
+                          textTransform: "none",
+                          fontSize: 15,
+                        }}
+                      >
+                        Appointment
+                      </Button>
+                    </Link>
+                  </Tooltip>
+                </Box>
+              )}
+              {!user && (
+                <Box>
+                  <Tooltip title="Book an appointment">
+                    <Link to="/Appointment" style={{ textDecoration: "none" }}>
+                      <Button
+                        variant="outlined"
+                        sx={{
+                          color: "white",
+                          textTransform: "none",
+                          fontSize: 15,
+                        }}
+                      >
+                        Appointment
+                      </Button>
+                    </Link>
+                  </Tooltip>
+                </Box>
+              )}
               <Box>
                 <Tooltip title="Checkout our sevices">
                   <Link to="/" style={{ textDecoration: "none" }}>
