@@ -13,6 +13,8 @@ import { Link as RouterLink, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../utility/AuthProvider";
 import Navbar from "../components/Navbar";
 import paintJob from "../assets/paint job 1.jpg";
+import { Alert } from "@mui/material";
+import { baseURL } from "utility/constants";
 
 function Copyright(props: any) {
   return (
@@ -33,12 +35,13 @@ function Copyright(props: any) {
 }
 
 export default function SignupPage() {
+  const [error, setError] = React.useState("");
   let auth = useAuth();
   let location: any = useLocation();
   let navigate = useNavigate();
   let from = location.state?.from?.pathname || "/";
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
 
@@ -54,10 +57,27 @@ export default function SignupPage() {
       userType,
     };
 
-    auth.signup(user, () => {
-      localStorage.setItem("isAuthenticated", "YES");
-      navigate(from, { replace: true });
+    const response = await fetch(baseURL + "/auth/register", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(user),
     });
+    console.log(response);
+    if (response.status === 423) {
+      setError("Email already Taken");
+    }
+    if (response.status === 422) {
+      setError("Your password does not meet the minimum requirement");
+    }
+    const newUser = await response.json();
+
+    localStorage.setItem("user", JSON.stringify(newUser));
+    navigate(from, { replace: true });
+    window.location.reload();
+    // auth.signup(user, () => {
+    //   localStorage.setItem("isAuthenticated", "YES");
+    //   navigate(from, { replace: true });
+    // });
   };
 
   return (
@@ -84,6 +104,11 @@ export default function SignupPage() {
               alignItems: "center",
             }}
           >
+            {error.length !== 0 && (
+              <Alert variant="filled" severity="error">
+                {error}
+              </Alert>
+            )}
             <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
               <LockOutlinedIcon />
             </Avatar>
