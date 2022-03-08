@@ -115,7 +115,73 @@ abstract class AppointmentController {
       res.status(400).send(error);
     }
   }
+  /**
+   * Get all the appointments of the customer
+   * @param req
+   * @param res
+   * @param next
+   */
+  static async getAllPendingAppointmentsOfCustomer(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    const customerId = req.params.customerId;
 
+    try {
+      const appointments =
+        await AppointmentService.getAllPendingAppointmentsOfCustomer(
+          customerId
+        );
+      res.status(200).send(appointments);
+    } catch (error) {
+      res.status(400).send(error);
+    }
+  }
+  /**
+   * Get all the appointments of the customer
+   * @param req
+   * @param res
+   * @param next
+   */
+  static async getAllConfirmAppointmentsOfCustomer(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    const customerId = req.params.customerId;
+
+    try {
+      const appointments =
+        await AppointmentService.getAllConfirmAppointmentsOfCustomer(
+          customerId
+        );
+      res.status(200).send(appointments);
+    } catch (error) {
+      res.status(400).send(error);
+    }
+  }
+  /**
+   * Get all the appointments of the customer
+   * @param req
+   * @param res
+   * @param next
+   */
+  static async getAllCancelAppointmentsOfCustomer(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    const customerId = req.params.customerId;
+
+    try {
+      const appointments =
+        await AppointmentService.getAllCancelAppointmentsOfCustomer(customerId);
+      res.status(200).send(appointments);
+    } catch (error) {
+      res.status(400).send(error);
+    }
+  }
   /**
    * Get all the appointmens of the technician
    * @param req

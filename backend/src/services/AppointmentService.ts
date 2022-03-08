@@ -138,6 +138,48 @@ abstract class AppointmentService {
       throw error;
     }
   }
+  static async getAllPendingAppointmentsOfCustomer(customerId: string) {
+    try {
+      const appointments = await Appointment.find({
+        customer: customerId,
+        status: "Pending",
+      })
+        .populate("technician", "name")
+        .populate("service", "name cost")
+        .populate("automobile", "licensePlate");
+      return appointments;
+    } catch (error) {
+      throw error;
+    }
+  }
+  static async getAllConfirmAppointmentsOfCustomer(customerId: string) {
+    try {
+      const appointments = await Appointment.find({
+        customer: customerId,
+        status: "Confirm",
+      })
+        .populate("technician", "name")
+        .populate("service", "name cost")
+        .populate("automobile", "licensePlate");
+      return appointments;
+    } catch (error) {
+      throw error;
+    }
+  }
+  static async getAllCancelAppointmentsOfCustomer(customerId: string) {
+    try {
+      const appointments = await Appointment.find({
+        customer: customerId,
+        status: "Cancelled",
+      })
+        .populate("technician", "name")
+        .populate("service", "name cost")
+        .populate("automobile", "licensePlate");
+      return appointments;
+    } catch (error) {
+      throw error;
+    }
+  }
 
   static async getAllAppointmentsOfTechnician(technicianId: string) {
     try {

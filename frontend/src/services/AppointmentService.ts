@@ -23,6 +23,44 @@ export const getAllAppointmentsOfCustomer = async (customerId: string) => {
   }
   return await response.json();
 };
+export const getAllPendingAppointmentsOfCustomer = async (
+  customerId: string
+) => {
+  const response = await fetch(
+    baseURL + `/appointment/getAllPendingAppointmentsOfCustomer/${customerId}`
+  );
+  if (!response.ok) {
+    const message: string = `An error has occured: ${response.status}`;
+    throw new Error(message);
+  }
+  return await response.json();
+};
+
+export const getAllConfirmAppointmentsOfCustomer = async (
+  customerId: string
+) => {
+  const response = await fetch(
+    baseURL + `/appointment/getAllConfirmAppointmentsOfCustomer/${customerId}`
+  );
+  if (!response.ok) {
+    const message: string = `An error has occured: ${response.status}`;
+    throw new Error(message);
+  }
+  return await response.json();
+};
+
+export const getAllCancelAppointmentsOfCustomer = async (
+  customerId: string
+) => {
+  const response = await fetch(
+    baseURL + `/appointment/getAllCancelAppointmentsOfCustomer/${customerId}`
+  );
+  if (!response.ok) {
+    const message: string = `An error has occured: ${response.status}`;
+    throw new Error(message);
+  }
+  return await response.json();
+};
 
 export const getAllAppointments = async () => {
   const response = await fetch(baseURL + `/appointment/getAllAppointments`);

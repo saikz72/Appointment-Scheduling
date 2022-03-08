@@ -15,7 +15,12 @@ import {
   Typography,
 } from "@mui/material";
 import React from "react";
-import { getAllAppointmentsOfCustomer } from "../services/AppointmentService";
+import {
+  getAllAppointmentsOfCustomer,
+  getAllCancelAppointmentsOfCustomer,
+  getAllConfirmAppointmentsOfCustomer,
+  getAllPendingAppointmentsOfCustomer,
+} from "../services/AppointmentService";
 import { useAuth } from "../utility/AuthProvider";
 import { usePersist } from "../utility/PersistenceProvider";
 import DateTimePicker from "react-datetime-picker";
@@ -61,6 +66,10 @@ const Appointment = () => {
   const [startDate, setStartDate] = React.useState<Date>(new Date());
   const [openEditModal, setOpenEditModal] = React.useState(false);
   const [appointments, setAppointments] = React.useState<AppointmentType[]>([]);
+  const [pendings, setPendings] = React.useState<AppointmentType[]>([]);
+  const [confirms, setConfirms] = React.useState<AppointmentType[]>([]);
+  const [cancells, setCancells] = React.useState<AppointmentType[]>([]);
+
   const persist = usePersist();
   const auth = useAuth();
   const user = auth.user ? auth.user : persist.user;
@@ -70,6 +79,15 @@ const Appointment = () => {
   React.useEffect(() => {
     getAllAppointmentsOfCustomer(customerId)
       .then((response) => setAppointments(response))
+      .catch((error) => console.log(error));
+    getAllPendingAppointmentsOfCustomer(customerId)
+      .then((response) => setPendings(response))
+      .catch((error) => console.log(error));
+    getAllCancelAppointmentsOfCustomer(customerId)
+      .then((response) => setCancells(response))
+      .catch((error) => console.log(error));
+    getAllConfirmAppointmentsOfCustomer(customerId)
+      .then((response) => setConfirms(response))
       .catch((error) => console.log(error));
   }, [customerId]);
 
@@ -236,7 +254,7 @@ const Appointment = () => {
 
   const handleCancel = () => {};
 
-  const FutureAppointmentsPanel = () => {
+  const CancelAppointmentsPanel = () => {
     return (
       <TableContainer>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -252,7 +270,151 @@ const Appointment = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {appointments.map((appointment) => (
+            {cancells.map((appointment) => (
+              <TableRow
+                key={appointment?._id}
+                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+              >
+                <TableCell component="th" scope="row">
+                  {appointment?.technician?.name}
+                </TableCell>
+                <TableCell align="center">
+                  {new Date(appointment?.startDate).toLocaleDateString()}
+                </TableCell>
+                <TableCell align="right">
+                  {new Date(appointment?.startDate).toLocaleTimeString()}
+                </TableCell>
+                <TableCell align="right">
+                  {appointment?.service?.name}
+                </TableCell>
+                <TableCell align="right">
+                  {appointment?.service?.cost}
+                </TableCell>
+                <TableCell align="right">
+                  {appointment?.automobile?.licensePlate}
+                </TableCell>
+                <TableCell align="right">
+                  {/* <Typography color="red" fontSize={11}>
+                    {appointment?.status}
+                  </Typography> */}
+                  {pendingElement(appointment?.status)}
+                </TableCell>
+                <TableCell align="right">
+                  <Box sx={{ display: "flex", justifyContent: "center" }}>
+                    <Button
+                      sx={{ mx: 1, px: 1 }}
+                      variant="contained"
+                      onClick={() => setOpenEditModal(true)}
+                    >
+                      PostPoned
+                    </Button>
+                    <Button
+                      sx={{ mx: 1 }}
+                      variant="outlined"
+                      color="error"
+                      onClick={() => setOpenCancelModal(true)}
+                    >
+                      Cancel
+                    </Button>
+                  </Box>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    );
+  };
+
+  const ConfirmAppointmentsPanel = () => {
+    return (
+      <TableContainer>
+        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <TableCell>Technician</TableCell>
+              <TableCell align="center"> Date</TableCell>
+              <TableCell align="center"> Time</TableCell>
+              <TableCell align="right">Service</TableCell>
+              <TableCell align="right">Amount</TableCell>
+              <TableCell align="right">License Plate</TableCell>
+              <TableCell align="right">Status</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {confirms.map((appointment) => (
+              <TableRow
+                key={appointment?._id}
+                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+              >
+                <TableCell component="th" scope="row">
+                  {appointment?.technician?.name}
+                </TableCell>
+                <TableCell align="center">
+                  {new Date(appointment?.startDate).toLocaleDateString()}
+                </TableCell>
+                <TableCell align="right">
+                  {new Date(appointment?.startDate).toLocaleTimeString()}
+                </TableCell>
+                <TableCell align="right">
+                  {appointment?.service?.name}
+                </TableCell>
+                <TableCell align="right">
+                  {appointment?.service?.cost}
+                </TableCell>
+                <TableCell align="right">
+                  {appointment?.automobile?.licensePlate}
+                </TableCell>
+                <TableCell align="right">
+                  {/* <Typography color="red" fontSize={11}>
+                    {appointment?.status}
+                  </Typography> */}
+                  {pendingElement(appointment?.status)}
+                </TableCell>
+                <TableCell align="right">
+                  <Box sx={{ display: "flex", justifyContent: "center" }}>
+                    <Button
+                      sx={{ mx: 1, px: 1 }}
+                      variant="contained"
+                      onClick={() => setOpenEditModal(true)}
+                    >
+                      PostPoned
+                    </Button>
+                    <Button
+                      sx={{ mx: 1 }}
+                      variant="outlined"
+                      color="error"
+                      onClick={() => setOpenCancelModal(true)}
+                    >
+                      Cancel
+                    </Button>
+                  </Box>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    );
+  };
+
+  const PendingAppointmentsPanel = () => {
+    return (
+      <TableContainer>
+        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <TableCell>Technician</TableCell>
+              <TableCell align="center"> Date</TableCell>
+              <TableCell align="center"> Time</TableCell>
+              <TableCell align="right">Service</TableCell>
+              <TableCell align="right">Amount</TableCell>
+              <TableCell align="right">License Plate</TableCell>
+              <TableCell align="right">Status</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {pendings.map((appointment) => (
               <TableRow
                 key={appointment?._id}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
@@ -320,10 +482,21 @@ const Appointment = () => {
             aria-label="secondary tabs example"
             variant="fullWidth"
           >
-            <Tab label="Appointments" {...a11yProps(0)} />
+            <Tab label="Confirm Appointments" {...a11yProps(0)} />
+            <Tab label="Pending Appointments" {...a11yProps(1)} />
+            <Tab label="Cancel Appointments" {...a11yProps(2)} />
           </Tabs>
-          <TabPanel value={value} index={0}>
+          {/* <TabPanel value={value} index={0}>
             <FutureAppointmentsPanel />
+          </TabPanel> */}
+          <TabPanel value={value} index={0}>
+            <ConfirmAppointmentsPanel />
+          </TabPanel>
+          <TabPanel value={value} index={1}>
+            <PendingAppointmentsPanel />
+          </TabPanel>
+          <TabPanel value={value} index={2}>
+            <CancelAppointmentsPanel />
           </TabPanel>
         </Box>
         <CancelModal />

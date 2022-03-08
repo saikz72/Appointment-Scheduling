@@ -1,9 +1,9 @@
-import { api } from '../utility/AuthProvider';
-import { baseURL } from '../utility/constants';
+import { api } from "../utility/AuthProvider";
+import { baseURL } from "../utility/constants";
 
 export const getUserInformation = async (requestBody: any) => {
   try {
-    const response = await api.post(baseURL + '/auth/user', requestBody);
+    const response = await api.post(baseURL + "/auth/user", requestBody);
     return await response.data;
   } catch (error) {
     console.log(error);
@@ -13,11 +13,16 @@ export const getUserInformation = async (requestBody: any) => {
 
 export const createTechnician = async (requestBody: any) => {
   try {
-    const response = await fetch(baseURL + '/auth/register', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+    const response = await fetch(baseURL + "/auth/register", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(requestBody),
     });
+    if (response.status === 422) {
+      const message: string =
+        "Password should be 8 characters long, should have 1 upper case and 1 lower case, 1 number and 1 special character.";
+      throw new Error(message);
+    }
     if (!response.ok) {
       const message: string = `An error has occured: ${response.status}`;
       throw new Error(message);
@@ -30,7 +35,7 @@ export const createTechnician = async (requestBody: any) => {
 
 export const getAllTechnicians = async () => {
   try {
-    const response = await fetch(baseURL + '/auth/getAllTechnicians');
+    const response = await fetch(baseURL + "/auth/getAllTechnicians");
     if (!response.ok) {
       const message: string = `An error has occured: ${response.status}`;
       throw new Error(message);
@@ -44,9 +49,9 @@ export const getAllTechnicians = async () => {
 export const deleteTechnician = async (requestBody: any) => {
   console.log(requestBody);
   try {
-    const response = await fetch(baseURL + '/auth/deleteAccount', {
-      method: 'DELETE',
-      headers: { 'Content-Type': 'application/json' },
+    const response = await fetch(baseURL + "/auth/deleteAccount", {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(requestBody),
     });
 
@@ -56,7 +61,7 @@ export const deleteTechnician = async (requestBody: any) => {
     }
     return await response.json();
   } catch (err) {
-    console.log('err', err);
+    console.log("err", err);
     throw err;
   }
 };
