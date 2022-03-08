@@ -1,7 +1,5 @@
 import {
   Box,
-  Button,
-  Modal,
   Tab,
   Table,
   TableBody,
@@ -16,7 +14,6 @@ import React from "react";
 import { getAllAppointments } from "../services/AppointmentService";
 import { useAuth } from "../utility/AuthProvider";
 import { usePersist } from "../utility/PersistenceProvider";
-import DateTimePicker from "react-datetime-picker";
 import AppointmentType from "types/AppointmentType";
 
 interface TabPanelProps {
@@ -24,18 +21,6 @@ interface TabPanelProps {
   index: number;
   value: number;
 }
-
-const style = {
-  position: "absolute" as "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 800,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  p: 4,
-};
 
 function TabPanel(props: TabPanelProps) {
   const { children, value, index, ...other } = props;
@@ -55,9 +40,6 @@ function TabPanel(props: TabPanelProps) {
 
 const AdminAppointment = () => {
   const [value, setValue] = React.useState(0);
-  const [openCancelModal, setOpenCancelModal] = React.useState(false);
-  const [startDate, setStartDate] = React.useState<Date>(new Date());
-  const [openEditModal, setOpenEditModal] = React.useState(false);
   const [appointments, setAppointments] = React.useState<AppointmentType[]>([]);
   const persist = usePersist();
   const auth = useAuth();
@@ -86,129 +68,6 @@ const AdminAppointment = () => {
     };
   }
 
-  const CancelModal = (props: any) => {
-    return (
-      <Modal
-        open={openCancelModal}
-        onClose={() => setOpenCancelModal(false)}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={style}>
-          <Typography
-            align="center"
-            id="modal-modal-title"
-            variant="h6"
-            component="h2"
-          >
-            Are you sure you want to cancel this appointment?
-          </Typography>
-          <Box sx={{ display: "flex", justifyContent: "center" }}>
-            <Button
-              onClick={() => {
-                handleCancel();
-                setOpenCancelModal(false);
-              }}
-            >
-              Yes
-            </Button>
-            <Button onClick={() => setOpenCancelModal(false)}>No</Button>
-          </Box>
-        </Box>
-      </Modal>
-    );
-  };
-
-  const AppointmentUpdateContent = () => {
-    return (
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          flexDirection: "column",
-        }}
-      >
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            flexDirection: "column",
-          }}
-        >
-          {/** START 1*/}
-          <Box
-            mt={2}
-            sx={{
-              borderRadius: 4,
-              display: "flex",
-              justifyContent: "center",
-              flexDirection: "column",
-              alignItems: "center",
-              width: 500,
-            }}
-          >
-            {/** START 2*/}
-
-            <Box mb={2}>
-              <DateTimePicker
-                amPmAriaLabel="Select AM/PM"
-                calendarAriaLabel="Toggle calendar"
-                clearAriaLabel="Clear value"
-                dayAriaLabel="Day"
-                hourAriaLabel="Hour"
-                maxDetail="second"
-                minuteAriaLabel="Minute"
-                monthAriaLabel="Month"
-                nativeInputAriaLabel="Date and time"
-                onChange={setStartDate}
-                secondAriaLabel="Second"
-                value={startDate}
-                yearAriaLabel="Year"
-              />
-            </Box>
-          </Box>
-        </Box>
-      </Box>
-    );
-  };
-
-  const EditModal = (props: any) => {
-    return (
-      <Modal
-        open={openEditModal}
-        onClose={() => setOpenCancelModal(false)}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={style}>
-          <AppointmentUpdateContent />
-          <Box sx={{ display: "flex", justifyContent: "center" }}>
-            <Button
-              onClick={() => {
-                handleEdit();
-                setOpenEditModal(false);
-              }}
-              sx={{ my: 2, mx: 2 }}
-              variant="contained"
-            >
-              Update
-            </Button>
-            <Button
-              color="error"
-              sx={{ my: 2, mx: 2 }}
-              variant="contained"
-              onClick={() => setOpenEditModal(false)}
-            >
-              Cancel
-            </Button>
-          </Box>
-        </Box>
-      </Modal>
-    );
-  };
-
   const pendingElement = (status: string | null) => {
     if (status === "Pending") {
       return (
@@ -230,10 +89,6 @@ const AdminAppointment = () => {
       </Typography>
     );
   };
-
-  const handleEdit = () => {};
-
-  const handleCancel = () => {};
 
   const FutureAppointmentsPanel = () => {
     return (
@@ -262,7 +117,7 @@ const AdminAppointment = () => {
                 <TableCell align="center">
                   {new Date(appointment?.startDate).toLocaleDateString()}
                 </TableCell>
-                <TableCell align="right">
+                <TableCell align="center">
                   {new Date(appointment?.startDate).toLocaleTimeString()}
                 </TableCell>
                 <TableCell align="right">
@@ -306,8 +161,6 @@ const AdminAppointment = () => {
             <FutureAppointmentsPanel />
           </TabPanel>
         </Box>
-        <CancelModal />
-        <EditModal />
       </Box>
     </React.Fragment>
   );
