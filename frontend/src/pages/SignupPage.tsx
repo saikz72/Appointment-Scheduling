@@ -67,7 +67,9 @@ export default function SignupPage() {
       setError("Email already Taken");
     }
     if (response.status === 422) {
-      setError("Your password does not meet the minimum requirement");
+      setError(
+        "Password should be 8 characters long, should have 1 upper case and 1 lower case, 1 number and 1 special character."
+      );
     }
     const newUser = await response.json();
 

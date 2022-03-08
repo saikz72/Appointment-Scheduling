@@ -1,7 +1,7 @@
-import AutomobileType from '../types/AutomobileType';
-import BusinessType from '../types/BusinessType';
-import ServiceType from '../types/ServiceType';
-import * as actionTypes from './actionTypes';
+import AutomobileType from "../types/AutomobileType";
+import BusinessType from "../types/BusinessType";
+import ServiceType from "../types/ServiceType";
+import * as actionTypes from "./actionTypes";
 
 export interface Action {
   type:
@@ -13,6 +13,7 @@ export interface Action {
     | actionTypes.AutomobileActionTypes.ADD_AUTOMOBILE
     | actionTypes.AutomobileActionTypes.UPDATE_AUTOMOBILE
     | actionTypes.AutomobileActionTypes.REMOVE_AUTOMOBILE
+    | actionTypes.ServiceActionTypes.ADD
     | null;
   payload: BusinessType | ServiceType | AutomobileType | null;
 }
@@ -41,6 +42,13 @@ export const deleteService = (payload?: ServiceType) => {
 export const updateService = (payload?: ServiceType) => {
   return {
     type: actionTypes.ServiceActionTypes.UPDATE,
+    payload: payload,
+  };
+};
+
+export const addService = (payload?: ServiceType) => {
+  return {
+    type: actionTypes.ServiceActionTypes.ADD,
     payload: payload,
   };
 };

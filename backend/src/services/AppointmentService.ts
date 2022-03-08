@@ -107,7 +107,10 @@ abstract class AppointmentService {
 
   static async getAllAppointments() {
     try {
-      const appointments = await Appointment.find();
+      const appointments = await Appointment.find()
+        .populate("customer", "name email")
+        .populate("service", "name cost")
+        .populate("automobile", "licensePlate");
       return appointments;
     } catch (error) {
       throw error;
