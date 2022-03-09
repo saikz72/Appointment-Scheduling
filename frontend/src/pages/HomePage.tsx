@@ -1,4 +1,4 @@
-import Navbar from "../components/Navbar";
+import Navbar from '../components/Navbar';
 import {
   Box,
   Button,
@@ -11,35 +11,35 @@ import {
   TableRow,
   Stack,
   Divider,
-} from "@mui/material";
-import Footer from "../components/Footer";
-import { Link } from "react-router-dom";
-import landingPageHero from "../assets/landing-hero.png";
-import paintJob from "../assets/paint job 1.jpg";
-import tow from "../assets/towing.png";
-import hours from "../assets/openingHours.png";
-import wash from "../assets/car-wash.png";
-import towing from "../assets/tow-truck.png";
-import inspection from "../assets/inspection.png";
-import oilChange from "../assets/oil.png";
-import roadSide from "../assets/roadsideAssistance.png";
-import tyre from "../assets/tire.png";
-import repair from "../assets/car-repairService.png";
-import Testimonial from "components/Testimonial";
-import { useAuth } from "utility/AuthProvider";
-import { usePersist } from "utility/PersistenceProvider";
+} from '@mui/material';
+import Footer from '../components/Footer';
+import { Link } from 'react-router-dom';
+import landingPageHero from '../assets/landing-hero.png';
+import paintJob from '../assets/paint job 1.jpg';
+import tow from '../assets/towing.png';
+import hours from '../assets/openingHours.png';
+import wash from '../assets/car-wash.png';
+import towing from '../assets/tow-truck.png';
+import inspection from '../assets/inspection.png';
+import oilChange from '../assets/oil.png';
+import roadSide from '../assets/roadsideAssistance.png';
+import tyre from '../assets/tire.png';
+import repair from '../assets/car-repairService.png';
+import Testimonial from 'components/Testimonial';
+import { useAuth } from 'utility/AuthProvider';
+import { usePersist } from 'utility/PersistenceProvider';
 
 function createData(day: string, time: string) {
   return { day, time };
 }
 
 const rows = [
-  createData("Monday", "9:00AM - 12:00PM"),
-  createData("Tuesday", "9:00AM - 12:00PM"),
-  createData("Wednesday", "9:00AM - 12:00PM"),
-  createData("Thursday", "9:00AM - 12:00PM"),
-  createData("Friday", "9:00AM - 12:00PM"),
-  createData("Saturday", "9:00AM - 12:00PM"),
+  createData('Monday', '9:00AM - 12:00PM'),
+  createData('Tuesday', '9:00AM - 12:00PM'),
+  createData('Wednesday', '9:00AM - 12:00PM'),
+  createData('Thursday', '9:00AM - 12:00PM'),
+  createData('Friday', '9:00AM - 12:00PM'),
+  createData('Saturday', '9:00AM - 12:00PM'),
 ];
 
 const HomePage = () => {
@@ -50,7 +50,7 @@ const HomePage = () => {
   return (
     <Box
       sx={{
-        backgroundColor: "#FAFBFF",
+        backgroundColor: '#FAFBFF',
       }}
     >
       <Navbar />
@@ -59,12 +59,12 @@ const HomePage = () => {
           {/* What the site is about */}
           <Box
             sx={{
-              display: "flex",
+              display: 'flex',
               mt: 40,
               mx: 4,
-              alignItems: "center",
-              justifyContent: "center",
-              flexDirection: "column",
+              alignItems: 'center',
+              justifyContent: 'center',
+              flexDirection: 'column',
             }}
           >
             <Typography
@@ -72,16 +72,15 @@ const HomePage = () => {
               variant="h2"
               mt={4}
               color="#2F2888"
-              sx={{ fontWeight: "bold" }}
+              sx={{ fontWeight: 'bold' }}
               gutterBottom
             >
               Welcome to Geek repair shop
             </Typography>
-            <Typography align="center" variant="h6" sx={{ fontWeight: "500" }}>
-              When it comes to your car repair requirement our team offers a
-              variety of services that will ensure your vehicle is restored as
-              close as possible to manufacturer standards. Handled by certified
-              technicians.
+            <Typography align="center" variant="h6" sx={{ fontWeight: '500' }}>
+              When it comes to your car repair requirement our team offers a variety of
+              services that will ensure your vehicle is restored as close as possible to
+              manufacturer standards. Handled by certified technicians.
             </Typography>
           </Box>
         </Grid>
@@ -92,7 +91,7 @@ const HomePage = () => {
       </Grid>
 
       {/**  */}
-      <Box sx={{ backgroundColor: "#FAFBFF" }}>
+      <Box sx={{ backgroundColor: '#FAFBFF' }}>
         <Grid container rowSpacing={6} columnSpacing={{ xs: 4, sm: 2, md: 4 }}>
           <Grid item xs={6}>
             <img width="100%" height="100%" src={paintJob} alt="Logo" />
@@ -100,11 +99,11 @@ const HomePage = () => {
           <Grid item xs={6}>
             <Box
               sx={{
-                display: "flex",
+                display: 'flex',
                 mx: 10,
-                alignItems: "center",
-                justifyContent: "center",
-                flexDirection: "column",
+                alignItems: 'center',
+                justifyContent: 'center',
+                flexDirection: 'column',
               }}
             >
               <Typography
@@ -112,7 +111,7 @@ const HomePage = () => {
                 variant="h2"
                 mt={4}
                 color="#2F2888"
-                sx={{ fontWeight: "bold" }}
+                sx={{ fontWeight: 'bold' }}
                 gutterBottom
               >
                 About Us
@@ -124,23 +123,16 @@ const HomePage = () => {
                 paragraph
                 sx={{ fontWeight: 500 }}
               >
-                We provide vehicle maintenance, online sparepart shopping and
-                technical advices regarding ones vehicle. We also provides other
-                services such as a car wash, tire change, roadside assistance,
-                towing, and car inspection. Our service is guaranteed and
-                quality oriented.
+                We provide vehicle maintenance, online sparepart shopping and technical
+                advices regarding ones vehicle. We also provides other services such as a
+                car wash, tire change, roadside assistance, towing, and car inspection.
+                Our service is guaranteed and quality oriented.
               </Typography>
             </Box>
-            {user && user.userType === "Customer" && (
+            {user && user.userType === 'Customer' && (
               <Box m={8}>
-                <Link
-                  to="/appointment"
-                  style={{ flexGrow: 1, textDecoration: "none" }}
-                >
-                  <Button
-                    variant="contained"
-                    sx={{ margin: "0 auto", display: "flex" }}
-                  >
+                <Link to="/appointment" style={{ flexGrow: 1, textDecoration: 'none' }}>
+                  <Button variant="contained" sx={{ margin: '0 auto', display: 'flex' }}>
                     Make an appointment
                   </Button>
                 </Link>
@@ -148,14 +140,8 @@ const HomePage = () => {
             )}
             {user === undefined && (
               <Box m={8}>
-                <Link
-                  to="/appointment"
-                  style={{ flexGrow: 1, textDecoration: "none" }}
-                >
-                  <Button
-                    variant="contained"
-                    sx={{ margin: "0 auto", display: "flex" }}
-                  >
+                <Link to="/appointment" style={{ flexGrow: 1, textDecoration: 'none' }}>
+                  <Button variant="contained" sx={{ margin: '0 auto', display: 'flex' }}>
                     Make an appointment
                   </Button>
                 </Link>
@@ -170,11 +156,11 @@ const HomePage = () => {
         <Grid item xs={6}>
           <Box
             sx={{
-              display: "flex",
+              display: 'flex',
               mt: 8,
-              alignItems: "center",
-              justifyContent: "center",
-              flexDirection: "column",
+              alignItems: 'center',
+              justifyContent: 'center',
+              flexDirection: 'column',
             }}
           >
             <Typography
@@ -182,30 +168,26 @@ const HomePage = () => {
               variant="h2"
               mt={4}
               color="#2F2888"
-              sx={{ fontWeight: "bold" }}
+              sx={{ fontWeight: 'bold' }}
               gutterBottom
             >
               Services
             </Typography>
-            <Typography
-              align="center"
-              variant="h6"
-              sx={{ fontWeight: "500", mx: 20 }}
-            >
-              Our ASE Certified mechanics are committed to quality for our
-              community of drivers in Montreal,Quebec. We make sure to continue
-              providing to-quality services by providing biannual trainings. At
-              Prestige, we offer a variety of services:
+            <Typography align="center" variant="h6" sx={{ fontWeight: '500', mx: 20 }}>
+              Our ASE Certified mechanics are committed to quality for our community of
+              drivers in Montreal,Quebec. We make sure to continue providing to-quality
+              services by providing biannual trainings. At Prestige, we offer a variety of
+              services:
             </Typography>
             <Box
               sx={{
-                display: "flex",
-                justifyContent: "space-between",
-                flexDirection: "row",
+                display: 'flex',
+                justifyContent: 'space-between',
+                flexDirection: 'row',
                 mt: 4,
               }}
             >
-              <Box sx={{ flexDirection: "row", display: "flex", ml: 10 }}>
+              <Box sx={{ flexDirection: 'row', display: 'flex', ml: 10 }}>
                 <Stack direction="column">
                   <img width="50%" height="100%" src={wash} alt="Logo" />
                   <Typography> Car Wash</Typography>
@@ -252,9 +234,9 @@ const HomePage = () => {
         <Grid item xs={6}>
           <Box
             sx={{
-              display: "flex",
-              justifyContent: "center",
-              flexDirection: "column",
+              display: 'flex',
+              justifyContent: 'center',
+              flexDirection: 'column',
             }}
           >
             <Typography
@@ -262,21 +244,18 @@ const HomePage = () => {
               variant="h2"
               mt={4}
               color="#2F2888"
-              sx={{ fontWeight: "bold" }}
+              sx={{ fontWeight: 'bold' }}
               gutterBottom
             >
               Opening Hours
             </Typography>
-            <Box minWidth={300} sx={{ alignSelf: "center" }}>
+            <Box minWidth={300} sx={{ alignSelf: 'center' }}>
               <TableContainer>
                 <Table aria-label="simple table">
                   <TableBody>
                     {rows.map((row) => (
                       <TableRow key={row.day}>
-                        <TableCell
-                          align="center"
-                          sx={{ fontWeight: 500, fontSize: 18 }}
-                        >
+                        <TableCell align="center" sx={{ fontWeight: 500, fontSize: 18 }}>
                           {row.day}
                         </TableCell>
                         <TableCell sx={{ fontWeight: 500, fontSize: 18 }}>
@@ -300,19 +279,19 @@ const HomePage = () => {
           variant="h2"
           mt={4}
           color="#2F2888"
-          sx={{ fontWeight: "bold" }}
+          sx={{ fontWeight: 'bold' }}
           gutterBottom
         >
           Some testimonies from our customers
         </Typography>
       </Box>
 
-      <Box sx={{ display: "flex", justifyContent: "center", flexWrap: "wrap" }}>
+      <Box sx={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap' }}>
         <Testimonial />
         <Testimonial />
+        {/* <Testimonial />
         <Testimonial />
-        <Testimonial />
-        <Testimonial />
+        <Testimonial /> */}
       </Box>
 
       <Divider />
