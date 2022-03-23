@@ -25,6 +25,7 @@ import AvailableServices from "../components/AvailableServices";
 import TechniciansInfoCard from "../components/TechniciansInfoCard";
 import ProfileSettingsCard from "../components/ProfileSettingsCard";
 import AdminAppointment from "components/AdminAppointment";
+import WarehouseInfo from "components/WarehouseInfo";
 
 function Copyright(props: any) {
   return (
@@ -131,6 +132,8 @@ const DashboardContent = () => {
       );
     } else if (menuItemSelected === "Profile Settings") {
       return <ProfileSettingsCard />;
+    } else if (menuItemSelected === "Warehouse") {
+      return <WarehouseInfo />;
     }
     return <div></div>;
   }
