@@ -1,10 +1,10 @@
-import Appointment from "../models/Appointment";
-import Service from "../models/Service";
-import Bill from "../models/Bill";
-import Automobile from "../models/Automobile";
-import Technician from "../models/Technician";
-import Customer from "../models/Customer";
-import Product from "../models/Product";
+import Appointment from '../models/Appointment';
+import Service from '../models/Service';
+import Bill from '../models/Bill';
+import Automobile from '../models/Automobile';
+import Technician from '../models/Technician';
+import Customer from '../models/Customer';
+import Product from '../models/Product';
 
 abstract class AppointmentService {
   static async createAppointment(appointmentDTO: any) {
@@ -19,16 +19,7 @@ abstract class AppointmentService {
     // search for a technician to give the appointment
     // For starter, pick the technician with the least amount of scheduled appointments
     // TODO:: cannot assign same technician to the same timeslot for an appointment
-    const technicians = await Technician.find();
-    let technician: any;
-    let minAppointment: number = 10000;
-    technicians.forEach((techGuy: any) => {
-      if (minAppointment > techGuy.appointments.length) {
-        minAppointment = techGuy.appointments.length;
-        technician = techGuy;
-      }
-    });
-
+    const technician = await Technician.findOne({ name: 'mustafa' });
     // get service
     const service = await Service.findById(serviceId);
 
@@ -66,11 +57,11 @@ abstract class AppointmentService {
     });
 
     customer?.appointments?.push(appointment);
-    technician.appointments.push(appointment);
+    technician?.appointments?.push(appointment);
     appointment.bill = bill;
 
     await customer?.save();
-    await technician.save();
+    await technician?.save();
     await bill.save();
 
     const savedAppointment = await appointment.save();
@@ -80,7 +71,7 @@ abstract class AppointmentService {
   static async updateAppointment(appointmentId: string, appointmentDTO: any) {
     const appointment = await Appointment.findById(appointmentId);
     if (appointment === null) {
-      throw new Error("Could not find appointment with given ID.");
+      throw new Error('Could not find appointment with given ID.');
     }
 
     const startDate = appointmentDTO.startDate;
@@ -108,9 +99,9 @@ abstract class AppointmentService {
   static async getAllAppointments() {
     try {
       const appointments = await Appointment.find()
-        .populate("technician", "name")
-        .populate("service", "name cost")
-        .populate("automobile", "licensePlate");
+        .populate('technician', 'name')
+        .populate('service', 'name cost')
+        .populate('automobile', 'licensePlate');
       return appointments;
     } catch (error) {
       throw error;
@@ -130,9 +121,9 @@ abstract class AppointmentService {
   static async getAllAppointmentsOfCustomer(customerId: string) {
     try {
       const appointments = await Appointment.find({ customer: customerId })
-        .populate("technician", "name")
-        .populate("service", "name cost")
-        .populate("automobile", "licensePlate");
+        .populate('technician', 'name')
+        .populate('service', 'name cost')
+        .populate('automobile', 'licensePlate');
       return appointments;
     } catch (error) {
       throw error;
@@ -142,11 +133,11 @@ abstract class AppointmentService {
     try {
       const appointments = await Appointment.find({
         customer: customerId,
-        status: "Pending",
+        status: 'Pending',
       })
-        .populate("technician", "name")
-        .populate("service", "name cost")
-        .populate("automobile", "licensePlate");
+        .populate('technician', 'name')
+        .populate('service', 'name cost')
+        .populate('automobile', 'licensePlate');
       return appointments;
     } catch (error) {
       throw error;
@@ -156,11 +147,11 @@ abstract class AppointmentService {
     try {
       const appointments = await Appointment.find({
         customer: customerId,
-        status: "Confirm",
+        status: 'Confirm',
       })
-        .populate("technician", "name")
-        .populate("service", "name cost")
-        .populate("automobile", "licensePlate");
+        .populate('technician', 'name')
+        .populate('service', 'name cost')
+        .populate('automobile', 'licensePlate');
       return appointments;
     } catch (error) {
       throw error;
@@ -170,11 +161,11 @@ abstract class AppointmentService {
     try {
       const appointments = await Appointment.find({
         customer: customerId,
-        status: "Cancelled",
+        status: 'Cancelled',
       })
-        .populate("technician", "name")
-        .populate("service", "name cost")
-        .populate("automobile", "licensePlate");
+        .populate('technician', 'name')
+        .populate('service', 'name cost')
+        .populate('automobile', 'licensePlate');
       return appointments;
     } catch (error) {
       throw error;
@@ -184,9 +175,9 @@ abstract class AppointmentService {
   static async getAllAppointmentsOfTechnician(technicianId: string) {
     try {
       const appointments = await Appointment.find({ technician: technicianId })
-        .populate("customer", "name email")
-        .populate("service", "name cost")
-        .populate("automobile", "licensePlate");
+        .populate('customer', 'name email')
+        .populate('service', 'name cost')
+        .populate('automobile', 'licensePlate');
       return appointments;
     } catch (error) {
       throw error;
