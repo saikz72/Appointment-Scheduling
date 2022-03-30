@@ -16,7 +16,10 @@ import {
   Typography,
 } from '@mui/material';
 import React from 'react';
-import { getAllAppointmentsOfTechnician } from '../services/AppointmentService';
+import {
+  getAllAppointmentsOfTechnician,
+  updateAppointment,
+} from '../services/AppointmentService';
 import { useAuth } from '../utility/AuthProvider';
 import { usePersist } from '../utility/PersistenceProvider';
 import DateTimePicker from 'react-datetime-picker';
@@ -76,9 +79,23 @@ const TechnicianAppointment = () => {
       .catch((error) => console.log(error));
   }, [technicianId]);
 
-  const handleAccept = () => {};
-
-  const handleReject = () => {};
+  const handleAccept = (appointment: any) => {
+    appointment.status = 'Confirm';
+    console.log(appointment);
+    updateAppointment(appointment._id, appointment)
+      .then((res) => {
+        // let newAppointments = [...appointments];
+        // const idx = appointments.findIndex(
+        //   (app: any) => app._id === appointment._id
+        // );
+        // if (idx >= 0) {
+        //   newAppointments.splice(idx, 1);
+        // }
+        // setAppointments(newAppointments);
+        window.location.reload();
+      })
+      .catch((err) => []);
+  };
 
   function a11yProps(index: number) {
     return {
@@ -103,23 +120,33 @@ const TechnicianAppointment = () => {
           </TableHead>
           <TableBody>
             {appointments.map((appointment) => (
-              <TableRow key={appointment?._id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+              <TableRow
+                key={appointment?._id}
+                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+              >
                 <TableCell component="th" scope="row">
                   {appointment?.customer?.name}
                 </TableCell>
                 <TableCell align="right">{appointment?.startDate}</TableCell>
-                <TableCell align="right">{appointment?.service?.name}</TableCell>
-                <TableCell align="right">{appointment?.service?.cost}</TableCell>
-                <TableCell align="right">{appointment?.automobile?.licensePlate}</TableCell>
+                <TableCell align="right">
+                  {appointment?.service?.name}
+                </TableCell>
+                <TableCell align="right">
+                  {appointment?.service?.cost}
+                </TableCell>
+                <TableCell align="right">
+                  {appointment?.automobile?.licensePlate}
+                </TableCell>
                 <TableCell align="right">{appointment?.status}</TableCell>
                 <TableCell align="right">
                   {appointment?.status === 'Pending' && (
                     <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                      <Button sx={{ mx: 1 }} variant="contained" onClick={handleAccept}>
+                      <Button
+                        sx={{ mx: 1 }}
+                        variant="contained"
+                        onClick={() => handleAccept(appointment)}
+                      >
                         Accept
-                      </Button>
-                      <Button sx={{ mx: 1 }} variant="outlined" color="error" onClick={handleReject}>
-                        Reject
                       </Button>
                     </Box>
                   )}

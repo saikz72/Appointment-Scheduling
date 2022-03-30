@@ -1,12 +1,15 @@
-import { Box, TextField, Button } from '@mui/material';
+import { Box, TextField, Button, Alert } from '@mui/material';
 import React from 'react';
-import ServiceType from 'types/ServiceType';
-import ServiceInfoCard from './ServiceInfoCard';
 import Product from '../components/Product';
-import { getAllProductsFromServer } from 'services/ProductService';
+import {
+  createProduct,
+  getAllProductsFromServer,
+} from 'services/ProductService';
+import ProductType from 'types/ProductType';
 
 export default function WarehouseInfo() {
-  const [products, setProducts] = React.useState([]);
+  const [products, setProducts] = React.useState<ProductType[]>([]);
+  const [error, setError] = React.useState(false);
 
   React.useEffect(() => {
     getAllProductsFromServer().then((res) => setProducts(res?.data));
@@ -14,21 +17,30 @@ export default function WarehouseInfo() {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setError(false);
     const data = new FormData(event.currentTarget);
 
     const name = data.get('name')?.toString();
-    const duration = data.get('duration')?.toString();
+    const description = data.get('description')?.toString();
     const cost = data.get('cost')?.toString();
 
     const requestBody: any = {
       name,
-      duration,
+      description,
       cost,
     };
-
-    // addServiceToServer(requestBody).then((service) => {
-    //   dispatch(actions.addService(service));
-    // });
+    console.log(requestBody);
+    createProduct(requestBody)
+      .then((res) => {
+        console.log('res', res.errors);
+        if (res.errors !== undefined) {
+          setError(true);
+        } else {
+          setError(false);
+          setProducts([...products, res]);
+        }
+      })
+      .catch((err) => setError(true));
   };
 
   return (
@@ -83,6 +95,11 @@ export default function WarehouseInfo() {
         <Button sx={{ marginTop: 2 }} variant="contained" type="submit">
           Add Spare part
         </Button>
+        {error && (
+          <Alert variant="filled" severity="error">
+            Cannot create spare part at this time. Try again
+          </Alert>
+        )}
       </Box>
       <Box
         sx={{
@@ -90,7 +107,7 @@ export default function WarehouseInfo() {
           flexWrap: 'wrap',
         }}
       >
-        {products.map((product: any) => {
+        {products.map((product: ProductType) => {
           return (
             <Box m={1} key={product?._id}>
               <Product product={product} />

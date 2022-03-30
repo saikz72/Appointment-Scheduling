@@ -93,6 +93,9 @@ abstract class AppointmentService {
       appointment.automobile = automobile;
     }
 
+    appointment.status = appointmentDTO.status;
+
+    console.log(appointment);
     return await appointment.save();
   }
 

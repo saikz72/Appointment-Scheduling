@@ -1,29 +1,30 @@
-import * as React from "react";
-import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-import repairLogo1 from "../assets/repairLogo1.jpeg";
-import DeleteIcon from "@mui/icons-material/Delete";
-import EditIcon from "@mui/icons-material/Edit";
-import { deleteServiceFromServer } from "../services/OfferingService";
-import { useData } from "../utility/DataProvider";
-import ServiceType from "../types/ServiceType";
-import { deleteService } from "../utility/action";
-import { Box, Collapse, Modal, TextField } from "@mui/material";
-import { updateServiceFromServer } from "../services/OfferingService";
-import * as actions from "../utility/action";
+import * as React from 'react';
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import repairLogo1 from '../assets/repairLogo1.jpeg';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import { deleteServiceFromServer } from '../services/OfferingService';
+import { useData } from '../utility/DataProvider';
+import ServiceType from '../types/ServiceType';
+import { deleteService } from '../utility/action';
+import { Box, Collapse, Modal, TextField } from '@mui/material';
+import { updateServiceFromServer } from '../services/OfferingService';
+import * as actions from '../utility/action';
+import { deleteProduct, updateProduct } from 'services/ProductService';
 
 const style = {
-  position: "absolute" as "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
+  position: 'absolute' as 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
   width: 400,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
   boxShadow: 24,
   p: 4,
 };
@@ -49,7 +50,7 @@ export default function Product(props: any) {
           <Typography id="modal-modal-title" variant="h6" component="h2">
             Are you sure you want delete this service?
           </Typography>
-          <Box sx={{ display: "flex", justifyContent: "center" }}>
+          <Box sx={{ display: 'flex', justifyContent: 'center' }}>
             <Button
               onClick={() => {
                 handleDelete(product);
@@ -65,11 +66,11 @@ export default function Product(props: any) {
     );
   };
   const handleDelete = async (product?: any) => {
-    deleteServiceFromServer(product?._id).then((result) => {
-      if (result?.status === 200) {
-        dispatch(deleteService(product));
-      }
-    });
+    deleteProduct(product._id)
+      .then((res) => {
+        window.location.reload();
+      })
+      .catch((err) => {});
   };
   const handleEdit = () => {
     setExpanded(!expanded);
@@ -79,30 +80,31 @@ export default function Product(props: any) {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
 
-    const name: string | undefined = data.get("name")?.toString();
-    const duration: number | undefined = Number(
-      data.get("duration")?.toString()
+    const name: string | undefined = data.get('name')?.toString();
+    const description: number | undefined = Number(
+      data.get('description')?.toString()
     );
-    const cost: number | undefined = Number(data.get("cost")?.toString());
+    const cost: number | undefined = Number(data.get('cost')?.toString());
 
-    const service: ServiceType = {
+    const updates: any = {
       name,
-      duration,
+      description,
       cost,
     };
-    // updateServiceFromServer(service, service?._id).then((updatedService: ServiceType) => {
-    //   dispatch(actions.updateService(updatedService));
-    // });
+
+    updateProduct(product._id, updates)
+      .then((res) => window.location.reload())
+      .catch((err) => console.log(err));
   };
 
   return (
     <Card sx={{ maxWidth: 400 }}>
       <CardContent
         sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          flexDirection: "column",
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          flexDirection: 'column',
         }}
       >
         <Typography variant="h6" color="primary" gutterBottom>
@@ -115,7 +117,7 @@ export default function Product(props: any) {
           Description : {product?.description}
         </Typography>
       </CardContent>
-      <CardActions sx={{ display: "flex", justifyContent: "space-around" }}>
+      <CardActions sx={{ display: 'flex', justifyContent: 'space-around' }}>
         <Button
           size="small"
           onClick={handleEdit}
@@ -138,7 +140,7 @@ export default function Product(props: any) {
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <Box
-          sx={{ display: "flex", flexDirection: "column" }}
+          sx={{ display: 'flex', flexDirection: 'column' }}
           component="form"
           noValidate
           onSubmit={handleSubmit}
@@ -146,7 +148,7 @@ export default function Product(props: any) {
           <Box
             mt={2}
             sx={{
-              display: "grid",
+              display: 'grid',
             }}
           >
             <TextField

@@ -39,11 +39,12 @@ export const deleteProduct = async (productId?: string) => {
   }
 };
 
-export const updateProduct = async (productId?: string) => {
+export const updateProduct = async (productId?: string, updates?: any) => {
   try {
     const response = await fetch(baseURL + `/product/${productId}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(updates),
     });
     return await response.json();
   } catch (error) {
