@@ -59,7 +59,11 @@ Clone the repo: ```git clone https://github.com/saikz72/Appointment-Scheduling``
 3. npm run start
 ```
 
-
-
-
+----------------
+### To Run the mobile application
+```
+1. npm install --global expo-cli
+2. cd mobile
+3. expo start
+```
 
