@@ -1,31 +1,32 @@
-import * as React from "react";
-import { styled, ThemeProvider } from "@mui/material/styles";
-import CssBaseline from "@mui/material/CssBaseline";
-import MuiDrawer from "@mui/material/Drawer";
-import Box from "@mui/material/Box";
-import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
-import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
-import Divider from "@mui/material/Divider";
-import IconButton from "@mui/material/IconButton";
-import Badge from "@mui/material/Badge";
-import Container from "@mui/material/Container";
-import Link from "@mui/material/Link";
-import MenuIcon from "@mui/icons-material/Menu";
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import NotificationsIcon from "@mui/icons-material/Notifications";
-import { MainListItems } from "../components/listItems";
-import { Link as RouterLink } from "react-router-dom";
-import Appointment from "../components/Appointment";
-import { Avatar, Paper, useTheme } from "@mui/material";
-import LogoutModal from "../components/LogoutModal";
-import logo from "../assets/logo.jpeg";
-import BusinessInfoCard from "../components/BusinessInfoCard";
-import AvailableServices from "../components/AvailableServices";
-import TechniciansInfoCard from "../components/TechniciansInfoCard";
-import ProfileSettingsCard from "../components/ProfileSettingsCard";
-import AdminAppointment from "components/AdminAppointment";
-import WarehouseInfo from "components/WarehouseInfo";
+import * as React from 'react';
+import { styled, ThemeProvider } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
+import MuiDrawer from '@mui/material/Drawer';
+import Box from '@mui/material/Box';
+import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import Divider from '@mui/material/Divider';
+import IconButton from '@mui/material/IconButton';
+import Badge from '@mui/material/Badge';
+import Container from '@mui/material/Container';
+import Link from '@mui/material/Link';
+import MenuIcon from '@mui/icons-material/Menu';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import NotificationsIcon from '@mui/icons-material/Notifications';
+import { MainListItems } from '../components/listItems';
+import { Link as RouterLink } from 'react-router-dom';
+import Appointment from '../components/Appointment';
+import { Avatar, Paper, useTheme } from '@mui/material';
+import LogoutModal from '../components/LogoutModal';
+import logo from '../assets/logo.jpeg';
+import BusinessInfoCard from '../components/BusinessInfoCard';
+import AvailableServices from '../components/AvailableServices';
+import TechniciansInfoCard from '../components/TechniciansInfoCard';
+import ProfileSettingsCard from '../components/ProfileSettingsCard';
+import AdminAppointment from 'components/AdminAppointment';
+import WarehouseInfo from 'components/WarehouseInfo';
+import Revenue from 'components/Revenue';
 
 function Copyright(props: any) {
   return (
@@ -35,12 +36,12 @@ function Copyright(props: any) {
       align="center"
       {...props}
     >
-      {"Copyright © "}
+      {'Copyright © '}
       <Link color="inherit" href="https://mui.com/">
         Your Website
-      </Link>{" "}
+      </Link>{' '}
       {new Date().getFullYear()}
-      {"."}
+      {'.'}
     </Typography>
   );
 }
@@ -52,17 +53,17 @@ interface AppBarProps extends MuiAppBarProps {
 }
 
 const AppBar = styled(MuiAppBar, {
-  shouldForwardProp: (prop) => prop !== "open",
+  shouldForwardProp: prop => prop !== 'open',
 })<AppBarProps>(({ theme, open }) => ({
   zIndex: theme.zIndex.drawer + 1,
-  transition: theme.transitions.create(["width", "margin"], {
+  transition: theme.transitions.create(['width', 'margin'], {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
   }),
   ...(open && {
     marginLeft: drawerWidth,
     width: `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create(["width", "margin"], {
+    transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
     }),
@@ -70,25 +71,25 @@ const AppBar = styled(MuiAppBar, {
 }));
 
 const Drawer = styled(MuiDrawer, {
-  shouldForwardProp: (prop) => prop !== "open",
+  shouldForwardProp: prop => prop !== 'open',
 })(({ theme, open }) => ({
-  "& .MuiDrawer-paper": {
-    position: "relative",
-    whiteSpace: "nowrap",
+  '& .MuiDrawer-paper': {
+    position: 'relative',
+    whiteSpace: 'nowrap',
     width: drawerWidth,
-    transition: theme.transitions.create("width", {
+    transition: theme.transitions.create('width', {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
     }),
-    boxSizing: "border-box",
+    boxSizing: 'border-box',
     ...(!open && {
-      overflowX: "hidden",
-      transition: theme.transitions.create("width", {
+      overflowX: 'hidden',
+      transition: theme.transitions.create('width', {
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.leavingScreen,
       }),
       width: theme.spacing(7),
-      [theme.breakpoints.up("sm")]: {
+      [theme.breakpoints.up('sm')]: {
         width: theme.spacing(9),
       },
     }),
@@ -99,17 +100,17 @@ const DashboardContent = () => {
   const theme = useTheme();
   const [open, setOpen] = React.useState(true);
   const [menuItemSelected, setMenuItemSelected] =
-    React.useState("Appointments");
+    React.useState('Appointments');
   const [openLogoutModal, setOpenLogoutModal] = React.useState(false);
 
   function displayDashboardContent(menuItemSelected: string) {
-    if (menuItemSelected === "Appointments") {
+    if (menuItemSelected === 'Appointments') {
       return (
         <Paper>
           <AdminAppointment />
         </Paper>
       );
-    } else if (menuItemSelected === "Logout") {
+    } else if (menuItemSelected === 'Logout') {
       return (
         <Paper>
           <Appointment />
@@ -120,20 +121,22 @@ const DashboardContent = () => {
           ;
         </Paper>
       );
-    } else if (menuItemSelected === "Business Info") {
+    } else if (menuItemSelected === 'Business Info') {
       return <BusinessInfoCard />;
-    } else if (menuItemSelected === "Available Services") {
+    } else if (menuItemSelected === 'Available Services') {
       return <AvailableServices />;
-    } else if (menuItemSelected === "Technicians") {
+    } else if (menuItemSelected === 'Technicians') {
       return (
         <Paper>
           <TechniciansInfoCard />
         </Paper>
       );
-    } else if (menuItemSelected === "Profile Settings") {
+    } else if (menuItemSelected === 'Profile Settings') {
       return <ProfileSettingsCard />;
-    } else if (menuItemSelected === "Warehouse") {
+    } else if (menuItemSelected === 'Warehouse') {
       return <WarehouseInfo />;
+    } else if (menuItemSelected === 'Revenue Report') {
+      return <Revenue />;
     }
     return <div></div>;
   }
@@ -144,12 +147,12 @@ const DashboardContent = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <Box sx={{ display: "flex" }}>
+      <Box sx={{ display: 'flex' }}>
         <CssBaseline />
         <AppBar position="absolute" open={open}>
           <Toolbar
             sx={{
-              pr: "24px", // keep right padding when drawer closed
+              pr: '24px', // keep right padding when drawer closed
               marginTop: 0.5,
             }}
           >
@@ -159,13 +162,13 @@ const DashboardContent = () => {
               aria-label="open drawer"
               onClick={toggleDrawer}
               sx={{
-                marginRight: "36px",
-                ...(open && { display: "none" }),
+                marginRight: '36px',
+                ...(open && { display: 'none' }),
               }}
             >
               <MenuIcon />
             </IconButton>
-            <RouterLink to="/" style={{ flexGrow: 1, textDecoration: "none" }}>
+            <RouterLink to="/" style={{ flexGrow: 1, textDecoration: 'none' }}>
               <Avatar src={logo} alt="Logo of the repair shop" />
               <Typography color="secondary">Home</Typography>
             </RouterLink>
@@ -179,9 +182,9 @@ const DashboardContent = () => {
         <Drawer variant="permanent" open={open}>
           <Toolbar
             sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "flex-end",
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'flex-end',
               px: [1],
             }}
           >
@@ -201,13 +204,13 @@ const DashboardContent = () => {
         <Box
           component="main"
           sx={{
-            backgroundColor: (theme) =>
-              theme.palette.mode === "light"
+            backgroundColor: theme =>
+              theme.palette.mode === 'light'
                 ? theme.palette.grey[100]
                 : theme.palette.grey[900],
             flexGrow: 1,
-            height: "100vh",
-            overflow: "auto",
+            height: '100vh',
+            overflow: 'auto',
           }}
         >
           <Toolbar />

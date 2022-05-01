@@ -11,6 +11,8 @@ import {
   TableRow,
   Stack,
   Divider,
+  TextField,
+  Alert,
 } from '@mui/material';
 import Footer from '../components/Footer';
 import { Link } from 'react-router-dom';
@@ -28,6 +30,7 @@ import repair from '../assets/car-repairService.png';
 import Testimonial from 'components/Testimonial';
 import { useAuth } from 'utility/AuthProvider';
 import { usePersist } from 'utility/PersistenceProvider';
+import { useState } from 'react';
 
 function createData(day: string, time: string) {
   return { day, time };
@@ -46,6 +49,11 @@ const HomePage = () => {
   const persist = usePersist();
   const auth = useAuth();
   const user = auth.user ? auth.user : persist.user;
+  const [submitted, setSubmitted] = useState(false);
+
+  const submit = () => {
+    setSubmitted(true);
+  };
 
   return (
     <Box
@@ -78,9 +86,10 @@ const HomePage = () => {
               Welcome to Geek repair shop
             </Typography>
             <Typography align="center" variant="h6" sx={{ fontWeight: '500' }}>
-              When it comes to your car repair requirement our team offers a variety of
-              services that will ensure your vehicle is restored as close as possible to
-              manufacturer standards. Handled by certified technicians.
+              When it comes to your car repair requirement our team offers a
+              variety of services that will ensure your vehicle is restored as
+              close as possible to manufacturer standards. Handled by certified
+              technicians.
             </Typography>
           </Box>
         </Grid>
@@ -123,16 +132,23 @@ const HomePage = () => {
                 paragraph
                 sx={{ fontWeight: 500 }}
               >
-                We provide vehicle maintenance, online sparepart shopping and technical
-                advices regarding ones vehicle. We also provides other services such as a
-                car wash, tire change, roadside assistance, towing, and car inspection.
-                Our service is guaranteed and quality oriented.
+                We provide vehicle maintenance, online sparepart shopping and
+                technical advices regarding ones vehicle. We also provides other
+                services such as a car wash, tire change, roadside assistance,
+                towing, and car inspection. Our service is guaranteed and
+                quality oriented.
               </Typography>
             </Box>
             {user && user.userType === 'Customer' && (
               <Box m={8}>
-                <Link to="/appointment" style={{ flexGrow: 1, textDecoration: 'none' }}>
-                  <Button variant="contained" sx={{ margin: '0 auto', display: 'flex' }}>
+                <Link
+                  to="/appointment"
+                  style={{ flexGrow: 1, textDecoration: 'none' }}
+                >
+                  <Button
+                    variant="contained"
+                    sx={{ margin: '0 auto', display: 'flex' }}
+                  >
                     Make an appointment
                   </Button>
                 </Link>
@@ -140,8 +156,14 @@ const HomePage = () => {
             )}
             {user === undefined && (
               <Box m={8}>
-                <Link to="/appointment" style={{ flexGrow: 1, textDecoration: 'none' }}>
-                  <Button variant="contained" sx={{ margin: '0 auto', display: 'flex' }}>
+                <Link
+                  to="/appointment"
+                  style={{ flexGrow: 1, textDecoration: 'none' }}
+                >
+                  <Button
+                    variant="contained"
+                    sx={{ margin: '0 auto', display: 'flex' }}
+                  >
                     Make an appointment
                   </Button>
                 </Link>
@@ -173,11 +195,15 @@ const HomePage = () => {
             >
               Services
             </Typography>
-            <Typography align="center" variant="h6" sx={{ fontWeight: '500', mx: 20 }}>
-              Our ASE Certified mechanics are committed to quality for our community of
-              drivers in Montreal,Quebec. We make sure to continue providing to-quality
-              services by providing biannual trainings. At Prestige, we offer a variety of
-              services:
+            <Typography
+              align="center"
+              variant="h6"
+              sx={{ fontWeight: '500', mx: 20 }}
+            >
+              Our ASE Certified mechanics are committed to quality for our
+              community of drivers in Montreal,Quebec. We make sure to continue
+              providing to-quality services by providing biannual trainings. At
+              Prestige, we offer a variety of services:
             </Typography>
             <Box
               sx={{
@@ -253,9 +279,12 @@ const HomePage = () => {
               <TableContainer>
                 <Table aria-label="simple table">
                   <TableBody>
-                    {rows.map((row) => (
+                    {rows.map(row => (
                       <TableRow key={row.day}>
-                        <TableCell align="center" sx={{ fontWeight: 500, fontSize: 18 }}>
+                        <TableCell
+                          align="center"
+                          sx={{ fontWeight: 500, fontSize: 18 }}
+                        >
                           {row.day}
                         </TableCell>
                         <TableCell sx={{ fontWeight: 500, fontSize: 18 }}>
@@ -293,6 +322,53 @@ const HomePage = () => {
         <Testimonial />
         <Testimonial /> */}
       </Box>
+      {user && user.userType === 'Customer' && (
+        <Box
+          sx={{
+            flex: 1,
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            flexWrap: 'wrap',
+            flexDirection: 'column',
+          }}
+        >
+          <Typography
+            align="center"
+            variant="h2"
+            mt={4}
+            color="#2F2888"
+            sx={{ fontWeight: 'bold' }}
+            gutterBottom
+          >
+            Add a Testimony
+          </Typography>
+          <Box width={600}>
+            <TextField
+              margin="normal"
+              multiline
+              minRows={5}
+              fullWidth
+              name="description"
+              label="Please add your testimony here."
+              id="description"
+            />
+          </Box>
+          <Button
+            onClick={submit}
+            sx={{ my: 2 }}
+            variant="contained"
+            disabled={submitted}
+          >
+            Submit Testimony
+          </Button>
+          {submitted && (
+            <Alert variant="filled" severity="success">
+              Your testimony has been submitted.
+            </Alert>
+          )}
+        </Box>
+      )}
 
       <Divider />
       <Footer />

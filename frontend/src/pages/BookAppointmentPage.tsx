@@ -12,23 +12,39 @@ import {
   Select,
   SelectChangeEvent,
   Theme,
-} from "@mui/material";
-import React from "react";
-import Navbar from "../components/Navbar";
-import DateTimePicker from "react-datetime-picker";
-import { useData } from "../utility/DataProvider";
-import ServiceType from "../types/ServiceType";
-import AutomobileType from "../types/AutomobileType";
-import { getAutomobilesFromServer } from "../services/AutomobileService";
-import { getAllProductsFromServer } from "../services/ProductService";
-import Footer from "../components/Footer";
-import { bookAppointment } from "../services/AppointmentService";
-import { blue } from "@mui/material/colors";
-import { usePersist } from "../utility/PersistenceProvider";
-import { useAuth } from "../utility/AuthProvider";
-import { useNavigate, Link } from "react-router-dom";
-import { useTheme } from "@mui/material/styles";
-import ProductType from "types/ProductType";
+} from '@mui/material';
+import React from 'react';
+import Navbar from '../components/Navbar';
+import DateTimePicker from 'react-datetime-picker';
+import { useData } from '../utility/DataProvider';
+import ServiceType from '../types/ServiceType';
+import AutomobileType from '../types/AutomobileType';
+import { getAutomobilesFromServer } from '../services/AutomobileService';
+import { getAllProductsFromServer } from '../services/ProductService';
+import Footer from '../components/Footer';
+import { bookAppointment } from '../services/AppointmentService';
+import { blue } from '@mui/material/colors';
+import { usePersist } from '../utility/PersistenceProvider';
+import { useAuth } from '../utility/AuthProvider';
+import { useNavigate, Link } from 'react-router-dom';
+import { useTheme } from '@mui/material/styles';
+import ProductType from 'types/ProductType';
+
+function generateRandom(min = 0, max = 100) {
+  // find diff
+  let difference = max - min;
+
+  // generate random number
+  let rand = Math.random();
+
+  // multiply with difference
+  rand = Math.floor(rand * difference);
+
+  // add with min value
+  rand = rand + min;
+
+  return rand;
+}
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -44,7 +60,7 @@ const MenuProps = {
 function getStyles(
   name: string | undefined,
   parts: readonly string[],
-  theme: Theme
+  theme: Theme,
 ) {
   if (name === undefined) {
     return;
@@ -61,30 +77,36 @@ export default function BookAppointmentPage() {
   const auth = useAuth();
   const { state } = useData();
   const navigate = useNavigate();
-  const [service, setService] = React.useState("");
-  const [automobile, setAutomobile] = React.useState("");
+  const [service, setService] = React.useState('');
+  const [automobile, setAutomobile] = React.useState('');
   const [automobiles, setAutomobiles] = React.useState<AutomobileType[]>([]);
   const [startDate, setStartDate] = React.useState<Date>(new Date());
-  const [status, setStatus] = React.useState("");
+  const [status, setStatus] = React.useState('');
   const [loading, setLoading] = React.useState(false);
   const [parts, setParts] = React.useState<string[]>([]);
   const [products, setProducts] = React.useState<ProductType[]>([]);
-  const [description, setDescription] = React.useState<String>("");
+  const [description, setDescription] = React.useState<String>('');
+  const [error, setError] = React.useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = React.useState<string>('');
+  const [fee, setFee] = React.useState<number>(0);
   const theme = useTheme();
 
   const user = auth.user ? auth.user : persist.user;
 
   const handleServiceChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setService(event.target.value as string);
+    const val = event.target.value;
+    setService(val as string);
+    const rand = generateRandom(500, 1000);
+    setFee(fee => rand);
   };
 
   const handleAutomobileChange = (
-    event: React.ChangeEvent<HTMLInputElement>
+    event: React.ChangeEvent<HTMLInputElement>,
   ) => {
     setAutomobile(event.target.value as string);
   };
   const handleDescriptionChange = (
-    event: React.ChangeEvent<HTMLInputElement>
+    event: React.ChangeEvent<HTMLInputElement>,
   ) => {
     setDescription(event.target.value as string);
   };
@@ -93,10 +115,10 @@ export default function BookAppointmentPage() {
     event.preventDefault();
     //TODO : accept payment to book appointment
     const data = new FormData(event.currentTarget);
-    const nameOnCard: string | undefined = data.get("nameOnCard")?.toString();
-    const cardNumber: string | undefined = data.get("cardNumber")?.toString();
-    const expiryDate: string | undefined = data.get("expiryDate")?.toString();
-    const cvv: string | undefined = data.get("cvv")?.toString();
+    const nameOnCard: string | undefined = data.get('nameOnCard')?.toString();
+    const cardNumber: string | undefined = data.get('cardNumber')?.toString();
+    const expiryDate: string | undefined = data.get('expiryDate')?.toString();
+    const cvv: string | undefined = data.get('cvv')?.toString();
 
     const customerId: string = user?._id;
     const requestBody: any = {
@@ -107,18 +129,60 @@ export default function BookAppointmentPage() {
       productNames: parts,
       description: description,
     };
-    console.log(requestBody);
 
+    if (nameOnCard === null || nameOnCard?.trim().length === 0) {
+      setError(true);
+      setErrorMessage('Name cannot be empty');
+      return;
+    }
+    if (isNaN(Number(cardNumber))) {
+      setError(true);
+      setErrorMessage('Card number must only contain numbers');
+      return;
+    }
+
+    if (cardNumber?.length !== 16) {
+      setError(true);
+      setErrorMessage('Card number must be 16 digits long');
+      return;
+    }
+
+    if (isNaN(Number(cvv))) {
+      setError(true);
+      setErrorMessage('Cvv must only contain numbers');
+      return;
+    }
+
+    if (cvv?.length !== 3) {
+      setError(true);
+      setErrorMessage('Cvv must be 3 numbers long');
+      return;
+    }
+
+    if (isNaN(Number(expiryDate))) {
+      setError(true);
+      setErrorMessage('Expiry date must only contain numbers');
+      return;
+    }
+
+    if (expiryDate?.length !== 4) {
+      setError(true);
+      setErrorMessage('Expiry date must be 4 numbers long');
+      return;
+    }
+    console.log(requestBody);
     if (!loading) {
       setLoading(true);
-      setStatus("");
       try {
         const response = await bookAppointment(requestBody);
-        setStatus("book");
+        setStatus('book');
+        setError(false);
+        setErrorMessage('');
         setLoading(false);
       } catch (error) {
         console.log(error);
-        setStatus("fail");
+        setError(true);
+        setErrorMessage('Fail to book appointment.');
         setLoading(false);
       }
     }
@@ -132,7 +196,7 @@ export default function BookAppointmentPage() {
     console.log(value);
     setParts(
       // On autofill we get a stringified value.
-      typeof value === "string" ? value.split(",") : value
+      typeof value === 'string' ? value.split(',') : value,
     );
   };
 
@@ -148,11 +212,11 @@ export default function BookAppointmentPage() {
       <Navbar />
       <Box
         sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          flexDirection: "column",
-          backgroundColor: "#FAFBFF",
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          flexDirection: 'column',
+          backgroundColor: '#FAFBFF',
         }}
       >
         {loading && (
@@ -163,29 +227,34 @@ export default function BookAppointmentPage() {
             }}
           />
         )}
-        {status === "book" ? (
+        {error && (
+          <Alert variant="filled" severity="error">
+            {errorMessage}
+          </Alert>
+        )}
+        {status === 'book' && (
           <Alert variant="filled" severity="success">
             Appointment has been booked successfully!
           </Alert>
-        ) : status === "fail" ? (
-          <Alert variant="filled" severity="error">
-            Fail to book appointment, something went wrong.
-          </Alert>
-        ) : null}
-
-        {status === "book" && (
-          <Link to="/dashboard" style={{ flexGrow: 1, textDecoration: "none" }}>
-            <Button color="success">Click here to view appointment</Button>
-          </Link>
+        )}
+        {status === 'book' && (
+          <>
+            <Link
+              to="/dashboard"
+              style={{ flexGrow: 1, textDecoration: 'none' }}
+            >
+              <Button color="success">Click here to view appointment</Button>
+            </Link>
+          </>
         )}
       </Box>
       <Box
         sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          flexDirection: "column",
-          backgroundColor: "#FAFBFF",
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          flexDirection: 'column',
+          backgroundColor: '#FAFBFF',
         }}
       >
         {/** START 1*/}
@@ -195,10 +264,10 @@ export default function BookAppointmentPage() {
           elevation={4}
           sx={{
             borderRadius: 4,
-            display: "flex",
-            justifyContent: "center",
-            flexDirection: "column",
-            alignItems: "center",
+            display: 'flex',
+            justifyContent: 'center',
+            flexDirection: 'column',
+            alignItems: 'center',
             width: 500,
           }}
         >
@@ -213,11 +282,17 @@ export default function BookAppointmentPage() {
               helperText="Please select a service"
               sx={{ mx: 2 }}
             >
-              {state.services.map((service: ServiceType) => (
-                <MenuItem key={service?._id} value={service?._id}>
-                  {service?.name}
-                </MenuItem>
-              ))}
+              {state.services.map((service: ServiceType) => {
+                if (!service || !service.cost || !service._id) {
+                  return null;
+                }
+                const val = [service._id, service.cost.toString()];
+                return (
+                  <MenuItem key={service?._id} value={service?._id}>
+                    {service.name}
+                  </MenuItem>
+                );
+              })}
             </TextField>
             <TextField
               id="outlined-select-currency"
@@ -247,16 +322,16 @@ export default function BookAppointmentPage() {
             value={parts}
             onChange={handleChange}
             input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
-            renderValue={(selected) => (
-              <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
-                {selected.map((value) => (
+            renderValue={selected => (
+              <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                {selected.map(value => (
                   <Chip key={value} label={value} />
                 ))}
               </Box>
             )}
             MenuProps={MenuProps}
           >
-            {products.map((product) => (
+            {products.map(product => (
               <MenuItem
                 key={product?.name}
                 value={product?.name}
@@ -295,9 +370,9 @@ export default function BookAppointmentPage() {
             noValidate
             onSubmit={handleSubmit}
             sx={{
-              display: "flex",
+              display: 'flex',
               mt: 1,
-              flexDirection: "column",
+              flexDirection: 'column',
             }}
           >
             <Box>
@@ -323,8 +398,8 @@ export default function BookAppointmentPage() {
             </Typography>
             <Box
               sx={{
-                display: "flex",
-                flexDirection: "column",
+                display: 'flex',
+                flexDirection: 'column',
                 width: 300,
               }}
             >
@@ -349,7 +424,7 @@ export default function BookAppointmentPage() {
                 required
                 fullWidth
                 name="expiryDate"
-                label="Expiry Date (MM/YY)"
+                label="Expiry Date (MMYY)"
                 id="expiryDate"
               />
               <TextField
@@ -357,11 +432,10 @@ export default function BookAppointmentPage() {
                 required
                 fullWidth
                 name="cvv"
-                label="Security Code"
+                label="CVV"
                 id="cvv"
               />
             </Box>
-
             <Button
               disabled={loading}
               type="submit"
@@ -370,6 +444,9 @@ export default function BookAppointmentPage() {
             >
               Book Appointment
             </Button>
+            <Typography textAlign="center" variant="h6" color="primary">
+              Total Fee: {fee}
+            </Typography>
           </Box>
           {/**END 4 */}
           {/**END 1*/}
