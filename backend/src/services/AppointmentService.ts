@@ -5,6 +5,7 @@ import Automobile from '../models/Automobile';
 import Technician from '../models/Technician';
 import Customer from '../models/Customer';
 import Product from '../models/Product';
+import Review from '../models/Review';
 
 abstract class AppointmentService {
   static async createAppointment(appointmentDTO: any) {
@@ -66,6 +67,20 @@ abstract class AppointmentService {
 
     const savedAppointment = await appointment.save();
     return savedAppointment;
+  }
+
+  static async createReview(dto: any) {
+    const { description } = dto;
+    const review = new Review({
+      description: description,
+    });
+    const saved = await review.save();
+    return saved;
+  }
+
+  static async getReviews() {
+    const reviews = await Review.find();
+    return reviews;
   }
 
   static async updateAppointment(appointmentId: string, appointmentDTO: any) {

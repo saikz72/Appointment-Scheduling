@@ -30,7 +30,8 @@ import repair from '../assets/car-repairService.png';
 import Testimonial from 'components/Testimonial';
 import { useAuth } from 'utility/AuthProvider';
 import { usePersist } from 'utility/PersistenceProvider';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { baseURL } from 'utility/constants';
 
 function createData(day: string, time: string) {
   return { day, time };
@@ -50,10 +51,34 @@ const HomePage = () => {
   const auth = useAuth();
   const user = auth.user ? auth.user : persist.user;
   const [submitted, setSubmitted] = useState(false);
+  const [review, setReview] = useState('');
+  const [allReviews, setAllReviews] = useState<any[]>([]);
 
-  const submit = () => {
-    setSubmitted(true);
+  const submit = async () => {
+    try {
+      const response = await fetch(baseURL + `review`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ description: review }),
+      });
+      if (!response.ok) {
+        throw new Error('ddd');
+      }
+      const json = await response.json();
+      console.log(json);
+      setSubmitted(true);
+    } catch (e) {}
   };
+
+  const fetchTest = async () => {
+    const response = await fetch(baseURL + 'review');
+    const json = await response.json();
+    setAllReviews(json);
+  };
+
+  useEffect(() => {
+    fetchTest();
+  }, []);
 
   return (
     <Box
@@ -316,11 +341,9 @@ const HomePage = () => {
       </Box>
 
       <Box sx={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap' }}>
-        <Testimonial />
-        <Testimonial />
-        {/* <Testimonial />
-        <Testimonial />
-        <Testimonial /> */}
+        {allReviews.map(r => (
+          <Testimonial review={r.description} />
+        ))}
       </Box>
       {user && user.userType === 'Customer' && (
         <Box
@@ -349,6 +372,8 @@ const HomePage = () => {
               multiline
               minRows={5}
               fullWidth
+              value={review}
+              onChange={e => setReview(e.target.value as string)}
               name="description"
               label="Please add your testimony here."
               id="description"

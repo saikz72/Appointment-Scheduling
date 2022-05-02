@@ -1,5 +1,5 @@
-import { Request, Response, NextFunction } from "express";
-import AppointmentService from "../services/AppointmentService";
+import { Request, Response, NextFunction } from 'express';
+import AppointmentService from '../services/AppointmentService';
 
 abstract class AppointmentController {
   /**
@@ -11,7 +11,7 @@ abstract class AppointmentController {
   static async createAppointment(
     req: Request,
     res: Response,
-    next: NextFunction
+    next: NextFunction,
   ) {
     // const serviceId = req.body.serviceId;
     // const customerId = req.body.customerId;
@@ -27,6 +27,24 @@ abstract class AppointmentController {
     }
   }
 
+  static async createReview(req: Request, res: Response, next: NextFunction) {
+    try {
+      const review = await AppointmentService.createReview(req.body);
+      res.status(200).send(review);
+    } catch (error) {
+      res.status(400).send(error);
+    }
+  }
+
+  static async getAllReview(req: Request, res: Response, next: NextFunction) {
+    try {
+      const reviews = await AppointmentService.getReviews();
+      res.status(200).send(reviews);
+    } catch (e) {
+      res.status(400).send(e);
+    }
+  }
+
   /**
    * Edit appointment details
    * @param req
@@ -36,7 +54,7 @@ abstract class AppointmentController {
   static async updateAppointment(
     req: Request,
     res: Response,
-    next: NextFunction
+    next: NextFunction,
   ) {
     const appointmentId = req.params.appointmentId;
     const appointmentDTO = req.body;
@@ -44,7 +62,7 @@ abstract class AppointmentController {
     try {
       const appointment = await AppointmentService.updateAppointment(
         appointmentId,
-        appointmentDTO
+        appointmentDTO,
       );
       res.status(200).send(appointment);
     } catch (error) {
@@ -61,15 +79,15 @@ abstract class AppointmentController {
   static async deleteAppointment(
     req: Request,
     res: Response,
-    next: NextFunction
+    next: NextFunction,
   ) {
     const appointmentId = req.params.appointmentId;
 
     try {
       const appointment = await AppointmentService.deleteAppointment(
-        appointmentId
+        appointmentId,
       );
-      res.status(200).send("Appointment successfully deleted");
+      res.status(200).send('Appointment successfully deleted');
     } catch (error) {
       res.status(400).send(error);
     }
@@ -84,7 +102,7 @@ abstract class AppointmentController {
   static async getAllAppointments(
     req: Request,
     res: Response,
-    next: NextFunction
+    next: NextFunction,
   ) {
     try {
       const appointments = await AppointmentService.getAllAppointments();
@@ -103,7 +121,7 @@ abstract class AppointmentController {
   static async getAllAppointmentsOfCustomer(
     req: Request,
     res: Response,
-    next: NextFunction
+    next: NextFunction,
   ) {
     const customerId = req.params.customerId;
 
@@ -124,14 +142,14 @@ abstract class AppointmentController {
   static async getAllPendingAppointmentsOfCustomer(
     req: Request,
     res: Response,
-    next: NextFunction
+    next: NextFunction,
   ) {
     const customerId = req.params.customerId;
 
     try {
       const appointments =
         await AppointmentService.getAllPendingAppointmentsOfCustomer(
-          customerId
+          customerId,
         );
       res.status(200).send(appointments);
     } catch (error) {
@@ -147,14 +165,14 @@ abstract class AppointmentController {
   static async getAllConfirmAppointmentsOfCustomer(
     req: Request,
     res: Response,
-    next: NextFunction
+    next: NextFunction,
   ) {
     const customerId = req.params.customerId;
 
     try {
       const appointments =
         await AppointmentService.getAllConfirmAppointmentsOfCustomer(
-          customerId
+          customerId,
         );
       res.status(200).send(appointments);
     } catch (error) {
@@ -170,7 +188,7 @@ abstract class AppointmentController {
   static async getAllCancelAppointmentsOfCustomer(
     req: Request,
     res: Response,
-    next: NextFunction
+    next: NextFunction,
   ) {
     const customerId = req.params.customerId;
 
@@ -191,7 +209,7 @@ abstract class AppointmentController {
   static async getAllAppointmentsOfTechnician(
     req: Request,
     res: Response,
-    next: NextFunction
+    next: NextFunction,
   ) {
     const technicianId = req.params.technicianId;
     console.log(technicianId);
