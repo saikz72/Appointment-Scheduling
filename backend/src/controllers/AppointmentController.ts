@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import AppointmentService from '../services/AppointmentService';
+import fs from 'fs';
 
 abstract class AppointmentController {
   /**
@@ -13,17 +14,27 @@ abstract class AppointmentController {
     res: Response,
     next: NextFunction,
   ) {
-    // const serviceId = req.body.serviceId;
-    // const customerId = req.body.customerId;
-    // const startDate = req.body.startDate;
-    // const automobileId = req.body.automobileId;
-    // const appointmentDTO = { startDate, customerId, serviceId, automobileId };
-
     try {
       const appointment = await AppointmentService.createAppointment(req.body);
       res.status(200).send(appointment);
     } catch (error) {
       res.status(400).send(error);
+    }
+  }
+
+  static async fetchReceipt(req: Request, res: Response, next: NextFunction) {
+    const appointment = req.body.appointment;
+    try {
+      fs.writeFile('./receipt.pdf', appointment.toString(), err => {
+        if (err) {
+          console.log(err);
+          throw err;
+        }
+        const file = `./receipt.pdf`;
+        res.download(file);
+      });
+    } catch (err) {
+      res.status(400).send(err);
     }
   }
 

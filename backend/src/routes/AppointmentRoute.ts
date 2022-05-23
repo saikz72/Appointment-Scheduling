@@ -49,4 +49,6 @@ router.post(`/review`, AppointmentController.createReview);
 
 router.get('/review', AppointmentController.getAllReview);
 
+router.post('/download', AppointmentController.fetchReceipt);
+
 export default router;

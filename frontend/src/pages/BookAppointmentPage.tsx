@@ -29,6 +29,7 @@ import { useAuth } from '../utility/AuthProvider';
 import { useNavigate, Link } from 'react-router-dom';
 import { useTheme } from '@mui/material/styles';
 import ProductType from 'types/ProductType';
+import { baseURL } from 'utility/constants';
 
 function generateRandom(min = 0, max = 100) {
   // find diff
@@ -92,6 +93,16 @@ export default function BookAppointmentPage() {
   const theme = useTheme();
 
   const user = auth.user ? auth.user : persist.user;
+
+  const downloadReceipt = async (appointment: any) => {
+    const res = await fetch(baseURL + 'download', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: appointment,
+    });
+    const json = await res.json();
+    console.log(json);
+  };
 
   const handleServiceChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const val = event.target.value;
@@ -245,6 +256,13 @@ export default function BookAppointmentPage() {
             >
               <Button color="success">Click here to view appointment</Button>
             </Link>
+          </>
+        )}
+        {status === 'book' && (
+          <>
+            <Button color="success" onClick={downloadReceipt}>
+              Click here to download your appointment receipt
+            </Button>
           </>
         )}
       </Box>
