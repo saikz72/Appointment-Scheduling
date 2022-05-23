@@ -67,3 +67,9 @@ Clone the repo: ```git clone https://github.com/saikz72/Appointment-Scheduling``
 3. expo start
 ```
 
+## Mobile
+### Setup
+1 ``` npm install --global expo-cli``` <br />
+2 ``` cd mobile ``` <br />
+3 ``` yarn install ``` <br />
+4 ``` yarn start ``` <br />
